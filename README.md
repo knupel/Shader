@@ -14,6 +14,9 @@ to use filter and all the tap of rope method you need to download Rope library
 [Wagner shader](https://github.com/spite/Wagner/tree/master/fragment-shaders),[David Guan](https://medium.com/david-guan/webgl-and-image-filter-101-5017b290d02f),[Raphaël de Courville](https://github.com/SableRaf/Filters4Processing)
 and always [shader toy](https://github.com/SableRaf/Filters4Processing),[sand box](http://glslsandbox.com/)
 
+# setup
+In `setup()` select your mode 0, 1 or 2 depend if you want work on background shader, on post FX on `g` or on your own PGgraphics
+
 # movie command
 forward `ARROW RIGHT`
 

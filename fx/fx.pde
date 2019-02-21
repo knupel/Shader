@@ -19,7 +19,7 @@ void load_media() {
 	img_b = loadImage("medium_puros_girl.jpg");
 }
 
-int mode_shader = 2;
+int mode_shader = 1;
 void setup() {
 	// if you change the shader/fx folder, utili in case you export your sketch, the shader folder is not exported.
 	// set_fx_path(sketchPath(2)+"/shader/fx/"); 

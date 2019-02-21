@@ -54,34 +54,35 @@ void filter_g(PImage img_1, PImage img_2, PImage pattern_1, PImage pattern_2) {
 		// println(get_fx(3).get_name());
 		
 		
-		// select_fx(g,null,null,get_fx(set_blur_gaussian));
-		//select_fx(g,null,nullg,get_fx(set_blur_circular));
-		// select_fx(g,null,null,get_fx(set_colour_change_a));
-		// select_fx(g,null,null,get_fx(set_colour_change_b));
-		//select_fx(g,null,null,get_fx(set_blur_radial));
-		// select_fx(g,img_1,null,get_fx(set_dither));
-		// select_fx(g,null,null,get_fx(set_grain));
-		//select_fx(g,null,null,get_fx(set_grain_scatter));
-		// select_fx(g,null,null,get_fx(set_halftone_dot));
-		// select_fx(g,null,null,get_fx(set_halftone_line));
-		// select_fx(g,null,null,get_fx(set_level));
-
-		// select_fx(g,g,null,get_fx(set_mix));
-
-		// select_fx(g,null,null,get_fx(set_pixel));
-
-		// select_fx(g,null,null,get_fx(set_reac_diff));
-		// select_fx(g,null,null,get_fx(set_split));
-
-		select_fx_post(g,null,null,get_fx(fx_manager,set_warp_proc));
-    
-    // select_fx(g,img_1,img_1,get_fx(set_warp_tex)); 
-		// select_fx(g,noise_nb,noise_nb,get_fx(set_warp_tex)); 
-		// select_fx(g,pattern_1,pattern_2,get_fx(set_warp_tex)); 
+		// select_fx_post(g,null,null,get_fx(fx_manager,set_blur_gaussian));
+		// select_fx_post(g,null,null,get_fx(fx_manager,set_blur_circular));
+		select_fx_post(g,null,null,get_fx(fx_manager,set_blur_radial));
+		// select_fx_post(g,null,null,get_fx(fx_manager,set_colour_change_a));
+		// select_fx_post(g,null,null,get_fx(fx_manager,set_colour_change_b));
 		
-		// select_fx(g,g,get_fx(set_scale));
+		// select_fx_post(g,img_1,null,get_fx(fx_manager,set_dither));
+		// select_fx_post(g,null,null,get_fx(fx_manager,set_grain));
+		// select_fx_post(g,null,null,get_fx(fx_manager,set_grain_scatter));
+		// select_fx_post(g,null,null,get_fx(fx_manager,set_halftone_dot));
+		// select_fx_post(g,null,null,get_fx(fx_manager,set_halftone_line));
+		// select_fx_post(g,null,null,get_fx(fx_manager,set_level));
+
+		// select_fx_post(g,g,null,get_fx(fx_manager,set_mix));
+
+		// select_fx_post(g,null,null,get_fx(fx_manager,set_pixel));
+
+		// select_fx_post(g,null,null,get_fx(fx_manager,set_reac_diff));
+		// select_fx_post(g,null,null,get_fx(fx_manager,set_split));
+
+		// select_fx_post(g,null,null,get_fx(fx_manager,set_warp_proc));
+    
+    // select_fx_post(g,img_1,img_1,get_fx(fx_manager,set_warp_tex)); 
+		// select_fx_post(g,noise_nb,noise_nb,get_fx(fx_manager,set_warp_tex)); 
+		// select_fx_post(g,pattern_1,pattern_2,get_fx(fx_manager,set_warp_tex)); 
+		
+		// select_fx_post(g,g,get_fx(fx_manager,set_scale));
 	
-		//select_fx(g,g,FX_HALFTONE_DOT,FX_WARP_PROC,FX_SPLIT_RGB);
+		//select_fx_post(g,g,FX_HALFTONE_DOT,FX_WARP_PROC,FX_SPLIT_RGB);
 
 
 	} 

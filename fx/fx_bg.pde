@@ -18,7 +18,7 @@ void draw_fx_bg() {
 	// select_fx_bg(get_fx(fx_bg_manager,set_necklace_fx_bg));
 	// select_fx_bg(get_fx(fx_bg_manager,set_neon_fx_bg));
 	// select_fx_bg(get_fx(fx_bg_manager,set_psy_fx_bg));
-	select_fx_bg(get_fx(fx_bg_manager,set_snow_fx_bg));
+	// select_fx_bg(get_fx(fx_bg_manager,set_snow_fx_bg));
 
 
 

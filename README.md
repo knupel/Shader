@@ -1,8 +1,9 @@
-## Filter
-This little project can be use too show easily video or image and apply glsl filter on it.
+## Shader
+This project is a processing framework to customize your background via the glsl shader or to filtering your rendering.
+there is a collection of background shader and more important collection of post fx filtering.
 
-Few glsl shader are available like gaussian blur, circular blur, radial blur, reaction diffusion, change spectrum HSB, RGB slit, dithering, grain, halftone, halftone line, scale,warp procedurale, warp texture, pixelate...
-All shaders can be usue on a specific PGraphics or on the main rendering, obviously it's faster to use them on main render 'g'.
+For POST FX the shader available is gaussian blur, circular blur, radial blur, reaction diffusion, change spectrum HSB, RGB slit, dithering, grain, halftone, halftone line, scale,warp procedurale, warp texture, pixelate...
+All shaders can be use on a specific PGraphics or on the main rendering, obviously it's faster to use them on main render 'g'.
 
 ## rope library
 to use filter and all the tap of rope method you need to download Rope library

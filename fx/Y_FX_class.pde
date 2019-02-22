@@ -1,6 +1,6 @@
 /**
  * CLASS FX 
- * v 0.3.0
+ * v 0.4.0
  * @see http://stanlepunk.xyz
  * @see https://github.com/StanLepunK/Shader
  * 2019-2019
@@ -40,6 +40,16 @@ public class FX {
 	private vec4 level_source; // 30
 	private vec4 level_layer; // 31
 	private vec4 colour; // 32
+
+  private float hue; // 200
+	private float saturation; // 201
+	private float brightness; // 202
+
+	private float red; // 300
+	private float green; // 301
+	private float blue; // 302
+
+	private float alpha; // 400
 
 	// modular
 	private vec3 [] matrix; // 40 > 42
@@ -301,6 +311,34 @@ public class FX {
 		}
 	}
 
+	private void set_hue(float hue) {
+		this.hue = hue;
+	}
+
+	private void set_saturation(float saturation) {
+		this.saturation = saturation;
+	}
+
+	private void set_brightness(float brightness) {
+		this.brightness = brightness;
+	}
+
+	private void set_red(float red) {
+		this.red = red;
+	}
+
+	private void set_green(float green) {
+		this.green = green;
+	}
+
+	private void set_blue(float blue) {
+		this.blue = blue;
+	}
+
+	private void set_alpha(float alpha) {
+		this.alpha = alpha;
+	}
+
 	private void set_matrix(int which, float... arg) {
 		if(this.matrix[which] == null) {
 			this.matrix[which] = vec3(build_3(arg));
@@ -475,7 +513,35 @@ public class FX {
 		}
 		return colour;
 	}
-  
+
+	public float get_hue() {
+		return hue;
+	}
+
+	public float get_saturation() {
+		return saturation;
+	}
+
+	public float get_brightness() {
+		return brightness;
+	}
+
+	public float get_red() {
+		return red;
+	}
+
+	public float get_green() {
+		return green;
+	}
+
+	public float get_blue() {
+		return blue;
+	}
+
+	public float get_alpha() {
+		return alpha;
+	}   
+
   // matrix
 	public vec3 get_matrix(int which) {
 		if(matrix != null  && which < matrix.length && which >= 0) {

@@ -1,6 +1,6 @@
 /**
 * SETTING FX POST method
-* v 0.2.1
+* v 0.2.2
 * 2019-2019
 */
 
@@ -19,6 +19,7 @@ void setting_fx_post(ArrayList<FX> fx_list) {
 
   setting_haltone_dot(fx_list);
   setting_haltone_line(fx_list);
+  setting_haltone_multi(fx_list);
 
   setting_level(fx_list);
 
@@ -194,6 +195,49 @@ void setting_haltone_line(ArrayList<FX> fx_list) {
     fx_set_pos(fx_list,set_halftone_line,px,py);
   }
 }
+
+
+
+
+
+// halftone multi
+String set_halftone_multi = "halftone multi";
+void setting_haltone_multi(ArrayList<FX> fx_list) {
+  init_fx(fx_list,set_halftone_multi,FX_HALFTONE_MULTI);
+
+  if(mousePressed) {
+    float px = map(mouseX,0,width,0,1);
+    float py = map(mouseY,0,height,0,1);
+    fx_set_pos(fx_list,set_halftone_multi,px,py); // 0 to 1
+    float quality = 2;
+    // float quality = map(mouseX,0,width,0,32);
+    fx_set_quality(fx_list,set_halftone_multi,quality); // 1 to 16++
+
+    float size =.9;
+    // float size = map(mouseX,0,width,0,3);
+    fx_set_size(fx_list,set_halftone_multi,size); // 0 to 2++
+
+    float angle = 0;
+    // flaot angle = sin(frameCount *.001) *TAU
+    fx_set_angle(fx_list,set_halftone_multi,angle); // in radians
+    
+    float threshold = .2;
+    // float threshold = map(mouseY,0,height,0,2);
+    fx_set_threshold(fx_list,set_halftone_multi,threshold); // from 0 to 10++ ?
+    
+    // float saturation = abs(sin(frameCount *.01));
+    float saturation = .5;
+    fx_set_saturation(fx_list,set_halftone_multi,saturation); // from 0 to 1
+    // fx_set_pos(fx_list,set_halftone_multi,mouseX,mouseY);
+    fx_set_mode(fx_list,set_halftone_multi,0); // from 0 to 2
+  }
+}
+
+
+
+
+
+
 
 // level
 String set_level = "level";

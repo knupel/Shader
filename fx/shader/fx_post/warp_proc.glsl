@@ -6,7 +6,7 @@
 * inspired by ushiostarfish https://www.shadertoy.com/user/ushiostarfish
 * @see https://www.shadertoy.com/view/4sX3RN
 
-v 0.0.4
+v 0.0.5
 2018-2019
 */
 // Processing implementation
@@ -16,8 +16,7 @@ precision highp float;
 #define PROCESSING_TEXTURE_SHADER
 varying vec4 vertColor;
 varying vec4 vertTexCoord;
-
-// sketch implementation template, uniform use by most of filter Romanesco shader
+// Rope implementation
 uniform sampler2D texture_source;
 uniform vec2 resolution_source;
 uniform bvec2 flip_source;

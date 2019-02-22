@@ -2,65 +2,63 @@
 * SHADER FX
 * @see http://stanlepunk.xyz
 * @see https://github.com/StanLepunK/Shader
-* v 0.6.1
+* v 0.7.0
 * 2019-2019
 *
 */
-int FX_TEMPLATE = 9998;
-int FX_BG_TEMPLATE = 9999;
-
-
 // CONSTANT FX POST
-int FX_BLUR_GAUSSIAN = 100;
-int FX_BLUR_RADIAL = 101;
-int FX_BLUR_CIRCULAR = 102;
+int FX_TEMPLATE = 0;
 
-int FX_COLOUR_CHANGE_A = 150;
-int FX_COLOUR_CHANGE_B = 151;
+int FX_BLUR_GAUSSIAN = 200;
+int FX_BLUR_RADIAL = 201;
+int FX_BLUR_CIRCULAR = 202;
 
-int FX_DITHER = 200;
+int FX_COLOUR_CHANGE_A = 300;
+int FX_COLOUR_CHANGE_B = 301;
 
-int FX_GRAIN = 250;
-int FX_GRAIN_SCATTER = 251;
+int FX_DITHER = 400;
 
-int FX_HALFTONE_DOT = 300;
-int FX_HALFTONE_LINE = 301;
+int FX_GRAIN = 700;
+int FX_GRAIN_SCATTER = 701;
 
-int FX_MIX = 0;
+int FX_HALFTONE_DOT = 800;
+int FX_HALFTONE_LINE = 801;
+int FX_HALFTONE_MULTI = 810;
 
-int FX_LEVEL = 510;
+int FX_LEVEL = 12_00;
 
-int FX_PIXEL = 600;
+int FX_MIX = 13_00;
 
-int FX_REAC_DIFF = 700;
+int FX_PIXEL = 16_00;
 
-int FX_SCALE = 500;
-int FX_SPLIT_RGB = 400;
+int FX_REAC_DIFF = 18_00;
 
-int FX_TOON = 800; // don't work
+int FX_SCALE = 19_00;
+int FX_SPLIT_RGB = 19_50;
 
-int FX_WARP_TEX = 1000;
-int FX_WARP_PROC = 1001;
+int FX_TOON = 20_00; // don't work
+
+int FX_WARP_TEX = 23_00;
+int FX_WARP_PROC = 23_01;
 
 
 // CONSTANT FX_BG
-int FX_BG_CELLULAR = 10000;
+int FX_BG_TEMPLATE = 1;
 
-int FX_BG_HEART = 10100;
+int FX_BG_CELLULAR = 3_0000;
 
-int FX_BG_NECKLACE = 10200;
+int FX_BG_HEART = 8_0000;
 
-int FX_BG_NEON = 10300;
+int FX_BG_NECKLACE = 14_0000;
 
-int FX_BG_PSY = 10400;
+int FX_BG_NEON = 14_1000;
 
-int FX_BG_SNOW = 10500;
+int FX_BG_PSY = 16_0000;
+
+int FX_BG_SNOW = 19_0000;
 
 
-
-
-//ArrayList<FX>fx_manager;
-
+// get method
 FX get_fx(ArrayList<FX> fx_list, int target) {
 	if(fx_list != null && target < fx_list.size()) {
 		return fx_list.get(target);
@@ -82,19 +80,16 @@ FX get_fx(ArrayList<FX> fx_list, String name) {
 	return buffer;
 }
 
+
+
+// init method
 void init_fx(ArrayList<FX> fx_list, String name, int type) {
 	init_fx(fx_list,name,type,-1, null, null, null,-1,null,null);
 }
 
 
-
 void init_fx(ArrayList<FX> fx_list, String name, int type, int id, String author, String pack, String version, int revision, String [] name_slider, String [] name_button) {
 	boolean exist = false;
-	/*
-	if(fx_list == null) {
-		fx_list = new ArrayList<FX>();
-	}
-	*/
 
 	if(fx_list != null && fx_list.size() > 0) {
 		for(FX fx : fx_list) {
@@ -111,6 +106,8 @@ void init_fx(ArrayList<FX> fx_list, String name, int type, int id, String author
 	}
 }
 
+
+// add FX
 void add_fx_to_manager(ArrayList<FX> fx_list, String name, int type, int id, String author, String pack, String version, int revision, String [] name_slider, String [] name_button) {
 	FX fx = new FX();
 	fx.set_name(name);
@@ -131,8 +128,9 @@ void add_fx_to_manager(ArrayList<FX> fx_list, String name, int type, int id, Str
 
 
 /**
-* POST FX
+* SELECT FX
 */
+
 // POST FX from FX class
 void select_fx_post(PImage main, PImage layer_a, PImage layer_b, FX... fx) {
 	for(int i = 0 ; i < fx.length ;i++) {
@@ -158,8 +156,10 @@ void select_fx_post(PImage main, PImage layer_a, PImage layer_b, FX... fx) {
 			fx_halftone_dot(main,fx[i]);
 		} else if(fx[i].get_type() == FX_HALFTONE_LINE) {
 			fx_halftone_line(main,fx[i]); 
-		} else if(fx[i].get_type() == FX_LEVEL) {
-			fx_level(main,fx[i]); 
+		} else if(fx[i].get_type() == FX_HALFTONE_LINE) {
+			fx_halftone_line(main,fx[i]); 
+		} else if(fx[i].get_type() == FX_HALFTONE_MULTI) {
+			fx_halftone_multi(main,fx[i]); 
 		} else if(fx[i].get_type() == FX_PIXEL) {
 			fx_pixel(main,fx[i]);
 		} else if(fx[i].get_type() == FX_REAC_DIFF) {
@@ -172,7 +172,9 @@ void select_fx_post(PImage main, PImage layer_a, PImage layer_b, FX... fx) {
 			fx_warp_proc(main,fx[i]); 
 		} else if(fx[i].get_type() == FX_WARP_TEX) {
 			fx_warp_tex(main,layer_a,layer_b,fx[i]); 
-		}    
+		} else {
+			printErrTempo(60,"method select_fx_post(): fx",fx[i].get_name(),fx[i].get_type(),"don't match with any fx available");
+		}   
 	}
 }
 
@@ -215,10 +217,7 @@ void select_fx_bg(FX fx) {
 
 /**
 prepare your setting
-v 0.0.2
-*/
-/**
-mode
+v 0.1.0
 */
 void fx_set_mode(ArrayList<FX> fx_list, String name, int mode) {
 	fx_set(fx_list,0,name,mode);
@@ -243,7 +242,6 @@ void fx_set_scale(ArrayList<FX> fx_list, String name, float... arg) {
 	}
 }
 
-
 void fx_set_resolution(ArrayList<FX> fx_list, String name, float... arg) {
 	int which = 11;
 	if(arg.length == 1) {
@@ -254,7 +252,6 @@ void fx_set_resolution(ArrayList<FX> fx_list, String name, float... arg) {
 		fx_set(fx_list,which,name,arg[0],arg[1]);
 	}
 }
-
 
 void fx_set_strength(ArrayList<FX> fx_list, String name, float... arg) {
 	int which = 20;
@@ -390,6 +387,34 @@ void fx_set_colour(ArrayList<FX> fx_list, String name, float... arg) {
 	} else if(arg.length > 4) {
 		fx_set(fx_list,which,name,arg[0],arg[1],arg[2],arg[3]);
 	}
+}
+
+void fx_set_hue(ArrayList<FX> fx_list, String name, float hue) {
+	fx_set(fx_list,200,name,hue);
+}
+
+void fx_set_saturation(ArrayList<FX> fx_list, String name, float saturation) {
+	fx_set(fx_list,201,name,saturation);
+}
+
+void fx_set_brightness(ArrayList<FX> fx_list, String name, float brightness) {
+	fx_set(fx_list,202,name,brightness);
+}
+
+void fx_set_red(ArrayList<FX> fx_list, String name, float red) {
+	fx_set(fx_list,300,name,red);
+}
+
+void fx_set_green(ArrayList<FX> fx_list, String name, float green) {
+	fx_set(fx_list,301,name,green);
+}
+
+void fx_set_blue(ArrayList<FX> fx_list, String name, float blue) {
+	fx_set(fx_list,302,name,blue);
+}
+
+void fx_set_alpha(ArrayList<FX> fx_list, String name, float alpha) {
+	fx_set(fx_list,400,name,alpha);
 }
 
 

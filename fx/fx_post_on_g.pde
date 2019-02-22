@@ -56,15 +56,20 @@ void filter_g(PImage img_1, PImage img_2, PImage pattern_1, PImage pattern_2) {
 		
 		// select_fx_post(g,null,null,get_fx(fx_manager,set_blur_gaussian));
 		// select_fx_post(g,null,null,get_fx(fx_manager,set_blur_circular));
-		select_fx_post(g,null,null,get_fx(fx_manager,set_blur_radial));
+		// select_fx_post(g,null,null,get_fx(fx_manager,set_blur_radial));
+
 		// select_fx_post(g,null,null,get_fx(fx_manager,set_colour_change_a));
 		// select_fx_post(g,null,null,get_fx(fx_manager,set_colour_change_b));
 		
 		// select_fx_post(g,img_1,null,get_fx(fx_manager,set_dither));
 		// select_fx_post(g,null,null,get_fx(fx_manager,set_grain));
 		// select_fx_post(g,null,null,get_fx(fx_manager,set_grain_scatter));
+
 		// select_fx_post(g,null,null,get_fx(fx_manager,set_halftone_dot));
 		// select_fx_post(g,null,null,get_fx(fx_manager,set_halftone_line));
+		select_fx_post(g,null,null,get_fx(fx_manager,set_halftone_multi));
+
+
 		// select_fx_post(g,null,null,get_fx(fx_manager,set_level));
 
 		// select_fx_post(g,g,null,get_fx(fx_manager,set_mix));

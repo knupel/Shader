@@ -1005,6 +1005,70 @@ PGraphics fx_halftone_line(PImage source, boolean on_g, vec2 pos, vec3 angle, in
 
 
 
+/**
+* Halftone Multi
+* refactoring from 
+* v 0.0.1
+* 2019-2019
+*/
+// use setting
+PGraphics fx_halftone_multi(PImage source, FX fx) {
+	return fx_halftone_multi(source,fx.on_g(),fx.get_size().x,fx.get_angle().x,fx.get_quality(),fx.get_threshold().x,fx.get_saturation(),vec2(fx.get_pos()),fx.get_mode());
+}
+
+
+// main
+PShader fx_halftone_multi;
+PGraphics pg_halftone_multi;
+PGraphics fx_halftone_multi(PImage source, boolean on_g, float size, float angle, float quality, float threshold, float saturation, vec2 pos, int mode) {
+	if(!on_g && (pg_halftone_multi == null 
+								|| (source.width != pg_halftone_multi.width 
+								&& source.height != pg_halftone_multi.height))) {
+		pg_halftone_multi = createGraphics(source.width,source.height,get_renderer());
+	}
+
+	if(fx_halftone_multi == null) {
+		String path = get_fx_post_path()+"halftone_multi.glsl";
+		if(fx_post_rope_path_exists) {
+			fx_halftone_multi = loadShader(path);
+			println("load shader:",path);
+		}
+	} else {
+    if(on_g) set_shader_flip(fx_halftone_multi,source);
+		fx_halftone_multi.set("texture_source",source);
+		fx_halftone_multi.set("resolution_source",source.width,source.height);
+    
+		// external param
+		fx_halftone_multi.set("position",pos.x,pos.y); // -1 to 1
+		float sat = map(saturation,0,1,-1,1);
+		fx_halftone_multi.set("saturation",sat); // -1 to 1
+		fx_halftone_multi.set("angle",angle); // in radian
+		fx_halftone_multi.set("scale",size); // from 0 to 2 is good
+		fx_halftone_multi.set("divs",quality); // from 1 to 16
+		fx_halftone_multi.set("sharpness",threshold); // from 0 to 2 is good
+		fx_halftone_multi.set("mode",mode); // from 0 to 3 dot, circle and line
+
+		 // rendering
+    render_shader(fx_halftone_multi,pg_halftone_multi,source,on_g);
+	}
+
+	// end
+	reset_reverse_g(false);
+	if(on_g) {
+		return null;
+	} else {
+		return pg_halftone_multi; 
+	}
+}
+
+
+
+
+
+
+
+
+
 
 
 
@@ -1027,9 +1091,6 @@ PGraphics fx_halftone_line(PImage source, boolean on_g, vec2 pos, vec3 angle, in
 v 0.0.3
 2019-2019
 */
-
-
-
 // direct filtering
 PGraphics fx_level(PImage source, FX fx) {
 	vec3 level = vec3(1);

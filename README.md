@@ -9,10 +9,10 @@ All shaders can be use on a specific PGraphics or on the main rendering, obvious
 to use filter and all the tap of rope method you need to download Rope library
 [download](https://github.com/StanLepunK/Rope/blob/master/build_rope/Rope.zip)
 
-## link shader and glsl
+## link and source shader and glsl
 
 [Wagner shader](https://github.com/spite/Wagner/tree/master/fragment-shaders),[David Guan](https://medium.com/david-guan/webgl-and-image-filter-101-5017b290d02f),[Raphaël de Courville](https://github.com/SableRaf/Filters4Processing)
-and always [shader toy](https://github.com/SableRaf/Filters4Processing),[sand box](http://glslsandbox.com/)
+and always [shader toy](https://github.com/SableRaf/Filters4Processing),[sand box](http://glslsandbox.com/),[ISF: interactive Shader Format](https://www.interactiveshaderformat.com/)
 
 ## setup
 In `setup()` select your mode 0, 1 or 2 depend if you want work on background shader, on post FX on `g` or on your own PGgraphics
@@ -32,18 +32,19 @@ movie pause `SPACE`
 
 
 ## result
-![puros girl](https://github.com/StanLepunK/Shader/blob/master/img_link/IM%20184796.jpg)
-![puros girl](https://github.com/StanLepunK/Shader/blob/master/img_link/IM%20184797.jpg)
-![puros girl](https://github.com/StanLepunK/Shader/blob/master/img_link/IM%20184798.jpg)
-![puros girl](https://github.com/StanLepunK/Shader/blob/master/img_link/IM%20184799.jpg)
-![puros girl](https://github.com/StanLepunK/Shader/blob/master/img_link/IM%20184800.jpg)
-![puros girl](https://github.com/StanLepunK/Shader/blob/master/img_link/IM%20184801.jpg)
-![puros girl](https://github.com/StanLepunK/Shader/blob/master/img_link/IM%20184802.jpg)
-![puros girl](https://github.com/StanLepunK/Shader/blob/master/img_link/IM%20184803.jpg)
-![puros girl](https://github.com/StanLepunK/Shader/blob/master/img_link/IM%20184804.jpg)
-![puros girl](https://github.com/StanLepunK/Shader/blob/master/img_link/IM%20184805.jpg)
-![puros girl](https://github.com/StanLepunK/Shader/blob/master/img_link/IM%20184806.jpg)
-![puros girl](https://github.com/StanLepunK/Shader/blob/master/img_link/IM%20184807.jpg)
-![puros girl](https://github.com/StanLepunK/Shader/blob/master/img_link/IM%20184808.jpg)
-![puros girl](https://github.com/StanLepunK/Shader/blob/master/img_link/IM%20185809.jpg)
-![puros girl](https://github.com/StanLepunK/Shader/blob/master/img_link/IM%20185810.jpg)
+![blur radial](https://github.com/StanLepunK/Shader/blob/master/img_link/IM%20184796.jpg)
+![blur gaussian](https://github.com/StanLepunK/Shader/blob/master/img_link/IM%20184797.jpg)
+![blur circular](https://github.com/StanLepunK/Shader/blob/master/img_link/IM%20184798.jpg)
+![grain scatter](https://github.com/StanLepunK/Shader/blob/master/img_link/IM%20184799.jpg)
+![pixelate](https://github.com/StanLepunK/Shader/blob/master/img_link/IM%20184800.jpg)
+![warp procedural split rgb](https://github.com/StanLepunK/Shader/blob/master/img_link/IM%20184801.jpg)
+![split rgb](https://github.com/StanLepunK/Shader/blob/master/img_link/IM%20184802.jpg)
+![warp texture split rgb](https://github.com/StanLepunK/Shader/blob/master/img_link/IM%20184803.jpg)
+![warp procedural](https://github.com/StanLepunK/Shader/blob/master/img_link/IM%20184804.jpg)
+![halftone dot](https://github.com/StanLepunK/Shader/blob/master/img_link/IM%20184805.jpg)
+![halftone multi](https://github.com/StanLepunK/Shader/blob/master/img_link/IM%20184809.jpg)
+![change colour B](https://github.com/StanLepunK/Shader/blob/master/img_link/IM%20184806.jpg)
+![change colour A](https://github.com/StanLepunK/Shader/blob/master/img_link/IM%20184807.jpg)
+![reaction diffusion](https://github.com/StanLepunK/Shader/blob/master/img_link/IM%20184808.jpg)
+![cellular](https://github.com/StanLepunK/Shader/blob/master/img_link/IM%20185809.jpg)
+![heart](https://github.com/StanLepunK/Shader/blob/master/img_link/IM%20185810.jpg)

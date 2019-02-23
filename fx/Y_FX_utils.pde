@@ -2,10 +2,11 @@
 * SHADER FX
 * @see http://stanlepunk.xyz
 * @see https://github.com/StanLepunK/Shader
-* v 0.7.0
+* v 0.7.1
 * 2019-2019
 *
 */
+int NO_FX = -1;
 // CONSTANT FX POST
 int FX_TEMPLATE = 0;
 
@@ -44,6 +45,7 @@ int FX_WARP_PROC = 23_01;
 
 // CONSTANT FX BACKGROUND
 // here we start arbitrarily at 10_000 to no conflict with FX constant arounf 1_000.
+
 int FX_BG_TEMPLATE = 1;
 
 int FX_BG_CELLULAR = 3_0000;

@@ -321,7 +321,7 @@ PGraphics fx_blur_gaussian(PImage source, boolean on_g, boolean second_pass, ive
 
 /**
 * Blur radial
-v 0.2.2
+v 0.2.3
 2018-2019
 */
 // setting by class FX

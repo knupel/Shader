@@ -2,7 +2,7 @@
 * BACKGROUND FX
 * Rope background shader fx collection
 * 2019-2019
-* v 0.1.6
+* v 0.1.7
 * all filter bellow has been tested.
 * @see http://stanlepunk.xyz
 * @see https://github.com/StanLepunK/Shader
@@ -45,8 +45,7 @@ PGraphics fx_bg_template(ivec2 canvas, boolean on_g, vec3 colour) {
 		if(fx_bg_rope_path_exists) {
 			fx_bg_template = loadShader(path);
 			println("load shader: template_fx_bg.glsl");
-		}
-		println("load shader:",path);
+		} 
 	} else {
 		set_shader_resolution(fx_bg_template,canvas,on_g);
 
@@ -79,7 +78,7 @@ PGraphics fx_bg_template(ivec2 canvas, boolean on_g, vec3 colour) {
 /**
 * Cellular fx backgournd by Stan le punk
 * this template can be used for texture or direct filtering
-* v 0.0.1
+* v 0.0.3
 * 2019-2019
 */
 // setting by class FX
@@ -105,10 +104,8 @@ PGraphics fx_bg_cellular(ivec2 canvas, boolean on_g, vec4 colour, int num, vec2 
 		if(fx_bg_rope_path_exists) {
 			fx_bg_cellular = loadShader(path);
 			println("load shader: cellular.glsl");
-		}
-		println("load shader:",path);
+		}	
 	} else {
-		println(fx_bg_cellular);
 		set_shader_resolution(fx_bg_cellular,canvas,on_g);
 
 		fx_bg_cellular.set("time",frameCount *.1); 
@@ -171,7 +168,6 @@ PGraphics fx_bg_heart(ivec2 canvas, boolean on_g, vec3 colour, int num, float sp
 			fx_bg_heart = loadShader(path);
 			println("load shader: heart.glsl");
 		}
-		println("load shader:",path);
 	} else {
 		set_shader_resolution(fx_bg_heart,canvas,on_g);
 
@@ -236,7 +232,6 @@ PGraphics fx_bg_necklace(ivec2 canvas, boolean on_g, vec2 pos, vec2 size, float 
 			fx_bg_necklace = loadShader(path);
 			println("load shader: necklace.glsl");
 		}
-		println("load shader:",path);
 	} else {
 		set_shader_resolution(fx_bg_necklace,canvas,on_g);
 
@@ -299,7 +294,6 @@ PGraphics fx_bg_neon(ivec2 canvas, boolean on_g, vec2 pos, float speed) {
 			fx_bg_neon = loadShader(path);
 			println("load shader: neon.glsl");
 		}
-		println("load shader:",path);
 	} else {
 		set_shader_resolution(fx_bg_neon,canvas,on_g);
 
@@ -362,7 +356,6 @@ PGraphics fx_bg_psy(ivec2 canvas, boolean on_g, int num, float speed) {
 			fx_bg_psy = loadShader(path);
 			println("load shader: psy.glsl");
 		}
-		println("load shader:",path);
 	} else {
 		set_shader_resolution(fx_bg_psy,canvas,on_g);
 
@@ -419,7 +412,6 @@ PGraphics fx_bg_snow(ivec2 canvas, boolean on_g, vec2 pos, vec3 colour, float sp
 			fx_bg_snow = loadShader(path);
 			println("load shader: snow.glsl");
 		}
-		println("load shader:",path);
 	} else {
 		set_shader_resolution(fx_bg_snow,canvas,on_g);
 
@@ -489,7 +481,6 @@ PGraphics fx_bg_voronoi_hex(ivec2 canvas, boolean on_g, float size, vec3 colour,
 			fx_bg_voronoi_hex = loadShader(path);
 			println("load shader: voronoi_hex.glsl");
 		}
-		println("load shader:",path);
 	} else {
 		set_shader_resolution(fx_bg_voronoi_hex,canvas,on_g);
 		// processing parameter

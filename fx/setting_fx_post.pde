@@ -69,8 +69,8 @@ void setting_blur_radial(ArrayList<FX> fx_list) {
   vec2 pos = vec2();
   if(get_fx(fx_list,set_blur_radial).get_pos() != null) pos = vec2(get_fx(fx_list,set_blur_radial).get_pos()).copy();
   if(mousePressed) {
-    pos.set_x(map(mouseX,0,width,0,1));
-    pos.set_y(map(mouseY,0,height,0,1));
+    pos.x(map(mouseX,0,width,0,1));
+    pos.y(map(mouseY,0,height,0,1));
   }
   fx_set_pos(fx_list,set_blur_radial,pos.x,pos.y);
 

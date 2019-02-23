@@ -461,7 +461,7 @@ PGraphics fx_bg_snow(ivec2 canvas, boolean on_g, vec2 pos, vec3 colour, float sp
 
 
 /**
-* VORONOI THREE P
+* VORONOI HEX
 * refactoring
 * oroginal shader see glsl file for the link
 * v 0.0.1

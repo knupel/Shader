@@ -34,7 +34,7 @@ vec3 rotate(vec3 p) {
 	return vec3(p.x*cos(angle) + p.z*sin(angle), p.y, p.x*sin(angle) - p.z*cos(angle));
 }
 
-float field(vec3 p,float num_f) {
+float field(vec3 p, float num_f) {
 	float d = 0.;
 	p = abs(rotate(p));
 	

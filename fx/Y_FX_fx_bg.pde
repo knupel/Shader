@@ -452,3 +452,75 @@ PGraphics fx_bg_snow(ivec2 canvas, boolean on_g, vec2 pos, vec3 colour, float sp
 
 
 
+
+
+
+
+
+
+
+
+/**
+* VORONOI THREE P
+* refactoring
+* oroginal shader see glsl file for the link
+* v 0.0.1
+* 2019-2019
+*/
+// setting by class FX
+PGraphics fx_bg_voronoi_hex(FX fx) {
+	return fx_bg_voronoi_hex(fx.get_canvas(),fx.on_g(),fx.get_size().x,vec3(fx.get_colour()),fx.get_speed().x,fx.get_speed().y,fx.get_strength().x,fx.get_threshold().x,fx.get_mode());
+}
+
+
+// main
+PShader fx_bg_voronoi_hex;
+PGraphics pg_voronoi_hex_fx_bg;
+PGraphics fx_bg_voronoi_hex(ivec2 canvas, boolean on_g, float size, vec3 colour, float speed_mutation,float speed_colour, float strength, float threshold, int mode) {
+	if(!on_g && (pg_voronoi_hex_fx_bg == null
+								|| (canvas.x != pg_voronoi_hex_fx_bg.width 
+								&& canvas.y != pg_voronoi_hex_fx_bg.height))) {
+		pg_voronoi_hex_fx_bg = createGraphics(canvas.x,canvas.y,get_renderer());
+	}
+  // setting
+	if(fx_bg_voronoi_hex == null) {
+		String path = get_fx_bg_path()+"voronoi_hex.glsl";
+		if(fx_bg_rope_path_exists) {
+			fx_bg_voronoi_hex = loadShader(path);
+			println("load shader: voronoi_hex.glsl");
+		}
+		println("load shader:",path);
+	} else {
+		set_shader_resolution(fx_bg_voronoi_hex,canvas,on_g);
+		// processing parameter
+		fx_bg_voronoi_hex.set("time",float(frameCount)); 
+    
+    // external parameter
+    fx_bg_voronoi_hex.set("rgb",colour.x,colour.y,colour.z); // from 0 to 1
+    fx_bg_voronoi_hex.set("size",size); // from 1 to 10++
+    fx_bg_voronoi_hex.set("speed_mutation",speed_mutation); // from 0 to 1
+    fx_bg_voronoi_hex.set("speed_colour",speed_colour); // from 0 to 1
+		fx_bg_voronoi_hex.set("strength",strength); // from -0.05 to 0.05
+		fx_bg_voronoi_hex.set("threshold",threshold); // from 0.1 to 0.3
+		fx_bg_voronoi_hex.set("mode",mode); // from 0 to 1
+
+		if(on_g) {
+			filter(fx_bg_voronoi_hex);
+		} else {
+			pg_voronoi_hex_fx_bg.shader(fx_bg_voronoi_hex);
+		}
+	}
+
+	if(on_g) {
+		return null;
+	} else {
+		return pg_voronoi_hex_fx_bg; 
+	}
+}
+
+
+
+
+
+
+

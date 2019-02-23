@@ -13,8 +13,6 @@ uniform vec3 rgb;
 uniform vec4 rgba;
 
 
-
-
 // uniform vec2 position; // mapped or not that's a question?
 // uniform float time;
 
@@ -25,12 +23,12 @@ uniform vec4 rgba;
 // uniform int num;
 // uniform ivec3 size;
 // uniform float strength;
+// uniform float speed;
 
 // uniform float angle;
 // uniform float threshold;
 // uniform float quality;
 // uniform vec2 offset;
-// uniform float scale;
 
 // uniform int rows;
 // uniform int cols;

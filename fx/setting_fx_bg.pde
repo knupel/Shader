@@ -12,6 +12,7 @@ void setting_fx_bg(ArrayList<FX> fx_list) {
   setting_neon_fx_bg(fx_list);
   setting_psy_fx_bg(fx_list);
   setting_snow_fx_bg(fx_list);
+  setting_voronoi_hex_fx_bg(fx_list);
 }
 
 
@@ -141,7 +142,7 @@ void setting_psy_fx_bg(ArrayList<FX> fx_list) {
 
 
 
-// psy
+// snow
 String set_snow_fx_bg = "snow fx background";
 void setting_snow_fx_bg(ArrayList<FX> fx_list) {
   init_fx(fx_list,set_snow_fx_bg,FX_BG_SNOW);
@@ -161,6 +162,44 @@ void setting_snow_fx_bg(ArrayList<FX> fx_list) {
 
   float quality = abs(sin(frameCount *.01));
   fx_set_quality(fx_list,set_snow_fx_bg,quality);
+}
+
+
+
+
+
+
+
+
+
+
+// voronoi three p
+String set_voronoi_hex_fx_bg = "voronoi hex fx background";
+void setting_voronoi_hex_fx_bg(ArrayList<FX> fx_list) {
+  init_fx(fx_list,set_voronoi_hex_fx_bg,FX_BG_VORONOI_HEX);
+
+  if(mousePressed) {
+
+
+    float size = map(mouseX,0,width,0,10);
+    fx_set_size(fx_list,set_voronoi_hex_fx_bg,size);
+
+    float threshold = map(sin(frameCount *.001),-1,1,.01,0.3);
+    fx_set_threshold(fx_list,set_voronoi_hex_fx_bg,threshold);
+  }
+
+  vec3 colour = abs(vec3().wave_sin(frameCount,.01,.02,.03));
+  fx_set_colour(fx_list,set_voronoi_hex_fx_bg,colour.array());
+
+  float speed_mutation = .05;
+  float speed_colour = 1.;
+  // float speed = map(mouseX,0,width,0,1);
+  fx_set_speed(fx_list,set_voronoi_hex_fx_bg,speed_mutation,speed_colour);
+
+  float strength = map(sin(frameCount *.001),-1,1,-0.05,0.05);
+  fx_set_strength(fx_list,set_voronoi_hex_fx_bg,strength);
+
+  fx_set_mode(fx_list,set_voronoi_hex_fx_bg,0); // two mode available for the moment 0 or 1
 }
 
 

@@ -42,7 +42,8 @@ int FX_WARP_TEX = 23_00;
 int FX_WARP_PROC = 23_01;
 
 
-// CONSTANT FX_BG
+// CONSTANT FX BACKGROUND
+// here we start arbitrarily at 10_000 to no conflict with FX constant arounf 1_000.
 int FX_BG_TEMPLATE = 1;
 
 int FX_BG_CELLULAR = 3_0000;
@@ -51,11 +52,13 @@ int FX_BG_HEART = 8_0000;
 
 int FX_BG_NECKLACE = 14_0000;
 
-int FX_BG_NEON = 14_1000;
+int FX_BG_NEON = 14_0000;
 
 int FX_BG_PSY = 16_0000;
 
 int FX_BG_SNOW = 19_0000;
+
+int FX_BG_VORONOI_HEX = 22_0000;
 
 
 // get method
@@ -134,70 +137,82 @@ void add_fx_to_manager(ArrayList<FX> fx_list, String name, int type, int id, Str
 // POST FX from FX class
 void select_fx_post(PImage main, PImage layer_a, PImage layer_b, FX... fx) {
 	for(int i = 0 ; i < fx.length ;i++) {
-		if(fx[i].get_type() == FX_MIX) {
-			fx_mix(main,layer_a,fx[i]);
-		} else if(fx[i].get_type() == FX_BLUR_GAUSSIAN) {
-			fx_blur_gaussian(main,fx[i]); 
-		} else if(fx[i].get_type() == FX_BLUR_CIRCULAR) {
-			fx_blur_circular(main,fx[i]);
-		} else if(fx[i].get_type() == FX_BLUR_RADIAL) {
-			fx_blur_radial(main,fx[i]);
-		} else if(fx[i].get_type() == FX_COLOUR_CHANGE_A) {
-			fx_colour_change_a(main,fx[i]);
-		} else if(fx[i].get_type() == FX_COLOUR_CHANGE_B) {
-			fx_colour_change_b(main,fx[i]);
-		} else if(fx[i].get_type() == FX_DITHER) {
-			fx_dither(main,layer_a,fx[i]);
-		} else if(fx[i].get_type() == FX_GRAIN) {
-			 fx_grain(main,fx[i]);
-		} else if(fx[i].get_type() == FX_GRAIN_SCATTER) {
-			fx_grain_scatter(main,fx[i]);
-		} else if(fx[i].get_type() == FX_HALFTONE_DOT) {
-			fx_halftone_dot(main,fx[i]);
-		} else if(fx[i].get_type() == FX_HALFTONE_LINE) {
-			fx_halftone_line(main,fx[i]); 
-		} else if(fx[i].get_type() == FX_HALFTONE_LINE) {
-			fx_halftone_line(main,fx[i]); 
-		} else if(fx[i].get_type() == FX_HALFTONE_MULTI) {
-			fx_halftone_multi(main,fx[i]); 
-		} else if(fx[i].get_type() == FX_PIXEL) {
-			fx_pixel(main,fx[i]);
-		} else if(fx[i].get_type() == FX_REAC_DIFF) {
-			fx_reaction_diffusion(main,fx[i]);
-		} else if(fx[i].get_type() == FX_SPLIT_RGB) {
-			fx_split_rgb(main,fx[i]); 
-		} else if(fx[i].get_type() == FX_SCALE) {
-			fx_scale(main,fx[i]);
-		} else if(fx[i].get_type() == FX_WARP_PROC) {
-			fx_warp_proc(main,fx[i]); 
-		} else if(fx[i].get_type() == FX_WARP_TEX) {
-			fx_warp_tex(main,layer_a,layer_b,fx[i]); 
+		if(fx[i] != null) {
+			if(fx[i].get_type() == FX_MIX) {
+				fx_mix(main,layer_a,fx[i]);
+			} else if(fx[i].get_type() == FX_BLUR_GAUSSIAN) {
+				fx_blur_gaussian(main,fx[i]); 
+			} else if(fx[i].get_type() == FX_BLUR_CIRCULAR) {
+				fx_blur_circular(main,fx[i]);
+			} else if(fx[i].get_type() == FX_BLUR_RADIAL) {
+				fx_blur_radial(main,fx[i]);
+			} else if(fx[i].get_type() == FX_COLOUR_CHANGE_A) {
+				fx_colour_change_a(main,fx[i]);
+			} else if(fx[i].get_type() == FX_COLOUR_CHANGE_B) {
+				fx_colour_change_b(main,fx[i]);
+			} else if(fx[i].get_type() == FX_DITHER) {
+				fx_dither(main,layer_a,fx[i]);
+			} else if(fx[i].get_type() == FX_GRAIN) {
+				 fx_grain(main,fx[i]);
+			} else if(fx[i].get_type() == FX_GRAIN_SCATTER) {
+				fx_grain_scatter(main,fx[i]);
+			} else if(fx[i].get_type() == FX_HALFTONE_DOT) {
+				fx_halftone_dot(main,fx[i]);
+			} else if(fx[i].get_type() == FX_HALFTONE_LINE) {
+				fx_halftone_line(main,fx[i]); 
+			} else if(fx[i].get_type() == FX_HALFTONE_LINE) {
+				fx_halftone_line(main,fx[i]); 
+			} else if(fx[i].get_type() == FX_HALFTONE_MULTI) {
+				fx_halftone_multi(main,fx[i]); 
+			} else if(fx[i].get_type() == FX_PIXEL) {
+				fx_pixel(main,fx[i]);
+			} else if(fx[i].get_type() == FX_REAC_DIFF) {
+				fx_reaction_diffusion(main,fx[i]);
+			} else if(fx[i].get_type() == FX_SPLIT_RGB) {
+				fx_split_rgb(main,fx[i]); 
+			} else if(fx[i].get_type() == FX_SCALE) {
+				fx_scale(main,fx[i]);
+			} else if(fx[i].get_type() == FX_WARP_PROC) {
+				fx_warp_proc(main,fx[i]); 
+			} else if(fx[i].get_type() == FX_WARP_TEX) {
+				fx_warp_tex(main,layer_a,layer_b,fx[i]); 
+			} else {
+				printErrTempo(60,"method select_fx_post(): fx",fx[i].get_name(),fx[i].get_type(),"don't match with any fx available");
+			}
 		} else {
-			printErrTempo(60,"method select_fx_post(): fx",fx[i].get_name(),fx[i].get_type(),"don't match with any fx available");
-		}   
+			printErrTempo(60,"method select_fx_post(): fx",i,"is",fx[i],"maybe fx need to be init or instantiate");
+		}
+		   
 	}
 }
 
 
 // BACKGROUND FX from FX class
-void select_fx_bg(FX fx) {
-	if(fx.get_type() == FX_BG_TEMPLATE) {
-		fx_bg_template(fx);
-	} else if(fx.get_type() == FX_BG_CELLULAR) {
-		fx_bg_cellular(fx);
-	} else if(fx.get_type() == FX_BG_HEART) {
-		fx_bg_heart(fx);
-	} else if(fx.get_type() == FX_BG_NECKLACE) {
-		fx_bg_necklace(fx);
-	} else if(fx.get_type() == FX_BG_NEON) {
-		fx_bg_neon(fx);
-	} else if(fx.get_type() == FX_BG_PSY) {
-		fx_bg_psy(fx);
-	} else if(fx.get_type() == FX_BG_SNOW) {
-		fx_bg_snow(fx);
+void select_fx_background(FX fx) {
+	if(fx != null) {
+		if(fx.get_type() == FX_BG_TEMPLATE) {
+			fx_bg_template(fx);
+		} else if(fx.get_type() == FX_BG_CELLULAR) {
+			fx_bg_cellular(fx);
+		} else if(fx.get_type() == FX_BG_HEART) {
+			fx_bg_heart(fx);
+		} else if(fx.get_type() == FX_BG_NECKLACE) {
+			fx_bg_necklace(fx);
+		} else if(fx.get_type() == FX_BG_NEON) {
+			fx_bg_neon(fx);
+		} else if(fx.get_type() == FX_BG_PSY) {
+			fx_bg_psy(fx);
+		} else if(fx.get_type() == FX_BG_SNOW) {
+			fx_bg_snow(fx);
+		} else if(fx.get_type() == FX_BG_VORONOI_HEX) {
+			fx_bg_voronoi_hex(fx);
+		} else {
+			fx_bg_template(fx);
+		}
 	} else {
-		fx_bg_template(fx);
-	}    
+		printErrTempo(60,"method select_fx_background(): fx is",fx,"maybe fx need to be init or instantiate");
+	}
+	    
 }
 
 

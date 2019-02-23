@@ -19,7 +19,9 @@ void load_media() {
 	img_b = loadImage("medium_puros_girl.jpg");
 }
 
-int mode_shader = 1;
+// int mode_shader = 0; // POST FX on PGrahics > texture
+// int mode_shader = 1; // POST FX on G
+int mode_shader = 2; // FX BACKGROUND
 void setup() {
 	// if you change the shader/fx folder, utili in case you export your sketch, the shader folder is not exported.
 	// set_fx_path(sketchPath(2)+"/shader/fx/"); 

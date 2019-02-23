@@ -34,7 +34,7 @@ uniform float divs;
 uniform float sharpness;
 uniform int mode;
 
-const float tau = 6.28318530718;
+const float TAU = 6.28318530718;
 
 vec3 rgb2hsv(vec3 c)  {
   vec4 K = vec4(0.0, -1.0 / 3.0, 2.0 / 3.0, -1.0);
@@ -45,39 +45,39 @@ vec3 rgb2hsv(vec3 c)  {
   
   float d = q.x - min(q.w, q.y);
   float e = 1.0e-10;
-  return vec3(abs(q.z + (q.w - q.y) / (6.0 * d + e)), d / (q.x + e), q.x);
+  return vec3(abs(q.z +(q.w -q.y) /(6. *d +e)), d /(q.x +e), q.x);
 }
 
 vec3 hsv2rgb(vec3 c)  {
-  vec4 K = vec4(1.0, 2.0 / 3.0, 1.0 / 3.0, 3.0);
-  vec3 p = abs(fract(c.xxx + K.xyz) * 6.0 - K.www);
-  return c.z * mix(K.xxx, clamp(p - K.xxx, 0.0, 1.0), c.y);
+  vec4 K = vec4(1., 2. /3., 1. /3., 3.);
+  vec3 p = abs(fract(c.xxx +K.xyz) *6. -K.www);
+  return c.z * mix(K.xxx, clamp(p -K.xxx, 0., 1.), c.y);
 }
 
 float halftone_dot(vec2 uv, vec2 res, float ang, float sca, vec2 cent) {
-  float s = sin( ang * tau ), c = cos( ang * tau );
-  vec2 tex = uv * res - cent * res;
-  vec2 point = vec2( c * tex.x - s * tex.y, s * tex.x + c * tex.y ) * max(sca,0.001);
-  return ( sin( point.x ) * sin( point.y ) ) * 4.0;
+  float s = sin(ang *TAU), c = cos(ang *TAU);
+  vec2 tex = uv *res -cent *res;
+  vec2 point = vec2(c *tex.x -s *tex.y, s *tex.x +c *tex.y) *max(sca,.001);
+  return (sin(point.x) *sin( point.y)) *4.;
 }
 
 float halftone_circle(vec2 uv, vec2 res, float ang, float sca, vec2 cent) {
-  float s = 0.0;
-  float c = 1.0;
-  vec2 tex = uv * res;
-  vec2 point = vec2( c * tex.x - s * tex.y, s * tex.x + c * tex.y );
-  float d = distance(point, cent * res) * max(sca,0.001);
-  return ( sin(d + ang * tau) ) * 4.0;
+  float s = 0.;
+  float c = 1.;
+  vec2 tex = uv *res;
+  vec2 point = vec2(c *tex.x -s *tex.y, s *tex.x +c *tex.y);
+  float d = distance(point,cent *res) *max(sca,.001);
+  return (sin(d +ang *TAU) ) *4.;
 }
 
 float halftone_line(vec2 uv, vec2 res, float ang, float sca, vec2 cent) {
-  float s = sin(tau * ang * 0.5);
-  float c = cos(tau * ang * 0.5);
+  float s = sin(TAU *ang *.5);
+  float c = cos(TAU *ang *.5);
   vec2 tex = uv * res;
-  vec2 point = vec2( c * tex.x - s * tex.y, s * tex.x + c * tex.y ) * max(sca,0.001);
+  vec2 point = vec2( c *tex.x -s *tex.y, s *tex.x + c *tex.y ) * max(sca,.001);
   float d = point.y;
 
-  return ( cent.x + sin(d + cent.y * tau) ) * 4.0;
+  return ( cent.x +sin(d +cent.y * TAU)) *4.;
 }
 
 

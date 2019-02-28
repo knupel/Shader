@@ -558,32 +558,21 @@ PGraphics fx_colour_change_b(PImage source, boolean on_g, float angle, float str
 
 /**
 * Dither
-* v 0.1.2
+* v 0.2.0
 * 2018-2019
 */
 
 // setting by class FX
 PGraphics fx_dither(PImage source, PImage layer, FX fx) {
-	return fx_dither(source,layer,fx.on_g());	
+	return fx_dither(source,layer,fx.on_g(),vec3(fx.get_level_source()),fx.get_mode());	
 }
-
-
-
-
-// test
-/*
-// cannot use : cause loop error because it's a same function that a main one
-PGraphics fx_dither(PImage source, PImage layer, boolean on_g) {
-	return fx_dither(source,layer,on_g);
-}
-*/
 
 
 
 // main
 PShader fx_dither;
 PGraphics result_dither;
-PGraphics fx_dither(PImage source, PImage layer, boolean on_g) {
+PGraphics fx_dither(PImage source, PImage layer, boolean on_g, vec3 level, int mode) {
 	if(!on_g && (result_dither == null 
 								|| (source.width != result_dither.width 
 								&& source.height != result_dither.height))) {
@@ -603,6 +592,11 @@ PGraphics fx_dither(PImage source, PImage layer, boolean on_g) {
 		fx_dither.set("texture_layer",layer);
 		fx_dither.set("resolution_source",source.width,source.height);
 		fx_dither.set("resolution_layer",layer.width,layer.height);
+
+		// external parameter
+		level = map(level,0,1,.05,1.50);
+    fx_dither.set("level_source",level.x,level.y,level.z);
+    fx_dither.set("mode",mode); // mode 0 : gray / 1 is rgb
 
     // rendering
 		render_shader(fx_dither,result_dither,source,on_g);

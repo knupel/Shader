@@ -130,6 +130,19 @@ void setting_colour_change_b(ArrayList<FX> fx_list) {
 String set_dither = "dither";
 void setting_dither(ArrayList<FX> fx_list) {
   init_fx(fx_list,set_dither,FX_DITHER);
+
+  if(keyPressed) {
+    fx_set_mode(fx_list,set_dither,1); // rgb dither
+  } else {
+    fx_set_mode(fx_list,set_dither,0); // gray dither
+  }
+
+  if(mousePressed) {
+    float level_x = map(mouseX,0,width,0,1); // for gray and rgb model
+    float level_y = abs(sin(frameCount*.01)); // for the rgb model
+    float level_z = abs(sin(frameCount*.004)); // for the rgb model
+    fx_set_level_source(fx_list,set_dither,level_x,level_y,level_z);
+  }
 }
 
 

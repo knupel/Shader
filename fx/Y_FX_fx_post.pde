@@ -2,7 +2,7 @@
 * POST FX shader collection
 *
 * 2019-2019
-* v 0.1.7
+* v 0.1.9
 * all filter bellow has been tested.
 * @see http://stanlepunk.xyz
 * @see https://github.com/StanLepunK/Shader
@@ -392,9 +392,6 @@ PGraphics fx_blur_radial(PImage source, boolean on_g, vec2 pos, float strength, 
 
 /**
 * Colour change A by Stan le punk
-
-* @see http://stanlepunk.xyz
-* @see https://github.com/StanLepunK/Filter
 v 0.2.2
 2018-2019
 */
@@ -788,7 +785,6 @@ PGraphics fx_grain_scatter(PImage source, boolean on_g,float strength) {
 * v 0.0.5
 * 2018-2019
 */
-
 // setting by class FX
 PGraphics fx_halftone_dot(PImage source, FX fx) {
 	vec2 pos = vec2(source.width/2,source.height/2);
@@ -888,8 +884,6 @@ PGraphics fx_halftone_dot(PImage source, boolean on_g, vec2 pos, float size, flo
 * v 0.0.7
 * 2018-2019
 */
-
-
 // use setting
 PGraphics fx_halftone_line(PImage source, FX fx) {
 	vec2 pos = vec2(source.width/2,source.height/2);
@@ -1265,8 +1259,6 @@ PGraphics fx_mix(PImage source, PImage layer, boolean on_g, int mode, vec3 level
 * v 0.0.5
 * 2018-2019
 */
-
-
 // setting by class FX
 PGraphics fx_pixel(PImage source, FX fx) {
 	ivec2 size = ivec2(5);
@@ -1350,8 +1342,6 @@ PGraphics fx_pixel(PImage source, boolean on_g, ivec2 size, int num, vec3 level_
 
 /**
 * Reaction diffusion
-* @see http://stanlepunk.xyz
-* @see https://github.com/StanLepunK/Filter
 * v 0.0.4
 * 2018-2019
 */
@@ -1554,14 +1544,10 @@ PGraphics fx_reaction_diffusion(PImage source, boolean on_g, vec2 conc_uv, vec2 
 
 
 /**
-* Scale line by Stan le punk
-* @see http://stanlepunk.xyz
-* @see https://github.com/StanLepunK/Filter
+* Scale line
 * v 0.0.5
 * 2018-2019
 */
-
-
 PGraphics fx_scale(PImage source, FX fx) {
 	ivec2 res = ivec2(source.width/2, source.height/2);
 	if(fx.get_resolution() != null) {
@@ -1645,8 +1631,6 @@ PGraphics fx_scale(PImage source, boolean on_g, ivec2 resolution) {
 
 /**
 * split rgb
-* @see http://stanlepunk.xyz
-* @see https://github.com/StanLepunK/Filter
 * v 0.0.6
 * 2019-2019
 */
@@ -1780,28 +1764,21 @@ PGraphics fx_warp_proc(PImage source, boolean on_g, float strength) {
 
 
 /**
-* warp texture 
-* v 0.2.0
+* warp texture type A
+* v 0.2.1
 * 2018-2019
 */
 // use setting
-PGraphics fx_warp_tex(PImage source, PImage velocity, PImage direction, FX fx) {
-	return fx_warp_tex(source,velocity,direction,fx.on_g(),fx.get_mode(),fx.get_strength().x);
+PGraphics fx_warp_tex_a(PImage source, PImage velocity, PImage direction, FX fx) {
+	return fx_warp_tex_a(source,velocity,direction,fx.on_g(),fx.get_mode(),fx.get_strength().x);
 }
 
-
-// test
-PGraphics fx_warp_tex(PImage source, boolean on_g) {
-	float strength = map(mouseX,0,width,-1,1);
-	int mode = 0; // 0 show warp, 500 velocity, 501 direction
-	return fx_warp_tex(source,null,null,on_g,mode,strength);
-}
 
 
 // main
-PShader fx_warp_tex;
-PGraphics result_warp_tex;
-PGraphics fx_warp_tex(PImage source, PImage velocity, PImage direction, boolean on_g, int mode, float strength) {
+PShader fx_warp_tex_a;
+PGraphics pg_warp_tex_a;
+PGraphics fx_warp_tex_a(PImage source, PImage velocity, PImage direction, boolean on_g, int mode, float strength) {
 	if(!on_g && (result_warp_proc == null 
 								|| (source.width != result_warp_proc.width 
 								&& source.height != result_warp_proc.height))) {
@@ -1809,33 +1786,32 @@ PGraphics fx_warp_tex(PImage source, PImage velocity, PImage direction, boolean 
 	}
   
 
-	if(fx_warp_tex == null) {
-		String path = get_fx_post_path()+"warp_tex.glsl";
+	if(fx_warp_tex_a == null) {
+		String path = get_fx_post_path()+"warp_tex_a.glsl";
 		if(fx_post_rope_path_exists) {
-			fx_warp_tex = loadShader(path);
+			fx_warp_tex_a = loadShader(path);
 			println("load shader:",path);
 		}
 	} else {
-		if(on_g) set_shader_flip(fx_warp_tex,source);
-		fx_warp_tex.set("texture_source",source);
-		fx_warp_tex.set("resolution_source",source.width,source.height);
+		if(on_g) set_shader_flip(fx_warp_tex_a,source);
+		fx_warp_tex_a.set("texture_source",source);
+		fx_warp_tex_a.set("resolution_source",source.width,source.height);
 
 		
 		// external parameter
 		// warp sources
 		if(direction != null) {
-			fx_warp_tex.set("texture_direction",direction);
+			fx_warp_tex_a.set("texture_direction",direction);
 		}
 		if(velocity != null) {
-			fx_warp_tex.set("texture_velocity",velocity);
+			fx_warp_tex_a.set("texture_velocity",velocity);
 		}
 		//setting external param
-		fx_warp_tex.set("strength",strength); // good for normal value 0 > 1
-		fx_warp_tex.set("mode",mode); // mode 0 > show warp / mode 500 show texture velocity / mode 501 show texture direction
-
+		fx_warp_tex_a.set("strength",strength); // good for normal value 0 > 1
+		fx_warp_tex_a.set("mode",mode); // mode 0 > show warp / mode 500 show texture velocity / mode 501 show texture direction
 
 		// rendering
-		render_shader(fx_warp_tex,result_warp_tex,source,on_g);
+		render_shader(fx_warp_tex_a,pg_warp_tex_a,source,on_g);
 	}
 
 	// return
@@ -1843,7 +1819,67 @@ PGraphics fx_warp_tex(PImage source, PImage velocity, PImage direction, boolean 
 	if(on_g) {
 		return null;
 	} else {
-		return result_warp_tex; 
+		return pg_warp_tex_a; 
+	}
+}
+
+
+
+
+
+
+
+
+/**
+* warp texture type B
+* v 0.0.1
+* 2019-2019
+*/
+
+// use setting
+PGraphics fx_warp_tex_b(PImage source, PImage layer, FX fx) {
+	return fx_warp_tex_b(source,layer,fx.on_g(),fx.get_strength().x);
+}
+
+
+
+
+// main
+PShader fx_warp_tex_b;
+PGraphics pg_warp_tex_b;
+PGraphics fx_warp_tex_b(PImage source, PImage layer, boolean on_g,float strength) {
+	if(!on_g && (pg_warp_tex_b == null 
+								|| (source.width != pg_warp_tex_b.width 
+								&& source.height != pg_warp_tex_b.height))) {
+		pg_warp_tex_b = createGraphics(source.width,source.height,get_renderer());
+	}
+
+	if(fx_warp_tex_b == null) {
+		String path = get_fx_post_path()+"warp_tex_b.glsl";
+		if(fx_post_rope_path_exists) {
+			fx_warp_tex_b = loadShader(path);
+			println("load shader:",path);
+		}
+	} else {
+    if(on_g) set_shader_flip(fx_warp_tex_b,source);
+		fx_warp_tex_b.set("texture_source",source);
+		fx_warp_tex_b.set("resolution_source",source.width,source.height);
+		fx_warp_tex_b.set("texture_layer",layer);
+		fx_warp_tex_b.set("resolution_layer",layer.width,layer.height);
+
+		// external param
+		fx_warp_tex_b.set("strength",strength);
+
+		 // rendering
+    render_shader(fx_warp_tex_b,pg_warp_tex_b,source,on_g);
+	}
+
+	// end
+	reset_reverse_g(false);
+	if(on_g) {
+		return null;
+	} else {
+		return pg_warp_tex_b; 
 	}
 }
 

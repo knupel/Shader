@@ -1,10 +1,20 @@
 /**
-* warp texture by Stan le Punk 
-* @see https://github.com/StanLepunK/Filter
+* FX framework by Stan le Punk 
+* the framework attempt to use a collection of shader FX for background or POST FX
+* by class FX to manage and set all shaders.
+
+* You can use easily the class and method FX without the framework part, just use the tab start by Y_ and Z_ and make your own shader world.
+* @see https://github.com/StanLepunK/Shader
 * v 0.0.6
 * 2018-2019
-* collection of shader filter and example to use easily
-* Enjoy, share, copy, paste and blahblah
+* This little framework use Rope Library and Rope framework.
+* More about Rope Library 
+* @see https://github.com/StanLepunK/Rope
+* More about Rope framework
+* @see https://github.com/StanLepunK/Rope_method
+
+* 
+* Enjoy, share, copy, paste, improve and blahblah
 * Processing 3.5.3
 */
 PGraphics render;
@@ -20,8 +30,9 @@ void load_media() {
 }
 
 // int mode_shader = 0; // POST FX on PGrahics > texture
-// int mode_shader = 1; // POST FX on G
-int mode_shader = 2; // FX BACKGROUND
+int mode_shader = 1; // POST FX on G
+// int mode_shader = 2; // FX BACKGROUND
+
 void setup() {
 	// if you change the shader/fx folder, utili in case you export your sketch, the shader folder is not exported.
 	// set_fx_path(sketchPath(2)+"/shader/fx/"); 

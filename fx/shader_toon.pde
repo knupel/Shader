@@ -1,7 +1,7 @@
 /**
 * TOON by Stan le punk
 * @see http://stanlepunk.xyz
-* @see https://github.com/StanLepunK/Filter
+* @see https://github.com/StanLepunK/Shader
 * v 0.0.6
 * 2018-2019
 */

@@ -39,8 +39,11 @@ int FX_SPLIT_RGB = 19_50;
 
 int FX_TOON = 20_00; // don't work
 
-int FX_WARP_TEX = 23_00;
-int FX_WARP_PROC = 23_01;
+
+int FX_WARP_PROC = 23_00;
+
+int FX_WARP_TEX_A = 23_10;
+int FX_WARP_TEX_B = 23_11;
 
 
 // CONSTANT FX BACKGROUND
@@ -176,8 +179,10 @@ void select_fx_post(PImage main, PImage layer_a, PImage layer_b, FX... fx) {
 				fx_scale(main,fx[i]);
 			} else if(fx[i].get_type() == FX_WARP_PROC) {
 				fx_warp_proc(main,fx[i]); 
-			} else if(fx[i].get_type() == FX_WARP_TEX) {
-				fx_warp_tex(main,layer_a,layer_b,fx[i]); 
+			} else if(fx[i].get_type() == FX_WARP_TEX_A) {
+				fx_warp_tex_a(main,layer_a,layer_b,fx[i]); 
+			} else if(fx[i].get_type() == FX_WARP_TEX_B) {
+				fx_warp_tex_b(main,layer_a,fx[i]); 
 			} else {
 				printErrTempo(60,"method select_fx_post(): fx",fx[i].get_name(),fx[i].get_type(),"don't match with any fx available");
 			}

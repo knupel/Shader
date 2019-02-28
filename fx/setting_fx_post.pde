@@ -34,7 +34,8 @@ void setting_fx_post(ArrayList<FX> fx_list) {
   setting_split(fx_list);
 
   setting_warp_proc(fx_list);
-  setting_warp_tex(fx_list);
+  setting_warp_tex_a(fx_list);
+  setting_warp_tex_b(fx_list);
 }
 
 
@@ -401,12 +402,26 @@ void setting_warp_proc(ArrayList<FX> fx_list) {
 }
 
 
-String set_warp_tex = "warp textural";
-void setting_warp_tex(ArrayList<FX> fx_list) {
-  init_fx(fx_list,set_warp_tex,FX_WARP_TEX);
-  fx_set_mode(fx_list,set_warp_tex,0);
+String set_warp_tex_a = "warp textural A";
+void setting_warp_tex_a(ArrayList<FX> fx_list) {
+  init_fx(fx_list,set_warp_tex_a,FX_WARP_TEX_A);
+  fx_set_mode(fx_list,set_warp_tex_a,0);
   if(mousePressed) {
-    fx_set_strength(fx_list,set_warp_tex,map(mouseX,0,width,-1,1));
+    fx_set_strength(fx_list,set_warp_tex_a,map(mouseX,0,width,-1,1));
+  }
+}
+
+
+
+
+
+String set_warp_tex_b = "warp textural B";
+void setting_warp_tex_b(ArrayList<FX> fx_list) {
+  init_fx(fx_list,set_warp_tex_b,FX_WARP_TEX_B);
+  
+  if(mousePressed) {
+    float strength = map(mouseX,0,width,-.2,.2);
+    fx_set_strength(fx_list,set_warp_tex_b,strength);
   }
 }
 

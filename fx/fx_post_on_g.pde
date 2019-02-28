@@ -67,7 +67,7 @@ void filter_g(PImage img_1, PImage img_2, PImage pattern_1, PImage pattern_2) {
 
 		// select_fx_post(g,null,null,get_fx(fx_manager,set_halftone_dot));
 		// select_fx_post(g,null,null,get_fx(fx_manager,set_halftone_line));
-		select_fx_post(g,null,null,get_fx(fx_manager,set_halftone_multi));
+		//select_fx_post(g,null,null,get_fx(fx_manager,set_halftone_multi));
 
 
 		// select_fx_post(g,null,null,get_fx(fx_manager,set_level));
@@ -83,7 +83,9 @@ void filter_g(PImage img_1, PImage img_2, PImage pattern_1, PImage pattern_2) {
     
     // select_fx_post(g,img_1,img_1,get_fx(fx_manager,set_warp_tex)); 
 		// select_fx_post(g,noise_nb,noise_nb,get_fx(fx_manager,set_warp_tex)); 
-		// select_fx_post(g,pattern_1,pattern_2,get_fx(fx_manager,set_warp_tex)); 
+		//select_fx_post(g,pattern_1,pattern_2,get_fx(fx_manager,set_warp_tex_a)); 
+		select_fx_post(g,g,null,get_fx(fx_manager,set_warp_tex_b)); 
+		//select_fx_post(g,pattern_1,null,get_fx(fx_manager,set_watercolor)); 
 		
 		// select_fx_post(g,g,get_fx(fx_manager,set_scale));
 	

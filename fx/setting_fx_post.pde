@@ -12,7 +12,7 @@ void setting_fx_post(ArrayList<FX> fx_list) {
   setting_colour_change_a(fx_list);
   setting_colour_change_b(fx_list);
 
-  setting_dither(fx_list);
+  setting_dither_bayer_8(fx_list);
 
   setting_grain(fx_list);
   setting_grain_scatter(fx_list);
@@ -32,6 +32,8 @@ void setting_fx_post(ArrayList<FX> fx_list) {
   setting_scale(fx_list);
 
   setting_split(fx_list);
+
+  setting_threshold(fx_list);
 
   setting_warp_proc(fx_list);
   setting_warp_tex_a(fx_list);
@@ -91,6 +93,13 @@ void setting_blur_radial(ArrayList<FX> fx_list) {
 }
 
 
+
+
+
+
+
+
+
 // colour change
 String set_colour_change_a = "colour change A";
 void setting_colour_change_a(ArrayList<FX> fx_list) {
@@ -126,24 +135,39 @@ void setting_colour_change_b(ArrayList<FX> fx_list) {
 }
 
 
-// dither
-String set_dither = "dither";
-void setting_dither(ArrayList<FX> fx_list) {
-  init_fx(fx_list,set_dither,FX_DITHER);
+
+
+
+
+
+
+// dither bayer 8
+String set_dither_bayer_8 = "dither bayer 8";
+void setting_dither_bayer_8(ArrayList<FX> fx_list) {
+  init_fx(fx_list,set_dither_bayer_8,FX_DITHER_BAYER_8);
 
   if(keyPressed) {
-    fx_set_mode(fx_list,set_dither,1); // rgb dither
+    fx_set_mode(fx_list,set_dither_bayer_8,0); // gray dither
   } else {
-    fx_set_mode(fx_list,set_dither,0); // gray dither
+    fx_set_mode(fx_list,set_dither_bayer_8,1); // rgb dither
   }
 
   if(mousePressed) {
-    float level_x = map(mouseX,0,width,0,1); // for gray and rgb model
-    float level_y = abs(sin(frameCount*.01)); // for the rgb model
-    float level_z = abs(sin(frameCount*.004)); // for the rgb model
-    fx_set_level_source(fx_list,set_dither,level_x,level_y,level_z);
+    float level_x = abs(sin(frameCount*.002)); // for gray and rgb model
+    float level_y = abs(sin(frameCount*.001)); // for the rgb model
+    float level_z = abs(sin(frameCount*.005)); // for the rgb model
+    fx_set_level_source(fx_list,set_dither_bayer_8,level_x,level_y,level_z);
   }
 }
+
+
+
+
+
+
+
+
+
 
 
 // grain
@@ -157,6 +181,11 @@ void setting_grain(ArrayList<FX> fx_list) {
  
 }
 
+
+
+
+
+
 // grain scatter
 String set_grain_scatter = "grain scatter";
 void setting_grain_scatter(ArrayList<FX> fx_list) {
@@ -166,6 +195,10 @@ void setting_grain_scatter(ArrayList<FX> fx_list) {
     fx_set_strength(fx_list,set_grain_scatter,strength);
   }
 }
+
+
+
+
 
 
 // halftone dot
@@ -400,6 +433,27 @@ void setting_split(ArrayList<FX> fx_list) {
     fx_set_pair(fx_list,set_split,0,offset_red.array());
     fx_set_pair(fx_list,set_split,1,offset_green.array());
     fx_set_pair(fx_list,set_split,2,offset_blue.array());
+  }
+}
+
+
+
+// dither
+String set_threshold = "threshold";
+void setting_threshold(ArrayList<FX> fx_list) {
+  init_fx(fx_list,set_threshold,FX_THRESHOLD);
+
+  if(keyPressed) {
+    fx_set_mode(fx_list,set_threshold,1); // rgb threshold
+  } else {
+    fx_set_mode(fx_list,set_threshold,0); // gray threshold
+  }
+
+  if(mousePressed) {
+    float level_x = map(mouseX,0,width,0,1); // for gray and rgb model
+    float level_y = abs(sin(frameCount*.01)); // for the rgb model
+    float level_z = abs(sin(frameCount*.004)); // for the rgb model
+    fx_set_level_source(fx_list,set_threshold,level_x,level_y,level_z);
   }
 }
 

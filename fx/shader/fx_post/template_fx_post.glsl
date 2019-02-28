@@ -15,7 +15,8 @@ varying vec4 vertTexCoord;
 uniform vec2 resolution; // WARNING VERY IMPORTANT // need this name for unknow reason :( here your pass your resolution texture
 // vec2 texOffset   = vec2(1) / resolution; // only work with uniform resolution
 
-// Rope implementationuniform sampler2D texture_source;
+// Rope implementation
+uniform sampler2D texture_source;
 uniform vec2 resolution_source;
 uniform bvec2 flip_source; // can be use to flip texture source
 uniform vec4 level_source;

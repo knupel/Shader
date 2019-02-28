@@ -557,49 +557,50 @@ PGraphics fx_colour_change_b(PImage source, boolean on_g, float angle, float str
 
 
 /**
-* Dither
+* Dither bayer 8
 * v 0.2.0
 * 2018-2019
 */
 
 // setting by class FX
-PGraphics fx_dither(PImage source, PImage layer, FX fx) {
-	return fx_dither(source,layer,fx.on_g(),vec3(fx.get_level_source()),fx.get_mode());	
+PGraphics fx_dither_bayer_8(PImage source, FX fx) {
+	return fx_dither_bayer_8(source,fx.on_g(),vec3(fx.get_level_source()),fx.get_mode());	
 }
 
 
 
 // main
-PShader fx_dither;
-PGraphics result_dither;
-PGraphics fx_dither(PImage source, PImage layer, boolean on_g, vec3 level, int mode) {
-	if(!on_g && (result_dither == null 
-								|| (source.width != result_dither.width 
-								&& source.height != result_dither.height))) {
-		result_dither = createGraphics(source.width,source.height,get_renderer());
+PShader fx_dither_bayer_8;
+PGraphics pg_dither_bayer_8;
+PGraphics fx_dither_bayer_8(PImage source, boolean on_g, vec3 level, int mode) {
+	if(!on_g && (pg_dither_bayer_8 == null 
+								|| (source.width != pg_dither_bayer_8.width 
+								&& source.height != pg_dither_bayer_8.height))) {
+		pg_dither_bayer_8 = createGraphics(source.width,source.height,get_renderer());
 	}
 
 	
-	if(fx_dither == null) {
-		String path = get_fx_post_path()+"dither.glsl";
+	if(fx_dither_bayer_8 == null) {
+		String path = get_fx_post_path()+"dither_bayer_8.glsl";
 		if(fx_post_rope_path_exists) {
-			fx_dither = loadShader(path);
+			fx_dither_bayer_8 = loadShader(path);
 			println("load shader:",path);
 		}
 	} else {
-		if(on_g) set_shader_flip(fx_dither,source,layer);
-		fx_dither.set("texture_source",source);
-		fx_dither.set("texture_layer",layer);
-		fx_dither.set("resolution_source",source.width,source.height);
-		fx_dither.set("resolution_layer",layer.width,layer.height);
+		if(on_g) set_shader_flip(fx_dither_bayer_8,source);
+		fx_dither_bayer_8.set("texture_source",source);
+		fx_dither_bayer_8.set("resolution_source",source.width,source.height);
+
 
 		// external parameter
-		level = map(level,0,1,.05,1.50);
-    fx_dither.set("level_source",level.x,level.y,level.z);
-    fx_dither.set("mode",mode); // mode 0 : gray / 1 is rgb
+		
+		// level = map(level,0,1,-.5,1.50);
+		println(level);
+    fx_dither_bayer_8.set("level_source",level.x,level.y,level.z);
+    fx_dither_bayer_8.set("mode",mode); // mode 0 : gray / 1 is rgb
 
     // rendering
-		render_shader(fx_dither,result_dither,source,on_g);
+		render_shader(fx_dither_bayer_8,pg_dither_bayer_8,source,on_g);
 	}
 
 	// return
@@ -607,9 +608,10 @@ PGraphics fx_dither(PImage source, PImage layer, boolean on_g, vec3 level, int m
 	if(on_g) {
 		return null;
 	} else {
-		return result_dither; 
+		return pg_dither_bayer_8; 
 	}
 }
+
 
 
 
@@ -1692,6 +1694,69 @@ PGraphics fx_split_rgb(PImage source, boolean on_g, vec2 offset_red, vec2 offset
 
 
 
+/**
+* Threshold
+* v 0.2.0
+* 2018-2019
+*/
+// setting by class FX
+PGraphics fx_threshold(PImage source, FX fx) {
+	return fx_threshold(source,fx.on_g(),vec3(fx.get_level_source()),fx.get_mode());	
+}
+
+
+// main
+PShader fx_threshold;
+PGraphics pg_threshold;
+PGraphics fx_threshold(PImage source, boolean on_g, vec3 level, int mode) {
+	if(!on_g && (pg_threshold == null 
+								|| (source.width != pg_threshold.width 
+								&& source.height != pg_threshold.height))) {
+		pg_threshold = createGraphics(source.width,source.height,get_renderer());
+	}
+
+	
+	if(fx_threshold == null) {
+		String path = get_fx_post_path()+"threshold.glsl";
+		if(fx_post_rope_path_exists) {
+			fx_threshold = loadShader(path);
+			println("load shader:",path);
+		}
+	} else {
+		if(on_g) set_shader_flip(fx_threshold,source);
+		fx_threshold.set("texture_source",source);
+		fx_threshold.set("resolution_source",source.width,source.height);
+
+		// external parameter
+		level = map(level,0,1,.05,1.50);
+    fx_threshold.set("level_source",level.x,level.y,level.z);
+    fx_threshold.set("mode",mode); // mode 0 : gray / 1 is rgb
+
+    // rendering
+		render_shader(fx_threshold,pg_threshold,source,on_g);
+	}
+
+	// return
+	reset_reverse_g(false);
+	if(on_g) {
+		return null;
+	} else {
+		return pg_threshold; 
+	}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -1829,7 +1894,6 @@ PGraphics fx_warp_tex_a(PImage source, PImage velocity, PImage direction, boolea
 * v 0.0.1
 * 2019-2019
 */
-
 // use setting
 PGraphics fx_warp_tex_b(PImage source, PImage layer, FX fx) {
 	return fx_warp_tex_b(source,layer,fx.on_g(),fx.get_strength().x);
@@ -1855,7 +1919,7 @@ PGraphics fx_warp_tex_b(PImage source, PImage layer, boolean on_g,float strength
 			println("load shader:",path);
 		}
 	} else {
-    if(on_g) set_shader_flip(fx_warp_tex_b,source);
+    if(on_g) set_shader_flip(fx_warp_tex_b,source,layer);
 		fx_warp_tex_b.set("texture_source",source);
 		fx_warp_tex_b.set("resolution_source",source.width,source.height);
 		fx_warp_tex_b.set("texture_layer",layer);

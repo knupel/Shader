@@ -61,7 +61,7 @@ void filter_g(PImage img_1, PImage img_2, PImage pattern_1, PImage pattern_2) {
 		// select_fx_post(g,null,null,get_fx(fx_manager,set_colour_change_a));
 		// select_fx_post(g,null,null,get_fx(fx_manager,set_colour_change_b));
 		
-		select_fx_post(g,g,null,get_fx(fx_manager,set_dither));
+		select_fx_post(g,null,null,get_fx(fx_manager,set_dither_bayer_8));
 		// select_fx_post(g,null,null,get_fx(fx_manager,set_grain));
 		// select_fx_post(g,null,null,get_fx(fx_manager,set_grain_scatter));
 
@@ -79,12 +79,14 @@ void filter_g(PImage img_1, PImage img_2, PImage pattern_1, PImage pattern_2) {
 		// select_fx_post(g,null,null,get_fx(fx_manager,set_reac_diff));
 		// select_fx_post(g,null,null,get_fx(fx_manager,set_split));
 
+		// select_fx_post(g,g,null,get_fx(fx_manager,set_threshold));
+
 		// select_fx_post(g,null,null,get_fx(fx_manager,set_warp_proc));
     
     // select_fx_post(g,img_1,img_1,get_fx(fx_manager,set_warp_tex)); 
 		// select_fx_post(g,noise_nb,noise_nb,get_fx(fx_manager,set_warp_tex)); 
 		//select_fx_post(g,pattern_1,pattern_2,get_fx(fx_manager,set_warp_tex_a)); 
-		//select_fx_post(g,g,null,get_fx(fx_manager,set_warp_tex_b)); 
+		// select_fx_post(g,g,null,get_fx(fx_manager,set_warp_tex_b)); 
 		//select_fx_post(g,pattern_1,null,get_fx(fx_manager,set_watercolor)); 
 		
 		// select_fx_post(g,g,get_fx(fx_manager,set_scale));

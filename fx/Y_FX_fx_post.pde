@@ -593,9 +593,6 @@ PGraphics fx_dither_bayer_8(PImage source, boolean on_g, vec3 level, int mode) {
 
 
 		// external parameter
-		
-		// level = map(level,0,1,-.5,1.50);
-		println(level);
     fx_dither_bayer_8.set("level_source",level.x,level.y,level.z);
     fx_dither_bayer_8.set("mode",mode); // mode 0 : gray / 1 is rgb
 

@@ -444,9 +444,9 @@ void setting_threshold(ArrayList<FX> fx_list) {
   init_fx(fx_list,set_threshold,FX_THRESHOLD);
 
   if(keyPressed) {
-    fx_set_mode(fx_list,set_threshold,1); // rgb threshold
-  } else {
     fx_set_mode(fx_list,set_threshold,0); // gray threshold
+  } else {
+    fx_set_mode(fx_list,set_threshold,1); // rgb threshold
   }
 
   if(mousePressed) {

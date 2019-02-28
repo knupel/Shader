@@ -46,6 +46,8 @@ movie pause `SPACE`
 ![change colour B](https://github.com/StanLepunK/Shader/blob/master/img_link/IM%20184806.jpg)
 ![change colour A](https://github.com/StanLepunK/Shader/blob/master/img_link/IM%20184807.jpg)
 ![reaction diffusion](https://github.com/StanLepunK/Shader/blob/master/img_link/IM%20184808.jpg)
+![dither bayer 8](https://github.com/StanLepunK/Shader/blob/master/img_link/IM%20184810.jpg)
+![threshold](https://github.com/StanLepunK/Shader/blob/master/img_link/IM%20184811.jpg)
 ![cellular](https://github.com/StanLepunK/Shader/blob/master/img_link/IM%20185809.jpg)
 ![heart](https://github.com/StanLepunK/Shader/blob/master/img_link/IM%20185810.jpg)
 ![voronoi hex](https://github.com/StanLepunK/Shader/blob/master/img_link/IM%20185811.jpg)

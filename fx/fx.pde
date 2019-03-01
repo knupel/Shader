@@ -62,13 +62,24 @@ void draw() {
 	} else if(mode_shader == 2) {
 		setting_fx_bg(fx_bg_manager);
 		draw_fx_bg();
-
 	}
+	other_stuff();
 
 	remote_command_movie();
 	reset(false);
-	
 }
+
+
+
+float rot_x; 
+float rot_y;
+void other_stuff() {
+	translate(width/2,height/2);
+	rotateX(rot_x += .01);
+	rotateY(rot_y += .02);
+	box(600,100,100);
+}
+
 
 
 

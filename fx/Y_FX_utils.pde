@@ -2,7 +2,7 @@
 * SHADER FX
 * @see http://stanlepunk.xyz
 * @see https://github.com/StanLepunK/Shader
-* v 0.7.1
+* v 0.7.2
 * 2019-2019
 *
 */
@@ -26,6 +26,8 @@ int FX_HALFTONE_DOT = 800;
 int FX_HALFTONE_LINE = 801;
 int FX_HALFTONE_MULTI = 810;
 
+int FX_IMAGE = 900;
+
 int FX_LEVEL = 12_00;
 
 int FX_MIX = 13_00;
@@ -36,7 +38,6 @@ int FX_REAC_DIFF = 18_00;
 
 int FX_SCALE = 19_00;
 int FX_SPLIT_RGB = 19_50;
-
 
 int FX_THRESHOLD = 20_00; // don't work
 int FX_TOON = 20_20; // don't work
@@ -171,6 +172,8 @@ void select_fx_post(PImage main, PImage layer_a, PImage layer_b, FX... fx) {
 				fx_halftone_line(main,fx[i]); 
 			} else if(fx[i].get_type() == FX_HALFTONE_MULTI) {
 				fx_halftone_multi(main,fx[i]); 
+			} else if(fx[i].get_type() == FX_IMAGE) {
+				fx_image(main,fx[i]);
 			} else if(fx[i].get_type() == FX_PIXEL) {
 				fx_pixel(main,fx[i]);
 			} else if(fx[i].get_type() == FX_REAC_DIFF) {

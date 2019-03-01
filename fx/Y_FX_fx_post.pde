@@ -2,7 +2,7 @@
 * POST FX shader collection
 *
 * 2019-2019
-* v 0.1.9
+* v 0.1.10
 * all filter bellow has been tested.
 * @see http://stanlepunk.xyz
 * @see https://github.com/StanLepunK/Shader
@@ -23,12 +23,6 @@ PGraphics fx_template(PImage source, FX fx) {
 }
 
 
-// test setting
-PGraphics fx_template(PImage source, boolean on_g) {
-  vec4 level_source = abs(vec4().wave_sin(frameCount,.01,.02,.04,.05));
-  level_source.w(1);
-	return fx_template(source,on_g,level_source);
-}
 
 
 // main
@@ -1019,6 +1013,60 @@ PGraphics fx_halftone_multi(PImage source, boolean on_g, float size, float angle
 
 
 
+
+
+
+
+
+
+
+/**
+* IMAGE MAPPING
+* 
+*/
+// setting by class FX
+PGraphics fx_image(PImage source, FX fx) {
+	return fx_image(source,fx.on_g(),fx.get_level_source());
+}
+
+
+// main
+PShader fx_image;
+PGraphics pg_image_rendering;
+PGraphics fx_image(PImage source, boolean on_g, vec4 level_source) {
+	if(!on_g && (pg_image_rendering == null 
+								|| (source.width != pg_image_rendering.width 
+								&& source.height != pg_image_rendering.height))) {
+		pg_image_rendering = createGraphics(source.width,source.height,get_renderer());
+	}
+
+	if(fx_image == null) {
+		String path = get_fx_post_path()+"image.glsl";
+		if(fx_post_rope_path_exists) {
+			fx_image = loadShader(path);
+			println("load shader: image.glsl");
+		}
+		println("load shader:",path);
+	} else {
+		if(on_g) set_shader_flip(fx_image,source);
+		fx_image.set("texture_source",source);
+
+    // external parameter
+		fx_image.set("level_source",level_source.x,level_source.y,level_source.w,level_source.z); // value from 0 to 1
+
+    // rendering
+		render_shader(fx_image,pg_image_rendering,source,on_g);
+
+	}
+
+	// return
+	reset_reverse_g(false);
+	if(on_g) {
+		return null;
+	} else {
+		return pg_image_rendering; 
+	}
+}
 
 
 

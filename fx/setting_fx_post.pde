@@ -1,6 +1,6 @@
 /**
 * SETTING FX POST method
-* v 0.2.2
+* v 0.2.3
 * 2019-2019
 */
 
@@ -20,6 +20,8 @@ void setting_fx_post(ArrayList<FX> fx_list) {
   setting_haltone_dot(fx_list);
   setting_haltone_line(fx_list);
   setting_haltone_multi(fx_list);
+
+  setting_image_mapping(fx_list);
 
   setting_level(fx_list);
 
@@ -277,6 +279,25 @@ void setting_haltone_multi(ArrayList<FX> fx_list) {
     fx_set_saturation(fx_list,set_halftone_multi,saturation); // from 0 to 1
     // fx_set_pos(fx_list,set_halftone_multi,mouseX,mouseY);
     fx_set_mode(fx_list,set_halftone_multi,0); // from 0 to 2
+  }
+}
+
+
+
+
+
+
+
+
+// halftone dot
+String set_image_mapping = "image mapping";
+void setting_image_mapping(ArrayList<FX> fx_list) {
+  init_fx(fx_list,set_image_mapping,FX_IMAGE);
+
+  if(mousePressed) {
+    // fx_set_size(fx_list,set_image_mapping,(abs(sin(frameCount *.01))) *30 +1);
+    vec4 rgba = abs(vec4().wave_sin(frameCount,.01,.02,.03,.01));
+    //fx_set_level_source(fx_list,set_image_mapping,rgba);
   }
 }
 

@@ -36,9 +36,9 @@ void filter_g(PImage img_1, PImage img_2, PImage pattern_1, PImage pattern_2) {
 	
 	if((movie_input != null || img_input != null) && !window_change_is()) {
 		if(img_input != null) {
-			// image(img_input);
+			background(img_input,CENTER);
 		} else if(movie_input != null) {
-			// image(movie_input);
+			background(movie_input,CENTER);
 		}
 		
 		//select_filter(FX_HALFTONE_LINE);
@@ -68,10 +68,10 @@ void filter_g(PImage img_1, PImage img_2, PImage pattern_1, PImage pattern_2) {
 
 		// select_fx_post(g,null,null,get_fx(fx_manager,set_halftone_dot));
 		// select_fx_post(g,null,null,get_fx(fx_manager,set_halftone_line));
-		//select_fx_post(g,null,null,get_fx(fx_manager,set_halftone_multi));
+		// select_fx_post(g,null,null,get_fx(fx_manager,set_halftone_multi));
 
-		if(img_input != null ) select_fx_post(img_input,null,null,get_fx(fx_manager,set_image_mapping));
-		if(movie_input != null ) select_fx_post(movie_input,null,null,get_fx(fx_manager,set_image_mapping));
+		// if(img_input != null ) select_fx_post(img_input,null,null,get_fx(fx_manager,set_image_mapping));
+		//if(movie_input != null ) select_fx_post(movie_input,null,null,get_fx(fx_manager,set_image_mapping));
 
 		// select_fx_post(g,null,null,get_fx(fx_manager,set_level));
 
@@ -80,7 +80,7 @@ void filter_g(PImage img_1, PImage img_2, PImage pattern_1, PImage pattern_2) {
 		// select_fx_post(g,null,null,get_fx(fx_manager,set_pixel));
 
 		// select_fx_post(g,null,null,get_fx(fx_manager,set_reac_diff));
-		// select_fx_post(g,null,null,get_fx(fx_manager,set_split));
+		select_fx_post(g,null,null,get_fx(fx_manager,set_split));
 
 		// select_fx_post(g,g,null,get_fx(fx_manager,set_threshold));
 

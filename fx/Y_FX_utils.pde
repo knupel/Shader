@@ -543,7 +543,8 @@ boolean fx_post_path_exist() {
 
 String get_fx_post_path() {
 	if(fx_post_rope_path == null) {
-		fx_post_rope_path = sketchPath()+"/shader/fx_post/";
+		// fx_post_rope_path = "shader/fx_post/";
+		fx_post_rope_path = sketchPath()+"/data/shader/fx_post/";
 		File f = new File(fx_post_rope_path);
 		if(!f.exists()) {
 			printErrTempo(60,"get_fx_post_path()",fx_post_rope_path,"no folder found");
@@ -579,7 +580,8 @@ boolean fx_bg_path_exist() {
 
 String get_fx_bg_path() {
 	if(fx_bg_rope_path == null) {
-		fx_bg_rope_path = sketchPath()+"/shader/fx_bg/";
+		// fx_bg_rope_path = "shader/fx_bg/";
+		fx_bg_rope_path = sketchPath()+"/data/shader/fx_bg/";
 		File f = new File(fx_bg_rope_path);
 		if(!f.exists()) {
 			printErrTempo(60,"get_fx_bg_path()",fx_bg_rope_path,"no folder found");

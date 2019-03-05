@@ -1,10 +1,10 @@
 /**
 ROPE PROCESSING METHOD
-v 2.3.0
+v 2.3.1
 * Copyleft (c) 2014-2019
 * Stan le Punk > http://stanlepunk.xyz/
-* @author Stan le Punk
-* @see https://github.com/StanLepunK/Rope_method
+* @author @stanlepunk
+* @see https://github.com/StanLepunK/Rope_framework
 * Processing 3.5.3
 */
 
@@ -830,7 +830,7 @@ void start_matrix_3D(vec pos, vec3 dir_cart) {
     translate(p) ;
   } else {
     printErr("Error in void start_matrix_3D(), vec pos is not an instance of vec2 or vec3, the matrix don't translate your object") ;
-    exit() ;
+    // exit() ;
   }
   float radius = sqrt(dir.x * dir.x + dir.y * dir.y + dir.z * dir.z);
   float longitude = acos(dir.x / sqrt(dir.x * dir.x + dir.y * dir.y)) * (dir.y < 0 ? -1 : 1);
@@ -856,7 +856,7 @@ void start_matrix_3D(vec pos, vec2 dir_polar) {
     rotateXY(dir_polar);
   } else {
     printErr("Error in void start_matrix_3D(), vec pos is not an instance of vec2 or vec3, the matrix cannot be init") ;
-    exit() ;
+    // exit() ;
   }
 }
 
@@ -873,7 +873,7 @@ void start_matrix_2D(vec pos, float orientation) {
     rotate(orientation);
   } else {
     printErr("Error in void start_matrix_3D(), vec pos is not an instance of vec2 or vec3, the matrix cannot be init") ;
-    exit();
+    // exit();
   }
 }
 
@@ -2285,6 +2285,30 @@ void tint(float v1, float v2, float v3) {
   } else {
     g.tint(v1,v2,v3);
   }
+}
+
+void tint(ivec4 v) {
+  tint(v.x,v.y,v.z,v.w);
+}
+
+void tint(ivec3 v) {
+  tint(v.x,v.y,v.z,g.colorModeA);
+}
+
+void tint(ivec2 v) {
+  tint(v.x,v.x,v.x,v.y);
+}
+
+void tint(vec4 v) {
+  tint(v.x,v.y,v.z,v.w);
+}
+
+void tint(vec3 v) {
+  tint(v.x,v.y,v.z,g.colorModeA);
+}
+
+void tint(vec2 v) {
+  tint(v.x,v.x,v.x,v.y);
 }
 
 void tint(float v1, float v2, float v3, float alpha) {

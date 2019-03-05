@@ -1,6 +1,9 @@
 /**
 SHADER filter
+* DEPRECATED step by step
 v 0.6.0
+* @author @stanlepunk
+* @see https://github.com/StanLepunK/Rope_framework
 few method manipulate image with the shader to don't slower Processing
 part
 */

@@ -2,7 +2,7 @@
 * POST FX shader collection
 *
 * 2019-2019
-* v 0.1.11
+* v 0.1.13
 * all filter bellow has been tested.
 * @author @stanlepunk
 * @see https://github.com/StanLepunK/Shader
@@ -1223,7 +1223,7 @@ PGraphics fx_level(PImage source, boolean on_g, int mode, float... level) {
 
 /**
 * mix
-* v 0.0.4
+* v 0.0.6
 * 2019-2019
 *
 * -2 main
@@ -1300,9 +1300,15 @@ PGraphics fx_mix(PImage source, PImage layer, boolean on_g, int mode, vec3 level
 		fx_mix.set("texture_source",source);
 		fx_mix.set("resolution_source",source.width,source.height);
 		fx_mix.set("texture_layer",layer);
-		if(graphics_is(layer).equals("PImage")) {
-			fx_mix.set("flip_layer",true,false);
+		
+		if(graphics_is(layer).equals("PGraphics")) {
+			fx_mix.set("flip_layer",false,false);
+		} else {
+			if(on_g) {
+				fx_mix.set("flip_layer",true,false);
+			}
 		}
+		
 
     // external paramer
     fx_mix.set("level_source",level_source.x,level_source.y,level_source.z);

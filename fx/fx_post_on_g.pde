@@ -71,14 +71,14 @@ void render_post_fx(PImage src, PImage img_1, PImage img_2, PImage pattern_1, PI
 
 	// println(get_fx(3).get_name());
 
-	select_fx_post(src,null,null,get_fx(fx_manager,set_blur_gaussian));
+	// select_fx_post(src,null,null,get_fx(fx_manager,set_blur_gaussian));
 	// select_fx_post(src,null,null,get_fx(fx_manager,set_blur_circular));
 	// select_fx_post(src,null,null,get_fx(fx_manager,set_blur_radial));
 
 	// select_fx_post(src,null,null,get_fx(fx_manager,set_colour_change_a));
 	// select_fx_post(src,null,null,get_fx(fx_manager,set_colour_change_b));
 
-	// select_fx_post(src,null,null,get_fx(fx_manager,set_dither_bayer_8));
+	select_fx_post(src,null,null,get_fx(fx_manager,set_dither_bayer_8));
 
 	// select_fx_post(src,null,null,get_fx(fx_manager,set_grain));
 	// select_fx_post(src,null,null,get_fx(fx_manager,set_grain_scatter));
@@ -136,19 +136,3 @@ void select_filter(PImage main, PImage layer_a, PImage layer_b, int... type)  {
 	if(fx != null) select_filter(main,layer_a,layer_b,fx);
 }
 */
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

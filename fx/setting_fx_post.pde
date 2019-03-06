@@ -1,6 +1,6 @@
 /**
 * SETTING FX POST method
-* v 0.2.3
+* v 0.2.4
 * 2019-2019
 */
 
@@ -21,7 +21,7 @@ void setting_fx_post(ArrayList<FX> fx_list) {
   setting_haltone_line(fx_list);
   setting_haltone_multi(fx_list);
 
-  setting_image_mapping(fx_list);
+  setting_image(fx_list);
 
   setting_level(fx_list);
 
@@ -30,8 +30,6 @@ void setting_fx_post(ArrayList<FX> fx_list) {
   setting_pixel(fx_list);
 
   setting_reac_diff(fx_list);
-
-  setting_scale(fx_list);
 
   setting_split(fx_list);
 
@@ -289,16 +287,28 @@ void setting_haltone_multi(ArrayList<FX> fx_list) {
 
 
 
-// halftone dot
-String set_image_mapping = "image mapping";
-void setting_image_mapping(ArrayList<FX> fx_list) {
-  init_fx(fx_list,set_image_mapping,FX_IMAGE);
+// image
+String set_image = "image";
+void setting_image(ArrayList<FX> fx_list) {
+  init_fx(fx_list,set_image,FX_IMAGE);
 
   if(mousePressed) {
-    // fx_set_size(fx_list,set_image_mapping,(abs(sin(frameCount *.01))) *30 +1);
-    vec4 rgba = abs(vec4().wave_sin(frameCount,.01,.02,.03,.01));
-    //fx_set_level_source(fx_list,set_image_mapping,rgba);
+    float px = map(mouseX,0,width,0,1);
+    float py = map(mouseY,0,height,0,1);
+    fx_set_pos(fx_list,set_image,px,py);
+
+    vec3 rgb = abs(vec3().wave_sin(frameCount,.01,.02,.03));
+    fx_set_colour(fx_list,set_image,rgb.r,rgb.b,rgb.g);
+
+    // float size =.9;
+    float scale = abs(sin(frameCount *.02))*3;
+    fx_set_size(fx_list,set_image,scale,scale); // 0 to 2++
+
+    float curtain_pos = abs(sin(frameCount *.05)) *.5;
+    fx_set_cardinal(fx_list,set_image,curtain_pos,curtain_pos,curtain_pos,curtain_pos); // 0 to 2++
   }
+
+  fx_set_mode(fx_list,set_image,r.SCALE);
 }
 
 
@@ -351,12 +361,12 @@ void setting_mix(ArrayList<FX> fx_list) {
   init_fx(fx_list,set_mix,FX_MIX);
   // fx_set_mode(set_mix,1); // produit - multiply
   fx_set_mode(fx_list,set_mix,8); 
-  // if(mousePressed) {
-    vec3 level_source = abs(vec3().wave_sin(frameCount,.001,.003,.005));
-    vec3 level_layer = abs(vec3().wave_cos(frameCount,.002,.001,.001));
-    fx_set_level_source(fx_list,set_mix,level_source.array());
-    fx_set_level_layer(fx_list,set_mix,level_layer.array());
- // }
+
+  vec3 level_source = abs(vec3().wave_sin(frameCount,.001,.003,.005));
+  vec3 level_layer = abs(vec3().wave_cos(frameCount,.002,.001,.001));
+  fx_set_level_source(fx_list,set_mix,level_source.array());
+  fx_set_level_layer(fx_list,set_mix,level_layer.array());
+
 }
 
 
@@ -426,15 +436,6 @@ void setting_reac_diff(ArrayList<FX> fx_list) {
 
 
 
-
-// scale
-String set_scale = "scale";
-void setting_scale(ArrayList<FX> fx_list) {
-  init_fx(fx_list,set_scale,FX_SCALE);
-  if(mousePressed) {
-    fx_set_resolution(fx_list,set_scale,mouseX,mouseY);
-  }
-}
 
 
 

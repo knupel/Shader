@@ -78,7 +78,7 @@ void render_post_fx(PImage src, PImage img_1, PImage img_2, PImage pattern_1, PI
 	// select_fx_post(src,null,null,get_fx(fx_manager,set_colour_change_a));
 	// select_fx_post(src,null,null,get_fx(fx_manager,set_colour_change_b));
 
-	// select_fx_post(src,null,null,get_fx(fx_manager,set_dither_bayer_8));
+	select_fx_post(src,null,null,get_fx(fx_manager,set_dither_bayer_8));
 
 	// select_fx_post(src,null,null,get_fx(fx_manager,set_grain));
 	// select_fx_post(src,null,null,get_fx(fx_manager,set_grain_scatter));
@@ -91,7 +91,7 @@ void render_post_fx(PImage src, PImage img_1, PImage img_2, PImage pattern_1, PI
 
 	// select_fx_post(src,null,null,get_fx(fx_manager,set_level));
 
-	select_fx_post(src,src,null,get_fx(fx_manager,set_mix));
+	// select_fx_post(src,src,null,get_fx(fx_manager,set_mix));
 
 	// select_fx_post(src,null,null,get_fx(fx_manager,set_pixel));
 

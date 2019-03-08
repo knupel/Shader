@@ -37,6 +37,7 @@ void filter_g(PImage img_1, PImage img_2, PImage pattern_1, PImage pattern_2) {
 	if((movie_input != null || img_input != null) && !window_change_is()) {
 		if(img_input != null) {
 			if(with_g) {
+				// image(img_input,CENTER);
 				background(img_input,CENTER);
 				render_post_fx(g,img_1,img_2,pattern_1,pattern_2);
 			} else {
@@ -44,6 +45,7 @@ void filter_g(PImage img_1, PImage img_2, PImage pattern_1, PImage pattern_2) {
 			}
 		} else if(movie_input != null) {
 			if(with_g) {
+				// image(movie_input,CENTER);
 				background(movie_input,CENTER);
 				render_post_fx(g,img_1,img_2,pattern_1,pattern_2);
 			} else {

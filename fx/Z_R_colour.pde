@@ -1,10 +1,10 @@
 /**
 Rope COLOUR
-v 0.7.0
+v 0.7.1
 * Copyleft (c) 2016-2019 
 * Stan le Punk > http://stanlepunk.xyz/
 Rope – Romanesco Processing Environment – 
-Processing 3.4
+Processing 3.5.3
 * @author @stanlepunk
 * @see https://github.com/StanLepunK/Rope_framework
 *
@@ -27,7 +27,7 @@ v 0.0.2
 
 * get the colour by index or name
 */
-public class ROPE_colour implements rope.core.RConstants {
+public class ROPE_colour implements rope.core.R_Constants {
 	int [] c;
 	public ROPE_colour(int... c) {
 		this.c = new int[c.length];
@@ -410,7 +410,7 @@ boolean hue_range(float min, float max, int colour) {
 
 
 /**
-convert color 0.2.0
+convert color 0.3.0
 */
 vec3 hsb_to_rgb(float hue, float saturation, float brightness) {
   vec4 ref = vec4(g.colorModeX, g.colorModeY, g.colorModeY, g.colorModeA);
@@ -419,7 +419,7 @@ vec3 hsb_to_rgb(float hue, float saturation, float brightness) {
   colorMode(RGB,255) ;
   vec3 rgb = vec3(red(c),green(c),blue(c)) ;
   // return to the previous colorMode
-  colorMode(HSB,ref.r, ref.g, ref.b, ref.a) ;
+  colorMode(HSB,ref.x,ref.y,ref.z,ref.w) ;
   return rgb;
 }
 

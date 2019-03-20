@@ -11,6 +11,10 @@
 
 
 
+
+
+
+
 /**
 * Template by Stan le punk
 * this template can be used for texture or direct filtering
@@ -45,6 +49,7 @@ PGraphics fx_template(PImage source, boolean on_g, vec4 level_source) {
 	} else {
 		if(on_g) set_shader_flip(fx_template,source);
 		fx_template.set("texture_source",source);
+		fx_template.set("resolution",(float)source.width,(float)source.height);
 
   
     // fx_template.set("color_mode",3); // mode 0 RGB / mode 3 HSB
@@ -168,14 +173,14 @@ PGraphics fx_blur_circular(PImage source, boolean on_g, vec3 strength, int num) 
 
 /**
 * gaussian blur
-* v 0.2.2
+* v 0.2.3
 * 2018-2019
 */
 // setting by class FX
 PGraphics fx_blur_gaussian(PImage source, FX fx) {
 	ivec2 res = ivec2();
 	boolean second_pass = true;
-	return fx_blur_gaussian(source,fx.on_g(),second_pass,res,fx.get_strength().x);
+	return fx_blur_gaussian(source,fx.on_g(),second_pass,res,fx.get_strength().x());
 }
 
 
@@ -314,19 +319,19 @@ PGraphics fx_blur_gaussian(PImage source, boolean on_g, boolean second_pass, ive
 
 /**
 * Blur radial
-v 0.2.3
+v 0.2.4
 2018-2019
 */
 // setting by class FX
 PGraphics fx_blur_radial(PImage source, FX fx) {
 	float str = 0;
 	if(fx.get_strength() != null) {
-		str = fx.get_strength().x;
+		str = fx.get_strength().x();
 	}
 
 	float scl = 0;
 	if(fx.get_scale() != null) {
-		scl = fx.get_scale().x;
+		scl = fx.get_scale().x();
 	}
 	return fx_blur_radial(source,fx.on_g(),vec2(fx.get_pos()),str,scl);
 }
@@ -396,9 +401,9 @@ PGraphics fx_colour_change_a(PImage source, FX fx) {
 
 // test
 PGraphics fx_colour_change_a(PImage source, boolean on_g) {
-	vec3 col_0 = vec3().wave_sin(frameCount,.001,.02,.005).mult(10);
-  vec3 col_1 = vec3().wave_cos(frameCount,.001,.02,.005).mult(10);
-  vec3 col_2 = vec3().wave_sin(frameCount,.01,.002,.002).mult(10);
+	vec3 col_0 = vec3().sin_wave(frameCount,.001,.02,.005).mult(10);
+  vec3 col_1 = vec3().cos_wave(frameCount,.001,.02,.005).mult(10);
+  vec3 col_2 = vec3().sin_wave(frameCount,.01,.002,.002).mult(10);
 		// 	vec3 col_0 = vec3(-1,0,1);
 		// vec3 col_1 = vec3(1,0,-1);
 		// vec3 col_2 = vec3(-1,0,1);	
@@ -494,12 +499,12 @@ PGraphics fx_colour_change_b(PImage source, boolean on_g) {
 }
 
 PShader fx_colour_change_b;
-PGraphics result_colour_change_b;
+PGraphics pg_colour_change_b;
 PGraphics fx_colour_change_b(PImage source, boolean on_g, float angle, float strength) {
-	if(!on_g && (result_colour_change_b == null 
-								|| (source.width != result_colour_change_b.width 
-								&& source.height != result_colour_change_b.height))) {
-		result_colour_change_b = createGraphics(source.width,source.height,get_renderer());
+	if(!on_g && (pg_colour_change_b == null 
+								|| (source.width != pg_colour_change_b.width 
+								&& source.height != pg_colour_change_b.height))) {
+		pg_colour_change_b = createGraphics(source.width,source.height,get_renderer());
 	}
 
 	if(fx_colour_change_b == null) {
@@ -518,7 +523,7 @@ PGraphics fx_colour_change_b(PImage source, boolean on_g, float angle, float str
     fx_colour_change_b.set("strength",1.);
 
     // rendering
-		render_shader(fx_colour_change_b,result_colour_change_b,source,on_g);
+		render_shader(fx_colour_change_b,pg_colour_change_b,source,on_g);
 	}
 
 	// return
@@ -526,9 +531,123 @@ PGraphics fx_colour_change_b(PImage source, boolean on_g, float angle, float str
 	if(on_g) {
 		return null;
 	} else {
-		return result_colour_change_b; 
+		return pg_colour_change_b; 
 	}
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/**
+* Datamosh refactoring by Stan le punk inpired by Alexandre Rivaux 
+* @see https://github.com/alexr4/datamoshing-GLSL
+* v 0.0.1
+*2019-2019
+*/
+// setting by class FX
+PGraphics fx_datamosh(PImage source, FX fx) {
+	return fx_datamosh(source,fx.on_g(),fx.get_threshold().x(),fx.get_pair(0).x(),fx.get_time());
+}
+
+// main
+PShader fx_datamosh;
+PGraphics pg_datamosh;
+
+// PGraphics datamoshBuffer;
+PGraphics fx_previous_datamosh;
+
+PGraphics fx_datamosh(PImage source, boolean on_g, float threshold, float offsetRGB, float time) {
+	if(!on_g && (pg_datamosh == null 
+								|| (source.width != pg_datamosh.width 
+								&& source.height != pg_datamosh.height))) {
+		pg_datamosh = createGraphics(source.width,source.height,get_renderer());
+	}
+
+	if(fx_datamosh == null) {
+		String path = get_fx_post_path()+"datamosh.glsl";
+		if(fx_post_rope_path_exists) {
+			fx_datamosh = loadShader(path);
+			println("load shader: datamosh.glsl");
+		}
+		println("load shader:",path);
+	} else {
+		//if(on_g) set_shader_flip(fx_datamosh,source);
+		// fx_datamosh.set("texture_source",source);
+		// fx_datamosh.set("resolution",(float)source.width,(float)source.height);
+    if(fx_previous_datamosh == null) {
+			fx_previous_datamosh = createGraphics(source.width,source.height,get_renderer());
+		}
+		fx_datamosh.set("resolution",(float)source.width,(float)source.height);
+		fx_datamosh.set("resolution_source",(float)source.width,(float)source.height);
+		// fx_datamosh.set("texture_layer",fx_previous_datamosh);
+		fx_datamosh.set("previous",fx_previous_datamosh);
+		// fx_datamosh.set("resolution_layer",(float)fx_previous_datamosh.width,(float)fx_previous_datamosh.height);
+
+  
+    // fx_datamosh.set("time",time); // from 0 to infinite
+		fx_datamosh.set("threshold",threshold); // value from 0 to 1
+		fx_datamosh.set("offsetRGB",offsetRGB); // value from 0 to 1
+
+		if(pg_datamosh == null) {
+			pg_datamosh = createGraphics(source.width,source.height,get_renderer());
+		}
+		
+		pg_datamosh.beginDraw();
+    pg_datamosh.shader(fx_datamosh);
+    pg_datamosh.image(source,0,0);
+    pg_datamosh.endDraw();
+    image(pg_datamosh,CENTER);
+    //background(pg_datamosh,CENTER);
+    
+    // image(pg_datamosh);
+    // image(source);
+    //image(datamoshBuffer);
+    // render_shader(fx_datamosh,pg_datamosh,source,on_g);
+
+    fx_previous_datamosh.beginDraw();
+    fx_previous_datamosh.image(pg_datamosh, 0, 0, fx_previous_datamosh.width, fx_previous_datamosh.height);
+    fx_previous_datamosh.endDraw();
+
+    // rendering > not use the classical one rrendering
+		// render_shader(fx_datamosh,pg_datamosh,source,on_g);
+
+
+	}
+
+	// return
+	reset_reverse_g(false);
+	if(on_g) {
+		return null;
+	} else {
+		return pg_datamosh; 
+	}
+}
+
+
+
+
+
+
+
 
 
 
@@ -554,13 +673,10 @@ PGraphics fx_colour_change_b(PImage source, boolean on_g, float angle, float str
 * v 0.2.0
 * 2018-2019
 */
-
 // setting by class FX
 PGraphics fx_dither_bayer_8(PImage source, FX fx) {
 	return fx_dither_bayer_8(source,fx.on_g(),vec3(fx.get_level_source()),fx.get_mode());	
 }
-
-
 
 // main
 PShader fx_dither_bayer_8;
@@ -775,22 +891,22 @@ PGraphics fx_grain_scatter(PImage source, boolean on_g,float strength) {
 PGraphics fx_halftone_dot(PImage source, FX fx) {
 	vec2 pos = vec2(source.width/2,source.height/2);
 	if(fx.get_pos() != null) {
-		pos = vec2(fx.get_pos().x,fx.get_pos().y);
+		pos = vec2(fx.get_pos().x(),fx.get_pos().y());
 	}
 
 	float threshold = .95;
 	if(fx.get_threshold() != null) {
-		threshold = fx.get_threshold().x;
+		threshold = fx.get_threshold().x();
 	}
 
 	float angle = 0;
 	if(fx.get_angle() != null) {
-		angle = fx.get_angle().x;
+		angle = fx.get_angle().x();
 	}
 
 	float pixel_size = 5;
 	if(fx.get_angle() != null) {
-		pixel_size = fx.get_size().x;
+		pixel_size = fx.get_size().x();
 	}
 
 	return fx_halftone_dot(source,fx.on_g(),pos,pixel_size,angle,threshold);
@@ -1153,7 +1269,7 @@ PGraphics fx_level(PImage source, FX fx) {
 // PGraphics filtering
 PGraphics fx_level(PImage source, boolean on_g) {
 	int mode = 0;
-	vec3 level = abs(vec3().wave_sin(frameCount,.01,.02,.04));
+	vec3 level = abs(vec3().sin_wave(frameCount,.01,.02,.04));
 	return fx_level(source,on_g,mode,level.array());
 }
 
@@ -1272,8 +1388,8 @@ PGraphics fx_mix(PImage source, PImage layer, FX fx) {
 // test
 PGraphics fx_mix(PImage source, PImage layer, boolean on_g) {
 	int mode = 1; // multiply
-	vec3 level_source = abs(vec3().wave_sin(frameCount,.01,.025,.05));
-	vec3 level_layer = abs(vec3().wave_cos(frameCount,.01,.025,.05));
+	vec3 level_source = abs(vec3().sin_wave(frameCount,.01,.025,.05));
+	vec3 level_layer = abs(vec3().cos_wave(frameCount,.01,.025,.05));
 	return fx_mix(source,layer,on_g,mode,level_source,level_layer);
 }
 

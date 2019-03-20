@@ -21,7 +21,7 @@ void setting_fx_bg(ArrayList<FX> fx_list) {
 String set_template_fx_bg = "template fx background";
 void setting_template_fx_bg(ArrayList<FX> fx_list) {
   init_fx(fx_list,set_template_fx_bg,FX_BG_TEMPLATE);
-  vec3 colour = abs(vec3().wave_sin(frameCount,.1,.02,.03));
+  vec3 colour = abs(vec3().sin_wave(frameCount,.1,.02,.03));
   fx_set_colour(fx_list,set_template_fx_bg,colour.array());
 }
 
@@ -31,7 +31,7 @@ void setting_template_fx_bg(ArrayList<FX> fx_list) {
 String set_cellular_fx_bg = "cellular fx background";
 void setting_cellular_fx_bg(ArrayList<FX> fx_list) {
   init_fx(fx_list,set_cellular_fx_bg,FX_BG_CELLULAR);
-  vec4 colour = abs(vec4().wave_sin(frameCount,.1,.02,.03,.04));
+  vec4 colour = abs(vec4().sin_wave(frameCount,.1,.02,.03,.04));
   fx_set_colour(fx_list,set_cellular_fx_bg,colour.array());
 
   float sx = map(mouseX,0,width,0,1);
@@ -50,7 +50,7 @@ void setting_cellular_fx_bg(ArrayList<FX> fx_list) {
 String set_heart_fx_bg = "heart fx background";
 void setting_heart_fx_bg(ArrayList<FX> fx_list) {
   init_fx(fx_list,set_heart_fx_bg,FX_BG_HEART);
-  vec4 colour = abs(vec4().wave_sin(frameCount,.1,.02,.03,.04));
+  vec4 colour = abs(vec4().sin_wave(frameCount,.1,.02,.03,.04));
   fx_set_colour(fx_list,set_heart_fx_bg,colour.array());
 
   float speed = map(mouseX,0,width,0,1);
@@ -148,7 +148,7 @@ void setting_snow_fx_bg(ArrayList<FX> fx_list) {
   init_fx(fx_list,set_snow_fx_bg,FX_BG_SNOW);
 
   if(mousePressed) {
-    vec3 colour = abs(vec3().wave_sin(frameCount,.01,.02,.03));
+    vec3 colour = abs(vec3().sin_wave(frameCount,.01,.02,.03));
     fx_set_colour(fx_list,set_snow_fx_bg,colour.array());
 
     float px = map(mouseX,0,width,0,1);
@@ -188,7 +188,7 @@ void setting_voronoi_hex_fx_bg(ArrayList<FX> fx_list) {
     fx_set_threshold(fx_list,set_voronoi_hex_fx_bg,threshold);
   }
 
-  vec3 colour = abs(vec3().wave_sin(frameCount,.01,.02,.03));
+  vec3 colour = abs(vec3().sin_wave(frameCount,.01,.02,.03));
   fx_set_colour(fx_list,set_voronoi_hex_fx_bg,colour.array());
 
   float speed_mutation = .05;

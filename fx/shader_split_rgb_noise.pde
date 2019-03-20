@@ -1,8 +1,8 @@
 /**
 * split rgb noise
-* @see http://stanlepunk.xyz
+* @see @stanlepunk
 * @see https://github.com/StanLepunK/Shader
-* v 0.0.5
+* v 0.0.6
 * 2019-2019
 */
 
@@ -11,16 +11,6 @@ PGraphics fx_split_rgb_noise(PImage source, FX fx) {
 	return fx_split_rgb_noise(source,fx.on_g(),vec2(fx.get_offset()));
 }
 
-
-
-
-// test
-PGraphics fx_split_rgb_noise(PImage source, boolean on_g) {
-	float ox = sin(frameCount *.001) *(width/10);
-	float oy = cos(frameCount *.001) *(height/10);
-	vec2 offset = vec2(ox,oy);
-	return fx_split_rgb_noise(source,on_g,offset);
-}
 
 
 // main

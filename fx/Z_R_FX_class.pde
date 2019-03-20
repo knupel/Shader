@@ -1,6 +1,6 @@
 /**
  * CLASS FX 
- * v 0.4.1
+ * v 0.4.2
  * @author @stanlepunk
  * @see https://github.com/StanLepunK/Shader
  * 2019-2019
@@ -25,6 +25,7 @@ public class FX {
 	private int mode; // 0
 	private int num; // 1 
 	private float quality; // 2
+	private float time; // 3
 
 	private vec2 scale; // 10
 	private vec2 resolution; // 11
@@ -41,7 +42,6 @@ public class FX {
 	private vec4 level_layer; // 31
 	private vec4 colour; // 32
 	private vec4 cardinal; // 33 > north, east, south, west > top, right, bottom, left
-
 
   private float hue; // 200
 	private float saturation; // 201
@@ -125,7 +125,9 @@ public class FX {
   		set_num((int)arg[0]);
   	} else if(which == 2) {
   		set_quality((float)arg[0]);
-  	} 
+  	} else if(which == 3) {
+  		set_time((float)arg[0]);
+  	}
 
   		else if(which == 10) {
   		set_scale(to_float_array(arg));
@@ -217,6 +219,10 @@ public class FX {
 
 	private void set_quality(float quality) {
 		this.quality = quality;
+	}
+
+	private void set_time(float time) {
+		this.time = time;
 	}
 
 	private void set_scale(float... arg) {
@@ -428,6 +434,10 @@ public class FX {
 
 	public float get_quality() {
 		return quality;
+	}
+
+	public float get_time() {
+		return time;
 	}
 
 	public vec2 get_scale() {

@@ -1,8 +1,8 @@
 /**
 * SHADER FX
-* @see http://stanlepunk.xyz
+* @see @stanlepunk
 * @see https://github.com/StanLepunK/Shader
-* v 0.7.3
+* v 0.7.4
 * 2019-2019
 *
 */
@@ -17,6 +17,7 @@ int FX_BLUR_CIRCULAR = 202;
 int FX_COLOUR_CHANGE_A = 300;
 int FX_COLOUR_CHANGE_B = 301;
 
+int FX_DATAMOSH = 400;
 int FX_DITHER_BAYER_8 = 408;
 
 int FX_GRAIN = 700;
@@ -157,6 +158,8 @@ void select_fx_post(PImage main, PImage layer_a, PImage layer_b, FX... fx) {
 				fx_colour_change_a(main,fx[i]);
 			} else if(fx[i].get_type() == FX_COLOUR_CHANGE_B) {
 				fx_colour_change_b(main,fx[i]);
+			} else if(fx[i].get_type() == FX_DATAMOSH) {
+				fx_datamosh(main,fx[i]);
 			} else if(fx[i].get_type() == FX_DITHER_BAYER_8) {
 				fx_dither_bayer_8(main,fx[i]);
 			} else if(fx[i].get_type() == FX_GRAIN) {
@@ -243,8 +246,10 @@ void select_fx_background(FX fx) {
 
 /**
 prepare your setting
-v 0.1.0
+v 0.1.1
 */
+
+// single
 void fx_set_mode(ArrayList<FX> fx_list, String name, int mode) {
 	fx_set(fx_list,0,name,mode);
 }
@@ -257,6 +262,11 @@ void fx_set_quality(ArrayList<FX> fx_list, String name, float quality) {
 	fx_set(fx_list,2,name,quality);
 }
 
+void fx_set_time(ArrayList<FX> fx_list, String name, float time) {
+	fx_set(fx_list,3,name,time);
+}
+
+// double
 void fx_set_scale(ArrayList<FX> fx_list, String name, float... arg) {
 	set_fx_float_2(10,fx_list,name,arg);
 }
@@ -265,6 +275,7 @@ void fx_set_resolution(ArrayList<FX> fx_list, String name, float... arg) {
 	set_fx_float_2(11,fx_list,name,arg);
 }
 
+// triple
 void fx_set_strength(ArrayList<FX> fx_list, String name, float... arg) {
 	set_fx_float_3(20,fx_list,name,arg);
 }
@@ -293,6 +304,7 @@ void fx_set_speed(ArrayList<FX> fx_list, String name, float... arg) {
 	set_fx_float_3(26,fx_list,name,arg);
 }
 
+// quadruple
 void fx_set_level_source(ArrayList<FX> fx_list, String name, float... arg) {
 	set_fx_float_4(30,fx_list,name,arg);
 }
@@ -309,7 +321,7 @@ void fx_set_cardinal(ArrayList<FX> fx_list, String name, float... arg) {
 	set_fx_float_4(33,fx_list,name,arg);
 }
 
-
+// single
 void fx_set_hue(ArrayList<FX> fx_list, String name, float hue) {
 	fx_set(fx_list,200,name,hue);
 }
@@ -340,17 +352,19 @@ void fx_set_alpha(ArrayList<FX> fx_list, String name, float alpha) {
 
 
 // modulair param
+// triple
 void fx_set_matrix(ArrayList<FX> fx_list, String name, int target, float... arg) {
 	int which = 40+target;
 	set_fx_float_3(which,fx_list,name,arg);
 }
 
-
+// double
 void fx_set_pair(ArrayList<FX> fx_list, String name, int target, float... arg) {
 	int which = 50+target;
 	set_fx_float_2(which,fx_list,name,arg);
 }
 
+// single boolean
 void fx_set_event(ArrayList<FX> fx_list, String name, int target, boolean arg) {
 	int which = 100+target;
 	fx_set(fx_list,which,name,arg);

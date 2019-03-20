@@ -24,7 +24,7 @@ PGraphics fx_bg_template(FX fx) {
 
 // test setting
 PGraphics fx_bg_template() {
-  vec3 colour = abs(vec3().wave_sin(frameCount,.01,.02,.03));
+  vec3 colour = abs(vec3().sin_wave(frameCount,.01,.02,.03));
 	return fx_bg_template(null,true,colour);
 }
 

@@ -1,6 +1,6 @@
 /**
 * SETTING FX POST method
-* v 0.2.4
+* v 0.2.5
 * 2019-2019
 */
 
@@ -11,7 +11,8 @@ void setting_fx_post(ArrayList<FX> fx_list) {
 
   setting_colour_change_a(fx_list);
   setting_colour_change_b(fx_list);
-
+  
+  setting_datamosh(fx_list);
   setting_dither_bayer_8(fx_list);
 
   setting_grain(fx_list);
@@ -106,9 +107,9 @@ void setting_colour_change_a(ArrayList<FX> fx_list) {
   init_fx(fx_list,set_colour_change_a,FX_COLOUR_CHANGE_A);
   
   if(mousePressed) {
-    vec3 m0 = vec3().wave_sin(frameCount,.001,.02,.005).mult(10);
-    vec3 m1 = vec3().wave_cos(frameCount,.001,.02,.005).mult(10);
-    vec3 m2 = vec3().wave_sin(frameCount,.01,.002,.002).mult(10);
+    vec3 m0 = vec3().sin_wave(frameCount,.001,.02,.005).mult(10);
+    vec3 m1 = vec3().cos_wave(frameCount,.001,.02,.005).mult(10);
+    vec3 m2 = vec3().sin_wave(frameCount,.01,.002,.002).mult(10);
     //  vec3 m0 = vec3(-1,0,1);
     // vec3 m1 = vec3(1,0,-1);
     // vec3 m2 = vec3(-1,0,1); 
@@ -136,6 +137,23 @@ void setting_colour_change_b(ArrayList<FX> fx_list) {
 
 
 
+
+
+
+// dither bayer 8
+String set_datamosh = "datamosh";
+void setting_datamosh(ArrayList<FX> fx_list) {
+  init_fx(fx_list,set_datamosh,FX_DATAMOSH);
+
+  // if(mousePressed) {
+    float threshold = noise(millis() * 0.0001, frameCount * 0.01) * 0.15;
+    fx_set_threshold(fx_list,set_datamosh,threshold);
+    float offsetRGB = noise(frameCount * 0.0125, millis() * 0.005) * 0.005;
+    fx_set_pair(fx_list,set_datamosh,0,offsetRGB);
+
+    // fx_set_time(fx_list,set_datamosh,frameCount);
+  //}
+}
 
 
 
@@ -297,8 +315,8 @@ void setting_image(ArrayList<FX> fx_list) {
     float py = map(mouseY,0,height,0,1);
     fx_set_pos(fx_list,set_image,px,py);
 
-    vec3 rgb = abs(vec3().wave_sin(frameCount,.01,.02,.03));
-    fx_set_colour(fx_list,set_image,rgb.r,rgb.b,rgb.g);
+    vec3 rgb = abs(vec3().sin_wave(frameCount,.01,.02,.03));
+    fx_set_colour(fx_list,set_image,rgb.red(),rgb.blu(),rgb.gre());
 
     // float size =.9;
     float scale = abs(sin(frameCount *.02))*3;
@@ -323,7 +341,7 @@ void setting_level(ArrayList<FX> fx_list) {
   init_fx(fx_list,set_level,FX_LEVEL);
   fx_set_mode(fx_list,set_level,0);
   if(mousePressed) {
-    vec3 level = abs(vec3().wave_sin(frameCount,.01,.02,.04));
+    vec3 level = abs(vec3().sin_wave(frameCount,.01,.02,.04));
     fx_set_level_source(fx_list,set_level,level.array());
   }
 }
@@ -362,8 +380,8 @@ void setting_mix(ArrayList<FX> fx_list) {
   // fx_set_mode(set_mix,1); // produit - multiply
   fx_set_mode(fx_list,set_mix,8); 
 
-  vec3 level_source = abs(vec3().wave_sin(frameCount,.001,.003,.005));
-  vec3 level_layer = abs(vec3().wave_cos(frameCount,.002,.001,.001));
+  vec3 level_source = abs(vec3().sin_wave(frameCount,.001,.003,.005));
+  vec3 level_layer = abs(vec3().cos_wave(frameCount,.002,.001,.001));
   fx_set_level_source(fx_list,set_mix,level_source.array());
   fx_set_level_layer(fx_list,set_mix,level_layer.array());
 
@@ -449,9 +467,9 @@ void setting_split(ArrayList<FX> fx_list) {
     float ox_red = map(mouseX,0,width,0,1);
     float oy_red = map(mouseY,0,height,0,1);
     */
-    vec2 offset_red = vec2().wave_cos(frameCount,.01,.02);
-    vec2 offset_green = vec2().wave_sin(frameCount,.01,.02);
-    vec2 offset_blue = vec2().wave_cos(frameCount,.004,.01);
+    vec2 offset_red = vec2().cos_wave(frameCount,.01,.02);
+    vec2 offset_green = vec2().sin_wave(frameCount,.01,.02);
+    vec2 offset_blue = vec2().cos_wave(frameCount,.004,.01);
     fx_set_pair(fx_list,set_split,0,offset_red.array());
     fx_set_pair(fx_list,set_split,1,offset_green.array());
     fx_set_pair(fx_list,set_split,2,offset_blue.array());

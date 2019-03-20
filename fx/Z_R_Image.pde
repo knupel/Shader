@@ -1,7 +1,7 @@
 /**
 * ROPE FRAMEWORK IMAGE
 * Rope – Romanesco Processing Environment – 
-* v 0.4.0
+* v 0.4.2
 * Copyleft (c) 2014-2019
 * Processing 3.5.3
 * @author @stanlepunk
@@ -958,21 +958,20 @@ void show_canvas(int num) {
 
 
 /**
-BACKGROUND_2D_3D 
-v 0.2.0
+* BACKGROUND
+* v 0.2.3
+* 2015-2019
 */
-float MAX_RATIO_DEPTH = 6.9 ;
-
 /**
 Background classic processing
 */
 // vec
 void background(vec4 c) {
-  background(c.r,c.g,c.b,c.a) ;
+  background(c.x,c.y,c.z,c.w) ;
 }
 
 void background(vec3 c) {
-  background(c.r,c.g,c.b) ;
+  background(c.x,c.y,c.z) ;
 }
 
 void background(vec2 c) {
@@ -998,80 +997,86 @@ void background(ivec2 c) {
 /**
 background image
 */
-void background(PImage img, int mode) {
-  background_calc(img,null,null,null,null,mode);
+void background(PImage src, int mode) {
+  background_calc(src,null,null,null,null,mode);
 }
 
-void background(PImage img, int mode, float red, float green, float blue) {
+void background(PImage src, int mode, float red, float green, float blue) {
   vec3 colour_curtain = abs(vec3(red,green,blue).div(vec3(g.colorModeX,g.colorModeY,g.colorModeZ)));
-  background_calc(img,null,null,colour_curtain,null,mode);
+  background_calc(src,null,null,colour_curtain,null,mode);
 }
 
-void background(PImage img, float px, float py, float red, float green, float blue) {
+void background(PImage src, float px, float py, float red, float green, float blue) {
   vec3 colour_curtain = abs(vec3(red,green,blue).div(vec3(g.colorModeX,g.colorModeY,g.colorModeZ)));
   vec2 pos = vec2(px /width, py /height);
-  background_calc(img,pos,null,colour_curtain,null,r.SCALE);
+  background_calc(src,pos,null,colour_curtain,null,r.SCALE);
 }
 
-void background(PImage img, float px, float py, float scale_x, float red, float green, float blue) {
+void background(PImage src, float px, float py, float scale_x, float red, float green, float blue) {
   vec3 colour_curtain = abs(vec3(red,green,blue).div(vec3(g.colorModeX,g.colorModeY,g.colorModeZ)));
   vec2 pos = vec2(px /width, py /height);
   vec2 scale = vec2(scale_x);
-  background_calc(img,pos,scale,colour_curtain,null,r.SCALE);
+  background_calc(src,pos,scale,colour_curtain,null,r.SCALE);
 }
 
-void background(PImage img, float px, float py, float scale_x, float red, float green, float blue, float curtain_position) {
+void background(PImage src, float px, float py, float scale_x, float red, float green, float blue, float curtain_position) {
   vec3 colour_curtain = abs(vec3(red,green,blue).div(vec3(g.colorModeX,g.colorModeY,g.colorModeZ)));
   vec2 pos = vec2(px /width, py /height);
   vec2 scale = vec2(scale_x);
   vec4 curtain_pos = vec4(curtain_position,0,curtain_position,0);
-  background_calc(img,pos,scale,colour_curtain,curtain_pos,r.SCALE);
+  background_calc(src,pos,scale,colour_curtain,curtain_pos,r.SCALE);
 }
 
-void background(PImage img, vec2 pos, vec2 scale, vec3 colour_background, vec4 pos_curtain, int mode) {
-  background_calc(img,pos,scale,colour_background,pos_curtain,mode);
+void background(PImage src, vec2 pos, vec2 scale, vec3 colour_background, vec4 pos_curtain, int mode) {
+  background_calc(src,pos,scale,colour_background,pos_curtain,mode);
 }
 
 
 
 PShader img_shader_calc_rope;
-void background_calc(PImage img, vec2 pos, vec2 scale, vec3 colour_background, vec4 pos_curtain, int mode) {
-  if(img_shader_calc_rope == null) {
-    img_shader_calc_rope = loadShader("shader/fx_post/image.glsl");
-  }
+void background_calc(PImage src, vec2 pos, vec2 scale, vec3 colour_background, vec4 pos_curtain, int mode) {
+  if(src != null && src.width > 0 && src.height > 0) {
+    if(img_shader_calc_rope == null) {
+      img_shader_calc_rope = loadShader("shader/fx_post/image.glsl");
+    }
+    if(graphics_is(src).equals("PGraphics")) {
+      img_shader_calc_rope.set("flip_source",false,false);
+    } else {
+      img_shader_calc_rope.set("flip_source",true,false);
+    }
+    
+    img_shader_calc_rope.set("texture_source",src);
+    img_shader_calc_rope.set("resolution",width,height);
+    img_shader_calc_rope.set("resolution_source",src.width,src.height); 
+    
+    if(colour_background != null) {
+      img_shader_calc_rope.set("colour",colour_background.x,colour_background.y,colour_background.z); // definr RGB color from 0 to 1
+    }
 
-  img_shader_calc_rope.set("flip_source",true,false);
-  img_shader_calc_rope.set("texture_source",img);
-  img_shader_calc_rope.set("resolution",width,height);
-  img_shader_calc_rope.set("resolution_source",img.width,img.height); 
-  
-  if(colour_background != null) {
-    img_shader_calc_rope.set("colour",colour_background.x,colour_background.y,colour_background.z); // definr RGB color from 0 to 1
-  }
+    if(pos_curtain != null) {
+      img_shader_calc_rope.set("curtain",pos_curtain.x,pos_curtain.y,pos_curtain.z,pos_curtain.w); // definr RGB color from 0 to 1
+    }
 
-  if(pos_curtain != null) {
-    img_shader_calc_rope.set("curtain",pos_curtain.x,pos_curtain.y,pos_curtain.z,pos_curtain.w); // definr RGB color from 0 to 1
-  }
+    if(pos != null) {
+      img_shader_calc_rope.set("position",pos.x,pos.y); // from 0 to 1
+    }
+    
+    if(scale != null) {
+      img_shader_calc_rope.set("scale",scale.x,scale.y);
+    }
+    
+    int shader_mode = 0;
+    if(mode == CENTER) {
+      shader_mode = 0;
+    } else if(mode == SCREEN) {
+      shader_mode = 1;
+    } else if(mode == r.SCALE) {
+      shader_mode = 2;
+    }
+    img_shader_calc_rope.set("mode",shader_mode);
 
-  if(pos != null) {
-    img_shader_calc_rope.set("position",pos.x,pos.y); // from 0 to 1
+    filter(img_shader_calc_rope);
   }
-  
-  if(scale != null) {
-    img_shader_calc_rope.set("scale",scale.x,scale.y);
-  }
-  
-  int shader_mode = 0;
-  if(mode == CENTER) {
-    shader_mode = 0;
-  } else if(mode == SCREEN) {
-    shader_mode = 1;
-  } else if(mode == r.SCALE) {
-    shader_mode = 2;
-  }
-  img_shader_calc_rope.set("mode",shader_mode);
-
-  filter(img_shader_calc_rope);
 }
 
 
@@ -1089,30 +1094,31 @@ void background_calc(PImage img, vec2 pos, vec2 scale, vec3 colour_background, v
 Normalize background
 */
 void background_norm(vec4 bg) {
-  background_norm(bg.x, bg.y, bg.z, bg.a) ;
+  background_norm(bg.x,bg.y,bg.z,bg.w) ;
 }
 
 void background_norm(vec3 bg) {
-  background_norm(bg.x, bg.y, bg.z, 1) ;
+  background_norm(bg.x,bg.y,bg.z,1) ;
 }
 
 void background_norm(vec2 bg) {
-  background_norm(bg.x, bg.x, bg.x, bg.y) ;
+  background_norm(bg.x,bg.x,bg.x,bg.y) ;
 }
 
 void background_norm(float c, float a) {
-  background_norm(c, c, c, a) ;
+  background_norm(c,c,c,a) ;
 }
 
 void background_norm(float c) {
-  background_norm(c, c, c, 1) ;
+  background_norm(c,c,c,1) ;
 }
 
 void background_norm(float r,float g, float b) {
-  background_norm(r, g, b, 1) ;
+  background_norm(r,g,b,1) ;
 }
 
 // Main method
+float MAX_RATIO_DEPTH = 6.9 ;
 void background_norm(float r_c, float g_c, float b_c, float a_c) {
   rectMode(CORNER) ;
   float x = map(r_c,0,1, 0, g.colorModeX) ;
@@ -1392,12 +1398,12 @@ String get_renderer() {
 
 String get_renderer(final PGraphics graph) {
   try {
-    if (Class.forName(JAVA2D).isInstance(graph))  return JAVA2D;
-    if (Class.forName(FX2D).isInstance(graph))    return FX2D;
-    if (Class.forName(P2D).isInstance(graph))     return P2D;
-    if (Class.forName(P3D).isInstance(graph))     return P3D;
-    if (Class.forName(PDF).isInstance(graph))     return PDF;
-    if (Class.forName(DXF).isInstance(graph))     return DXF;
+    if (Class.forName(JAVA2D).isInstance(graph)) return JAVA2D;
+    if (Class.forName(FX2D).isInstance(graph)) return FX2D;
+    if (Class.forName(P2D).isInstance(graph)) return P2D;
+    if (Class.forName(P3D).isInstance(graph)) return P3D;
+    if (Class.forName(PDF).isInstance(graph)) return PDF;
+    if (Class.forName(DXF).isInstance(graph)) return DXF;
   }
 
   catch (ClassNotFoundException ex) {

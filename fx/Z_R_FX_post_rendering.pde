@@ -565,14 +565,14 @@ PGraphics fx_colour_change_b(PImage source, boolean on_g, float angle, float str
 */
 // setting by class FX
 PGraphics fx_datamosh(PImage source, FX fx) {
-	return fx_datamosh(source,fx.on_g(),fx.get_threshold().x(),fx.get_pair(0).x(),fx.get_time());
+	return fx_datamosh(source,fx.on_g(),fx.get_threshold().x(),fx.get_strength().x(),fx.get_pair(0),fx.get_pair(1),fx.get_pair(2));
 }
 
 // main
 PShader fx_datamosh;
 PShader fx_flip_datamosh;
 PGraphics pg_datamosh;
-PGraphics fx_datamosh(PImage source, boolean on_g, float threshold, float offsetRGB, float time) {
+PGraphics fx_datamosh(PImage source, boolean on_g, float threshold, float strength, vec2 offset_red, vec2 offset_green, vec2 offset_blue) {
 	if(!on_g && (pg_datamosh == null 
 								|| (source.width != pg_datamosh.width 
 								&& source.height != pg_datamosh.height))) {
@@ -601,9 +601,25 @@ PGraphics fx_datamosh(PImage source, boolean on_g, float threshold, float offset
 		fx_datamosh.set("resolution_source",(float)source.width,(float)source.height);
 
     fx_datamosh.set("texture",source);
-    // fx_datamosh.set("time",time); // from 0 to infinite
+    
+    // fx_datamosh.set("strength",5.0); // value from 0 to 1
+    fx_datamosh.set("strength",strength); // value from 0 to 1
 		fx_datamosh.set("threshold",threshold); // value from 0 to 1
-		fx_datamosh.set("offsetRGB",offsetRGB); // value from 0 to 1
+		// fx_datamosh.set("offsetRGB",offsetRGB); // value from 0 to 1
+
+    // println("strength",strength);
+    // println("offset",offset_red,offset_green,offset_blue);
+		if(offset_red != null) {
+			fx_datamosh.set("offset_red",offset_red.x(),offset_red.y());
+		}
+
+		if(offset_green != null) {
+			fx_datamosh.set("offset_green",offset_green.x(),offset_green.y());
+		}
+		
+		if(offset_blue != null) {
+			fx_datamosh.set("offset_blue",offset_blue.x(),offset_blue.y());
+		} 
 
 		if(pg_datamosh == null) {
 			pg_datamosh = createGraphics(source.width,source.height,get_renderer());

@@ -40,8 +40,14 @@ uniform float lambda = 1.0;
 //datamoshing variables
 uniform float time;
 uniform float threshold = 0.15;
-uniform float intensity = 5.0;
+uniform float strength = 5.0;
+
+
 uniform float offsetRGB = 0.025;
+
+uniform vec2 offset_red;
+uniform vec2 offset_green;
+uniform vec2 offset_blue;
 
 in vec4 vertTexCoord;
 in vec4 vertColor;
@@ -125,14 +131,8 @@ vec4 getGradientAt(sampler2D tex_src, sampler2D tex_layer, vec2 texCoord, vec2 o
 }
 
 vec2 getFlow(vec2 uv, sampler2D tex_src, sampler2D tex_layer) {
-  vec2 flow = vec2(0.0);
-  
   vec4 current = texture(tex_src, uv);
   vec4 prev = texture(tex_layer, uv);
-  
-  vec2 offsetX = vec2(offset.x * offsetInc, 0.0);
-  vec2 offsetY = vec2(0.0, offset.y * offsetInc);
-
   //Frame Differencing (dT)
   vec4 differencing = prev - current;
   float vel = (differencing.r + differencing.g + differencing.b)/3;
@@ -140,8 +140,9 @@ vec2 getFlow(vec2 uv, sampler2D tex_src, sampler2D tex_layer) {
   vec4 newDifferencing = vec4(movement);
   //movement = pow(movement, 1.0);
 
-
   //Compute the gradient (movement Per Axis) (look alike sobel Operation)
+  vec2 offsetX = vec2(offset.x * offsetInc, 0.0);
+  vec2 offsetY = vec2(0.0, offset.y * offsetInc);
   vec4 gradX = getGradientAt(tex_src, tex_layer, uv, offsetX);
   vec4 gradY = getGradientAt(tex_src, tex_layer, uv, offsetY);
 
@@ -153,8 +154,8 @@ vec2 getFlow(vec2 uv, sampler2D tex_src, sampler2D tex_layer) {
   vec4 vy = newDifferencing * (gradY / gradMag);
 
   //vec4 flowCoded = packFlowAsColor(vx.r, vy.r, scale);
-  flow += getFlowVector(vx.x, vy.x, vec2(intensity));   
-
+  vec2 flow = vec2(0.0);
+  flow += getFlowVector(vx.x, vy.x, vec2(strength));   
   return flow;
 }
 
@@ -218,14 +219,29 @@ void main() {
 
   vec2 st;
   vec2 texel = vec2(1.0) / resolution;
-  st.x = uv.x + flow.x * texel.x * intensity;
-  st.y = uv.y + flow.y * texel.y * intensity;
+  st.x = uv.x + flow.x * texel.x *strength;
+  st.y = uv.y + flow.y * texel.y *strength;
 
   //shift rgb
-  vec2 shift = vec2(cos(flow.x * PI + time * 0.1), sin(flow.y * PI + time * 0.1)) * offsetRGB;
+  
+  vec2 shift = vec2(cos(flow.x * PI + time * 0.1), sin(flow.y * PI + time * 0.1));
+  vec2 shift_red = st +(shift *offset_red);
+  vec2 shift_green = st +(shift *offset_green);
+  vec2 shift_blue = st +(shift *offset_blue);
+  float r = texture(texture_layer,shift_red).r;
+  float g = texture(texture_layer,shift_green).g;
+  float b = texture(texture_layer,shift_blue).b;
+  
+  
+
+  /*
+  // vec2 shift = vec2(cos(flow.x * PI + time * 0.1), sin(flow.y * PI + time * 0.1)) * offsetRGB;
+  vec2 shift = vec2(cos(flow.x * PI + time * 0.1), sin(flow.y * PI + time * 0.1)) * offset_red.x;
   float r = texture(texture_layer, st + shift).r;
   float g = texture(texture_layer, st ).g;
   float b = texture(texture_layer, st - shift).b;
+  */
+  
 
   vec4 datamosh = texture(texture_layer, st);
   datamosh.rgb = vec3(r, g, b) * stepper;

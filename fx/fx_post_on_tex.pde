@@ -44,9 +44,11 @@ void filtering_render() {
 
 
     float threshold = noise(millis() * 0.0001, frameCount * 0.01) * 0.15;
-    float offsetRGB = noise(frameCount * 0.0125, millis() * 0.005) * 0.005;
-    float time = 0;
-		pass_render(fx_datamosh(render,on_g,threshold,offsetRGB,time));
+    float strength = abs(sin(frameCount *.01))*10;
+    vec2 offset_red = vec2().sin_wave(frameCount,.01,.02);
+  	vec2 offset_green = vec2().cos_wave(frameCount,.001,.01);
+  	vec2 offset_blue = vec2().sin_wave(frameCount,.005,.002);
+		pass_render(fx_datamosh(render,on_g,threshold,strength,offset_red,offset_green,offset_blue));
 
 		//pass_render(fx_flip(render,on_g,bvec2(mousePressed,keyPressed)));
 		

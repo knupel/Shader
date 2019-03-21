@@ -15,6 +15,8 @@ void setting_fx_post(ArrayList<FX> fx_list) {
   setting_datamosh(fx_list);
   setting_dither_bayer_8(fx_list);
 
+  setting_flip(fx_list);
+
   setting_grain(fx_list);
   setting_grain_scatter(fx_list);
 
@@ -181,6 +183,12 @@ void setting_dither_bayer_8(ArrayList<FX> fx_list) {
 
 
 
+// grain
+String set_flip = "flip";
+void setting_flip(ArrayList<FX> fx_list) {
+  fx_set_event(fx_list,set_flip,0,mousePressed,keyPressed);
+  init_fx(fx_list,set_flip,FX_FLIP);
+}
 
 
 

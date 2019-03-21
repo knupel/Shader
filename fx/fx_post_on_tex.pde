@@ -41,11 +41,22 @@ void filtering_render() {
 		// pass_render(fx_template(render,on_g));
 		// pass_render(fx_blur_circular(render,on_g)); 
 		// pass_render(fx_grain(render,on_g,random(1),1)); 
+
+
+    float threshold = noise(millis() * 0.0001, frameCount * 0.01) * 0.15;
+    float offsetRGB = noise(frameCount * 0.0125, millis() * 0.005) * 0.005;
+    float time = 0;
+		pass_render(fx_datamosh(render,on_g,threshold,offsetRGB,time));
+
+		//pass_render(fx_flip(render,on_g,bvec2(mousePressed,keyPressed)));
+		
 		// pass_render(fx_reaction_diffusion(render,on_g));
 		// pass_render(fx_halftone_line(render,on_g,20));
 		// pass_render(fx_scale(render,on_g,ivec2(mouseX,mouseY)));
 
-		pass_render(fx_pixel(render,on_g));
+		// pass_render(fx_pixel(render,on_g));
+
+		// 
 		
 		// pass_render(fx_mix(render,img_a,on_g));
 		//pass_render(fx_mix(render,render,on_g));

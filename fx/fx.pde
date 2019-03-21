@@ -48,11 +48,19 @@ void setup() {
 }
 
 boolean media_is;
+
+float total_fps;
+float avg_fps;
 void draw() {	
 	set_pattern(16,16,RGB,reset_is());
 
-	String rate = ""+frameRate;
+	String rate = "instant rate"+(int)frameRate + " | average rate:" + (int)avg_fps;
 	surface.setTitle(rate);
+	total_fps += frameRate;
+	avg_fps = total_fps/frameCount;
+
+
+
   if(mode_shader == 0) {
   	setting_fx_post(fx_manager);
 		draw_fx_post_on_tex();

@@ -31,9 +31,10 @@ vec2 set_uv(int flip_vertical, int flip_horizontal, vec2 res) {
   // flip 
   float condition_y = step(0.1, flip_vertical);
   uv.y = 1.0 -(uv.y *condition_y +(1.0 -uv.y) *(1.0 -condition_y));
-
+  
   float condition_x = step(0.1, flip_horizontal);
-  uv.x = 1.0 -(uv.x *condition_x +(1.0 -uv.x) *(1.0 -condition_x));
+  uv.x = uv.x *condition_x +(1.0 -uv.x) *(1.0 -condition_x);
+  // somethinf weird here, because when it's use in the other file.glsl the value must be reverse ?
 
   return uv;
 }

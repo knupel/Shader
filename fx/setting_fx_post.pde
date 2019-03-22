@@ -147,18 +147,24 @@ String set_datamosh = "datamosh";
 void setting_datamosh(ArrayList<FX> fx_list) {
   init_fx(fx_list,set_datamosh,FX_DATAMOSH);
 
-  float threshold = noise(millis() * 0.0001, frameCount * 0.01) * 0.15;
-  fx_set_threshold(fx_list,set_datamosh,threshold);
-  vec2 offset_red = vec2().sin_wave(frameCount,.01,.02).mult(.1);
-  vec2 offset_green = vec2().cos_wave(frameCount,.001,.01).mult(.1);
-  vec2 offset_blue = vec2().sin_wave(frameCount,.005,.002).mult(.1);
-  fx_set_pair(fx_list,set_datamosh,0,offset_red.array());
-  fx_set_pair(fx_list,set_datamosh,1,offset_green.array());
-  fx_set_pair(fx_list,set_datamosh,2,offset_blue.array());
+
   
   if(mousePressed) {
+    float threshold = abs(sin(frameCount *.01)) *0.1;
+   // println("threshold",threshold);
+    fx_set_threshold(fx_list,set_datamosh,threshold);
+    vec2 offset_red = vec2().sin_wave(frameCount,.01,.02).mult(.1);
+    vec2 offset_green = vec2().cos_wave(frameCount,.001,.01).mult(.1);
+    vec2 offset_blue = vec2().sin_wave(frameCount,.005,.002).mult(.1);
+    //println("offset red",offset_red);
+   // println("offset green",offset_green);
+   // println("offset blue",offset_blue);
+    fx_set_pair(fx_list,set_datamosh,0,offset_red.array());
+    fx_set_pair(fx_list,set_datamosh,1,offset_green.array());
+    fx_set_pair(fx_list,set_datamosh,2,offset_blue.array());
+
     float strength = map(mouseX,0,width,-100,100);
-    println("strnegth",strength);
+   // println("strength",strength);
     fx_set_strength(fx_list,set_datamosh,strength);
   }
 }

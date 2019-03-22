@@ -71,7 +71,7 @@ void draw() {
 		setting_fx_bg(fx_bg_manager);
 		draw_fx_bg();
 	}
-	// other_stuff();
+	other_stuff();
 
 	remote_command_movie();
 	reset(false);

@@ -79,9 +79,9 @@ void render_post_fx(PImage src_1, PImage src_2, PImage img_1, PImage img_2, PIma
 	// select_fx_post(src_1,null,null,get_fx(fx_manager,set_colour_change_a));
 	// select_fx_post(src_1,null,null,get_fx(fx_manager,set_colour_change_b));
   
-  // select_fx_post(movie_input,null,null,get_fx(fx_manager,set_datamosh));
-  select_fx_post(src_2,null,null,get_fx(fx_manager,set_datamosh));
-	// select_fx_post(src_1,null,null,get_fx(fx_manager,set_dither_bayer_8));
+  select_fx_post(src_2,null,null,get_fx(fx_manager,set_datamosh)); // we must pass the movie
+
+	//select_fx_post(src_1,null,null,get_fx(fx_manager,set_dither_bayer_8));
 
 	// select_fx_post(src_1,null,null,get_fx(fx_manager,set_flip));
 

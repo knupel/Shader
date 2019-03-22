@@ -2,7 +2,7 @@
 * POST FX shader collection
 *
 * 2019-2019
-* v 0.2.0
+* v 0.2.1
 * all filter bellow has been tested.
 * @author @stanlepunk
 * @see https://github.com/StanLepunK/Shader
@@ -558,9 +558,9 @@ PGraphics fx_colour_change_b(PImage source, boolean on_g, float angle, float str
 
 
 /**
-* Datamosh refactoring by Stan le punk inpired by Alexandre Rivaux 
+* Datamosh inpired by an algorithm of Alexandre Rivaux 
 * @see https://github.com/alexr4/datamoshing-GLSL
-* v 0.0.1
+* v 0.0.2
 *2019-2019
 */
 // setting by class FX
@@ -602,13 +602,9 @@ PGraphics fx_datamosh(PImage source, boolean on_g, float threshold, float streng
 
     fx_datamosh.set("texture",source);
     
-    // fx_datamosh.set("strength",5.0); // value from 0 to 1
-    fx_datamosh.set("strength",strength); // value from 0 to 1
+    fx_datamosh.set("strength",strength); // value from -infinite to infinite 
 		fx_datamosh.set("threshold",threshold); // value from 0 to 1
-		// fx_datamosh.set("offsetRGB",offsetRGB); // value from 0 to 1
 
-    // println("strength",strength);
-    // println("offset",offset_red,offset_green,offset_blue);
 		if(offset_red != null) {
 			fx_datamosh.set("offset_red",offset_red.x(),offset_red.y());
 		}

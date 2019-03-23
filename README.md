@@ -15,7 +15,7 @@ to use filter and all the tap of rope method you need to download Rope library
 and always [shader toy](https://github.com/SableRaf/Filters4Processing),[sand box](http://glslsandbox.com/),[ISF: interactive Shader Format](https://www.interactiveshaderformat.com/), [Alexandre Rivaux](https://github.com/alexr4/datamoshing-GLSL).
 
 ## setup
-In `setup()` select your mode 0, 1 or 2 depend if you want work on background shader, on post FX on `g` or on your own PGgraphics
+In `setup()` select your mode 0, 1 or 2 depend if you want work on `background shader` or on `post fx` on `g` (g is the main `PGraphics` of Processing) or on your own `PGgraphics`
 
 ## movie command
 forward `ARROW RIGHT`

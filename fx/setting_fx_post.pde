@@ -1,9 +1,67 @@
 /**
 * SETTING FX POST method
-* v 0.2.5
+* v 0.2.6
 * 2019-2019
 */
 
+
+// INCRUSTATION
+// mix
+/*
+* 1 multiply
+* 2 screen
+* 3 exclusion
+* 4 overlay
+* 5 hard_light
+* 6 soft_light
+* 7 color_dodge
+* 8 color_burn
+* 9 linear_dodge
+* 10 linear_burn
+* 11 vivid_light
+* 12 linear_light
+* 13 pin_light
+* 14 hard_mix
+* 15 subtract
+* 16 divide
+* 17 addition
+* 18 difference
+* 19 darken
+* 20 lighten
+* 21 invert
+* 22 invert_rgb
+* 23 main
+* 24 layer
+*/
+int mode = 1;
+void fx_inc(PImage src) {
+  boolean on_g = true;
+  if(mousePressed) {
+    mode = ceil(random(22));
+    println("mode",mode);
+  }
+  
+  // int mode = 2;
+  // vec3 level_source = vec3(1);
+  vec3 level_source = abs(vec3().sin_wave(frameCount,.01,.02,.03));
+  vec3 level_layer = abs(vec3().cos_wave(frameCount,.02,.04,.01));
+  if(src.width == inc_fx.width && src.height == inc_fx.height) {
+    fx_mix(src,inc_fx,on_g,mode,level_source,level_layer);
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+// CLASSIC POST FX
 void setting_fx_post(ArrayList<FX> fx_list) {
   setting_blur_circular(fx_list);
   setting_blur_gaussian(fx_list);

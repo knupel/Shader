@@ -6,60 +6,36 @@ void setup_fx_post_on_g() {
 	select_input();
 }
 
+
+
 void draw_fx_post_on_g(PImage img_1, PImage img_2, PImage pattern_1, PImage pattern_2) {
 	set_movie(input());
 	set_img(input());
-	filter_g(img_1,img_2,pattern_1,pattern_2);
+	if((movie_input != null || img_input != null) && !window_change_is()) {
+    if(movie_input != null) {
+    	filter_g(movie_input, img_1,img_2, pattern_1,pattern_2);
+    }
+    if(img_input != null) {
+    	filter_g(img_input, img_1,img_2, pattern_1,pattern_2);
+    }
+	}
 }
 
 PImage temp ;
 float angle_g;
+boolean incrust_is = true;
+void filter_g(PImage input, PImage img_1, PImage img_2, PImage pattern_1, PImage pattern_2) {
 
-void filter_g(PImage img_1, PImage img_2, PImage pattern_1, PImage pattern_2) {
-	/*
-	background_rope(255,0,0,50);
-	fill(0,255,255);
-	noStroke();
-	rectMode(CENTER);
-	angle_g += .01;
-	pushMatrix();
-	translate(mouseX,mouseY);
-	rotate(angle_g);
-	rect(0,0,width,height/4);
-	popMatrix();
-	*/
-	
-	// if(!window_change_is()) fx_mix_order_media(img_1,img_2,mode_mix);
-	// if(!window_change_is()) fx_template(img_1);
-	
 	boolean with_g = true;
-	if((movie_input != null || img_input != null) && !window_change_is()) {
-		if(img_input != null) {
-			if(with_g) {
-				// image(img_input,CENTER);
-				// background(img_input,CENTER);
-				render_post_fx(g,img_input,img_1,img_2,pattern_1,pattern_2);
-			} else {
-				render_post_fx(img_input,null,img_1,img_2,pattern_1,pattern_2);
-			}
-		} else if(movie_input != null) {
-			if(with_g) {
-				// image(movie_input,CENTER);
-				background(movie_input,CENTER);
-				render_post_fx(g,movie_input,img_1,img_2,pattern_1,pattern_2);
-			} else {
-				render_post_fx(movie_input,null,img_1,img_2,pattern_1,pattern_2);
-			}
-		} 
-		
-		
-
-
-	} 
-	if(img_input != null && !window_change_is()) {
-		// fx(img_input,img_input, mode_mix);
+  if(with_g) {
+  	// image(movie_input,CENTER);
+  	background(input,CENTER);
+  	if(incrust_is) fx_inc_copy(g);
+  	render_post_fx(g,input,img_1,img_2,pattern_1,pattern_2);
+  } else {
+  	render_post_fx(input,null,img_1,img_2,pattern_1,pattern_2);
 	}
-
+	if(incrust_is) fx_inc(g);
 }
 
 
@@ -79,9 +55,9 @@ void render_post_fx(PImage src_1, PImage src_2, PImage img_1, PImage img_2, PIma
 	// select_fx_post(src_1,null,null,get_fx(fx_manager,set_colour_change_a));
 	// select_fx_post(src_1,null,null,get_fx(fx_manager,set_colour_change_b));
   
-  select_fx_post(src_2,null,null,get_fx(fx_manager,set_datamosh)); // we must pass the movie
+  // select_fx_post(src_2,null,null,get_fx(fx_manager,set_datamosh)); // we must pass the movie
 
-	//select_fx_post(src_1,null,null,get_fx(fx_manager,set_dither_bayer_8));
+	// select_fx_post(src_1,null,null,get_fx(fx_manager,set_dither_bayer_8));
 
 	// select_fx_post(src_1,null,null,get_fx(fx_manager,set_flip));
 
@@ -90,7 +66,7 @@ void render_post_fx(PImage src_1, PImage src_2, PImage img_1, PImage img_2, PIma
 
 	// select_fx_post(src_1,null,null,get_fx(fx_manager,set_halftone_dot));
 	// select_fx_post(src_1,null,null,get_fx(fx_manager,set_halftone_line));
-	// select_fx_post(src_1,null,null,get_fx(fx_manager,set_halftone_multi));
+	select_fx_post(src_1,null,null,get_fx(fx_manager,set_halftone_multi));
 
 	// select_fx_post(src_1,null,null,get_fx(fx_manager,set_image));
 
@@ -118,26 +94,22 @@ void render_post_fx(PImage src_1, PImage src_2, PImage img_1, PImage img_2, PIma
 }
 
 
-/*
-void select_filter(int... type) {
-	select_filter(g,g,type);
-}
-*/
 
 
 
 
-/**
-FILTER SELECTOR
-v 0.0.3
-2019-2019
-*/
-/*
-void select_filter(PImage main, PImage layer_a, PImage layer_b, int... type)  {
-	FX [] fx = new FX[type.length];
-	for(int i = 0 ; i < fx.length ; i++) {
-		fx[0] = new FX(null,type[i]);
+
+
+PImage inc_fx;
+void fx_inc_copy(PImage src) {
+	if(inc_fx == null || inc_fx.width != src.width || inc_fx.height != src.height) {
+		inc_fx = createImage(src.width,src.height,RGB);
 	}
-	if(fx != null) select_filter(main,layer_a,layer_b,fx);
+	inc_fx.copy(src,0,0,src.width,src.height, 0,0,src.width,src.height);
 }
-*/
+
+
+
+
+
+

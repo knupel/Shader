@@ -33,6 +33,7 @@ void load_media() {
 int mode_shader = 1; // POST FX on G
 // int mode_shader = 2; // FX BACKGROUND
 
+
 void setup() {
 	// if you change the shader/fx folder, utili in case you export your sketch, the shader folder is not exported.
 	// set_fx_path(sketchPath(2)+"/shader/fx/"); 
@@ -59,7 +60,7 @@ void draw() {
 	total_fps += frameRate;
 	avg_fps = total_fps/frameCount;
 
-
+  
 
   if(mode_shader == 0) {
   	setting_fx_post(fx_manager);
@@ -71,8 +72,8 @@ void draw() {
 		setting_fx_bg(fx_bg_manager);
 		draw_fx_bg();
 	}
-	other_stuff();
-
+	//other_stuff();
+  
 	remote_command_movie();
 	reset(false);
 }

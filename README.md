@@ -1,9 +1,47 @@
 ## Shader
-This project is a processing framework to customize your background via the glsl shader or to filtering your rendering.
+This project is a Processing laboratory framework to customize background via the glsl shader or to filtering your rendering.
 there is a collection of background shader and more important collection of post fx filtering.
+Plus a method to catch the background before the post rendering to incrust it after the filter.
 
-For POST FX the shader available is gaussian blur, circular blur, radial blur, reaction diffusion, change spectrum HSB, RGB slit, dithering, grain, halftone, halftone line, scale,warp procedurale, warp texture, pixelate...
+For POST FX the shader available is gaussian blur, circular blur, radial blur, reaction diffusion, change spectrum HSB, RGB slit, dithering, datamosh, grain, halftone, halftone line, scale,warp procedural, warp texture, pixelate...
 All shaders can be use on a specific PGraphics or on the main rendering, obviously it's faster to use them on main render `g`.
+
+## WARNING
+So be careful it's my lab, that can be a mess... so you need to cheeck your brain to come in mine. But i'm pretty you can find a lot stuff helpful in the BAZAR !
+
+
+### Select target PGraphics
+on the first tab select which mode
+```
+// int mode_shader = 0; // POST FX on PGrahics > texture
+int mode_shader = 1; // POST FX on G
+// int mode_shader = 2; // FX BACKGROUND
+```
+After you need to activate which filter you want, if you work on `g` go on tab `fx_post_on_g.pde` if you want work on an other PGraphics go on tab `fx_post_on_tex.pde`
+
+for now if you work on `g` you can inscrust `g` on your filtering result to do that, make `boolean incrust_is = true;`laboratory
+```
+boolean incrust_is = true;
+void filter_g(PImage input, PImage img_1, PImage img_2, PImage pattern_1, PImage pattern_2) {
+
+	boolean with_g = true;
+  if(with_g) {
+  	// image(movie_input,CENTER);
+  	background(input,CENTER);
+  	if(incrust_is) fx_inc_copy(g);
+  	render_post_fx(g,input,img_1,img_2,pattern_1,pattern_2);
+  } else {
+  	render_post_fx(input,null,img_1,img_2,pattern_1,pattern_2);
+	}
+	if(incrust_is) fx_inc(g);
+}
+```
+
+### post fx
+tab 'setting_fx_post.pde'
+
+### background fx 
+on the tab 'setting_fx_bg.pde'
 
 ## rope library
 to use filter and all the tap of rope method you need to download Rope library
@@ -49,6 +87,7 @@ movie pause `SPACE`
 ![dither bayer 8](https://github.com/StanLepunK/Shader/blob/master/img_link/IM%20184810.jpg)
 ![threshold](https://github.com/StanLepunK/Shader/blob/master/img_link/IM%20184811.jpg)
 ![datamosh](https://github.com/StanLepunK/Shader/blob/master/img_link/IM%20184812.jpg)
+![post incrustation](https://github.com/StanLepunK/Shader/blob/master/img_link/IM%20184813.jpg)
 ![cellular](https://github.com/StanLepunK/Shader/blob/master/img_link/IM%20300809.jpg)
 ![heart](https://github.com/StanLepunK/Shader/blob/master/img_link/IM%20300810.jpg)
 ![voronoi hex](https://github.com/StanLepunK/Shader/blob/master/img_link/IM%20300811.jpg)

@@ -38,10 +38,10 @@ void filter_g(PImage input, PImage img_1, PImage img_2, PImage pattern_1, PImage
 ```
 
 ### post fx
-tab 'setting_fx_post.pde'
+tab `setting_fx_post.pde`
 
 ### background fx 
-on the tab 'setting_fx_bg.pde'
+on the tab `setting_fx_bg.pde`
 
 ## rope library
 to use filter and all the tap of rope method you need to download Rope library

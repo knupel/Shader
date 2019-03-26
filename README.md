@@ -7,7 +7,7 @@ For POST FX the shader available is gaussian blur, circular blur, radial blur, r
 All shaders can be use on a specific PGraphics or on the main rendering, obviously it's faster to use them on main render `g`.
 
 ## WARNING
-So be careful it's my lab, that can be a mess... so you need to cheeck your brain to come in mine. But i'm pretty you can find a lot stuff helpful in the BAZAR !
+Be careful it's my lab, that can be a mess... so you need to check your brain to come in mine, but i'm pretty you can find a lot stuffes helpful in this BAZAR!
 
 
 ### Select target PGraphics

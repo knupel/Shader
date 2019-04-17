@@ -68,6 +68,9 @@ sound down `ARROW DOWN`
 
 movie pause `SPACE`
 
+## command
+enable incrustation : `i` only with `fx_pos_on_g
+
 
 ## result
 ![blur radial](https://github.com/StanLepunK/Shader/blob/master/img_link/IM%20184796.jpg)

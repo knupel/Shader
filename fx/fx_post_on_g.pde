@@ -23,19 +23,19 @@ void draw_fx_post_on_g(PImage img_1, PImage img_2, PImage pattern_1, PImage patt
 
 PImage temp ;
 float angle_g;
-boolean incrust_is = true;
+
 void filter_g(PImage input, PImage img_1, PImage img_2, PImage pattern_1, PImage pattern_2) {
 
 	boolean with_g = true;
   if(with_g) {
   	// image(movie_input,CENTER);
   	background(input,CENTER);
-  	if(incrust_is) fx_inc_copy(g);
+  	if(incrust_is()) fx_inc_copy(g);
   	render_post_fx(g,input,img_1,img_2,pattern_1,pattern_2);
   } else {
   	render_post_fx(input,null,img_1,img_2,pattern_1,pattern_2);
 	}
-	if(incrust_is) fx_inc(g);
+	if(incrust_is()) fx_inc(g);
 }
 
 

@@ -52,17 +52,17 @@ PGraphics generate_pattern(int mode, int sx, int sw) {
 
 
 
-import processing.video.Movie;
-Movie movie_input;
-PImage img_input;
+
+
 
 /**
 set img from path
 */
+PImage img_input;
 void set_img(String path) {
 	if(img_input == null && path != null && !media_is) {
 		println(path);
-		if(extension_is(path,"jpg","jpeg","JPG","JPEG")) {
+		if(extension_is(path,"jpg","jpeg")) {
 			println("method set_img():",path);
 			img_input = loadImage(path);
 			media_is = true;
@@ -81,9 +81,11 @@ void set_img(String path) {
 /**
 set movie from path
 */
+import processing.video.Movie;
+Movie movie_input;
 void set_movie(String path) {
 	if(movie_input == null && path != null && !media_is) {
-		if(extension_is(path,"avi","AVI","mov","MOV","mp4","mpg")) {
+		if(extension_is(path,"avi","mov","mp4","mpg")) {
 			println("method set_movie():",path);
 			movie_input = new Movie(this,path);
 			movie_input.loop();

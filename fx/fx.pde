@@ -16,6 +16,7 @@
 * 
 * Enjoy, share, copy, paste, improve and blahblah
 * Processing 3.5.3
+* Rope Library 0.6.2
 */
 PGraphics render;
 
@@ -100,6 +101,14 @@ void other_stuff() {
 
 
 
+boolean incrust_is = true;
+void incrust_is(boolean is) {
+	incrust_is = is;
+}
+
+boolean incrust_is() {
+	return incrust_is;
+}
 
 
 boolean reset = false;
@@ -139,6 +148,8 @@ void mousePressed() {
 	
 }
 
+
+
 boolean key_up = false;
 boolean key_down = false;
 boolean key_left = false;
@@ -171,6 +182,10 @@ void keyPressed() {
 
 	if(key == 'n') {
 		reset(true);
+	}
+
+	if(key == 'i') {
+		incrust_is =  incrust_is? false:true;
 	}
 }
 

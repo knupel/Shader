@@ -21,7 +21,7 @@ void draw_fx_post_on_g(PImage img_1, PImage img_2, PImage pattern_1, PImage patt
 	}
 }
 
-PImage temp ;
+PImage temp;
 float angle_g;
 
 void filter_g(PImage input, PImage img_1, PImage img_2, PImage pattern_1, PImage pattern_2) {
@@ -30,7 +30,9 @@ void filter_g(PImage input, PImage img_1, PImage img_2, PImage pattern_1, PImage
   if(with_g) {
   	// image(movie_input,CENTER);
   	background(input,CENTER);
-  	if(incrust_is()) fx_inc_copy(g);
+  	if(incrust_is()) {
+  		fx_inc_copy(g);
+  	}
   	render_post_fx(g,input,img_1,img_2,pattern_1,pattern_2);
   } else {
   	render_post_fx(input,null,img_1,img_2,pattern_1,pattern_2);
@@ -62,11 +64,11 @@ void render_post_fx(PImage src_1, PImage src_2, PImage img_1, PImage img_2, PIma
 	// select_fx_post(src_1,null,null,get_fx(fx_manager,set_flip));
 
 	// select_fx_post(src_1,null,null,get_fx(fx_manager,set_grain));
-	// select_fx_post(src_1,null,null,get_fx(fx_manager,set_grain_scatter));
+	select_fx_post(src_1,null,null,get_fx(fx_manager,set_grain_scatter));
 
 	// select_fx_post(src_1,null,null,get_fx(fx_manager,set_halftone_dot));
 	// select_fx_post(src_1,null,null,get_fx(fx_manager,set_halftone_line));
-	select_fx_post(src_1,null,null,get_fx(fx_manager,set_halftone_multi));
+	// select_fx_post(src_1,null,null,get_fx(fx_manager,set_halftone_multi));
 
 	// select_fx_post(src_1,null,null,get_fx(fx_manager,set_image));
 

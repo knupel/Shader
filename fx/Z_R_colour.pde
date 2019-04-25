@@ -1,10 +1,10 @@
 /**
-Rope COLOUR
-v 0.7.1
+* Rope COLOUR
+*v 0.9.1
 * Copyleft (c) 2016-2019 
 * Stan le Punk > http://stanlepunk.xyz/
-Rope – Romanesco Processing Environment – 
-Processing 3.5.3
+* Processing 3.5.3
+* Library Rope 0.7.0.1
 * @author @stanlepunk
 * @see https://github.com/StanLepunK/Rope_framework
 *
@@ -19,83 +19,516 @@ Processing 3.5.3
 
 
 /**
-COLOUR LIST class
-v 0.0.2
+* COLOUR LIST class
+* v 0.2.1
+* 2017-2019
 */
-/**
-* Idea for the future add a list name for colour
+public class R_Colour implements rope.core.R_Constants, rope.core.R_Constants_Colour {
+  ArrayList<Palette> list;
+  PApplet pa;
+  public R_Colour(PApplet pa, int... list_colour) {
+    this.list = new ArrayList<Palette>();
+    this.pa = pa;
+    Palette p = new Palette(list_colour);
+    list.add(p);
+  }
 
-* get the colour by index or name
-*/
-public class ROPE_colour implements rope.core.R_Constants {
-	int [] c;
-	public ROPE_colour(int... c) {
-		this.c = new int[c.length];
-		for(int i = 0; i < c.length ; i++) {
-			this.c[i] = c[i];
-		}
-	}
+  // add
+  public void add(int [] colour) {
+    list.get(0).add(colour);
+  }
 
-	public int[] get_colour() {
-		return c;
-	}
+  public void add(int [] colour, int group) {
+    if(group >= 0 && group < list.size()) {
+      list.get(group).add(colour);
+    }
+  }
 
-	float[] get_hue() {
-		float[] component = new float[c.length];
-		for(int i = 0 ; i < c.length ; i++) {
-			component[i] = hue(c[i]);
-		}
-		return component;
-	}
+  public void add(int colour, int group) {
+    if(group >= 0 && group < list.size()) {
+      list.get(group).add(colour);
+    }
+  }
 
-	public float[] get_saturation() {
-		float[] component = new float[c.length];
-		for(int i = 0 ; i < c.length ; i++) {
-			component[i] = saturation(c[i]);
-		}
-		return component;
-	}
+  public void add(int colour) {
+    list.get(0).add(colour);
+  }
 
-	public float[] get_brightness() {
-		float[] component = new float[c.length];
-		for(int i = 0 ; i < c.length ; i++) {
-			component[i] = brightness(c[i]);
-		}
-		return component;
-	}
+ 
+  // clear
+  public void clear() {
+    for(Palette p : list) {
+      p.clear();
+    }
+  }
 
-	public float[] get_red() {
-		float[] component = new float[c.length];
-		for(int i = 0 ; i < c.length ; i++) {
-			component[i] = red(c[i]);
-		}
-		return component;
-	}
+  public void clear(int group) {
+    if(group >= 0 && group < list.size()) {
+      list.get(group).clear();
+    } else {
+      printErr("class R_Colour method clear(",group,") this group don't match with any group");
+    }
+  }
 
-	public float[] get_green() {
-		float[] component = new float[c.length];
-		for(int i = 0 ; i < c.length ; i++) {
-			component[i] = green(c[i]);
-		}
-		return component;
-	}
 
-	public float[] get_blue() {
-		float[] component = new float[c.length];
-		for(int i = 0 ; i < c.length ; i++) {
-			component[i] = blue(c[i]);
-		}
-		return component;
-	}
+  // remove
+  public void remove(int target) {
+    list.get(0).remove(target);
+  }
 
-	public float[] get_alpha() {
-		float[] component = new float[c.length];
-		for(int i = 0 ; i < c.length ; i++) {
-			component[i] = blue(c[i]);
-		}
-		return component;
-	}
+  public void remove(int target, int group) {
+    if(group >= 0 && group < list.size()) {
+      list.get(group).remove(target);
+    } else {
+      printErr("class R_Colour method remove(",group,") this group don't match with any group");
+    }
+  }
+  
+
+  // GET
+  public int [] get() {
+    return get(0);
+  }
+
+  public int [] get(int group) {
+    if(group >= 0 && group < list.size()) {
+      return list.get(group).array();
+    } else {
+      System.err.println("class R_Color method get() no group match with your demand, instead 'null' is return");
+      return null;
+    }
+  }
+
+  public int get_colour(int target) {
+    return get_colour(target,0);
+  }
+
+  public int get_colour(int target, int group) {
+    if(target >= 0 && group >= 0 && group < list.size() && target < list.get(group).array().length) {
+      return list.get(group).array()[target];
+    } else {
+      System.err.println("class R_Color method get_colour() no target match with your demand, instead '0' is return");
+      return 0;
+    }
+  }
+
+
+  // component
+  public float get_hue(int target) {
+    return get_hue(target,0);
+  }
+
+  public float get_hue(int target, int group) {
+    if(group >= 0 && group < list.size()) {
+      return pa.hue(list.get(group).get(target));
+    } else {
+      printErr("class R_Color method get_hue(",group,") no group match with your demand, instead '0' is return");
+      return 0;
+    }
+  }
+  
+  public float get_saturation(int target) {
+    return get_saturation(target,0);
+  }
+
+  public float get_saturation(int target, int group) {
+    if(group >= 0 && group < list.size()) {
+      return pa.saturation(list.get(group).get(target));
+    } else {
+      printErr("class R_Color method get_saturation(",group,") no group match with your demand, instead '0' is return");
+      return 0;
+    }
+  }
+  
+  public float get_brightness(int target) {
+    return get_brightness(target,0);
+  }
+
+  public float get_brightness(int target, int group) {
+    if(group >= 0 && group < list.size()) {
+      return pa.brightness(list.get(group).get(target));
+    } else {
+      printErr("class R_Color method get_brightness(",group,") no group match with your demand, instead '0' is return");
+      return 0;
+    }
+  }
+
+  public float get_red(int target) {
+    return get_red(target,0);
+  }
+  public float get_red(int target, int group) {
+    if(group >= 0 && group < list.size()) {
+      return pa.red(list.get(group).get(target));
+    } else {
+      printErr("class R_Color method get_red(",group,") no group match with your demand, instead '0' is return");
+      return 0;
+    }
+  }
+  
+  public float get_green(int target) {
+    return get_green(target,0);
+  }
+
+  public float get_green(int target, int group) {
+    if(group >= 0 && group < list.size()) {
+      return pa.green(list.get(group).get(target));
+    } else {
+      printErr("class R_Color method get_green(",group,") no group match with your demand, instead '0' is return");
+      return 0;
+    }
+  }
+
+  public float get_blue(int target) {
+    return get_blue(target,0);
+  }
+  public float get_blue(int target, int group) {
+    if(group >= 0 && group < list.size()) {
+     return pa.blue(list.get(group).get(target));
+    } else {
+      printErr("class R_Color method get_blue(",group,") no group match with your demand, instead '0' is return");
+      return 0;
+    }
+  }
+
+  public float get_alpha(int target) {
+    return get_alpha(target,0);
+  }
+
+  public float get_alpha(int target, int group) {
+    if(group >= 0 && group < list.size()) {
+      return pa.alpha(list.get(group).get(target));
+    } else {
+      printErr("class R_Color method get_alpha(",group,") no group match with your demand, instead '0' is return");
+      return 0;
+    }
+  }
+
+
+  
+  // multi component
+  public vec3 get_hsb(int target) {
+    return get_hsb(target,0);
+  }
+
+  public vec3 get_hsb(int target, int group) {
+    if(group >= 0 && group < list.size()) {
+      int c = list.get(group).get(target);
+      return vec3(pa.hue(c),pa.saturation(c),pa.brightness(c));
+    } else {
+      printErr("class R_Color method get_hsb(",group,") no group match with your demand, instead 'null' is return");
+      return null;
+    }
+  }
+
+  public vec4 get_hsba(int target) {
+    return get_hsba(target,0);
+  }
+
+  public vec4 get_hsba(int target, int group) {
+    if(group >= 0 && group < list.size()) {
+      int c = list.get(group).get(target);
+      return vec4(pa.hue(c),pa.saturation(c),pa.brightness(c),pa.alpha(c));
+    } else {
+      printErr("class R_Color method get_hsba(",group,") no group match with your demand, instead 'null' is return");
+      return null;
+    }
+  }
+
+  public vec3 get_rgb(int target) {
+    return get_rgb(target,0);
+  }
+
+  public vec3 get_rgb(int target, int group) {
+    if(group >= 0 && group < list.size()) {
+      int c = list.get(group).get(target);
+      return vec3(pa.red(c),pa.green(c),pa.blue(c));
+    } else {
+      printErr("class R_Color method get_rgb(",group,") no group match with your demand, instead 'null' is return");
+      return null;
+    }
+  }
+  
+  public vec4 get_rgba(int target) {
+    return get_rgba(target,0);
+  }
+
+  public vec4 get_rgba(int target, int group) {
+    if(group >= 0 && group < list.size()) {
+      int c = list.get(group).get(target);
+      return vec4(pa.red(c),pa.green(c),pa.blue(c),pa.alpha(c));
+    } else {
+      printErr("class R_Color method get_rgba(",group,") no group match with your demand, instead 'null' is return");
+      return null;
+    }
+  }
+  
+  
+
+  // get array single
+  public float [] hue() {
+    return hue(0);
+  }
+
+  public float [] hue(int group) {
+    if(group >= 0 && group < list.size()) {
+      float[] component = new float[list.get(group).size()];
+      for(int i = 0 ; i < component.length ; i++) {
+        int c = list.get(group).get(i);
+        component[i] = pa.hue(c);
+      }
+      return component;
+    } else {
+      printErr("class R_Color method hue(",group,") no group match with your demand, instead 'null' is return");
+      return null; 
+    }
+  }
+
+
+  public float [] saturation() {
+    return saturation(0);
+  }
+
+  public float [] saturation(int group) {
+    if(group >= 0 && group < list.size()) {
+      float[] component = new float[list.get(group).size()];
+      for(int i = 0 ; i < component.length ; i++) {
+        int c = list.get(group).get(i);
+        component[i] = pa.saturation(c);
+      }
+      return component;
+    } else {
+      printErr("class R_Color method saturation(",group,") no group match with your demand, instead 'null' is return");
+      return null; 
+    }
+  }
+
+  public float [] brightness() {
+    return brightness(0);
+  }
+
+  public float [] brightness(int group) {
+    if(group >= 0 && group < list.size()) {
+      float[] component = new float[list.get(group).size()];
+      for(int i = 0 ; i < component.length ; i++) {
+        int c = list.get(group).get(i);
+        component[i] = pa.brightness(c);
+      }
+      return component;
+    } else {
+      printErr("class R_Color method brightness(",group,") no group match with your demand, instead 'null' is return");
+      return null; 
+    }
+  }
+
+  public float [] red() {
+    return red(0);
+  }
+
+  public float [] red(int group) {
+    if(group >= 0 && group < list.size()) {
+      float[] component = new float[list.get(group).size()];
+      for(int i = 0 ; i < component.length ; i++) {
+        int c = list.get(group).get(i);
+        component[i] = pa.red(c);
+      }
+      return component;
+    } else {
+      printErr("class R_Color method red(",group,") no group match with your demand, instead 'null' is return");
+      return null; 
+    }
+  }
+
+  public float [] green() {
+    return green(0);
+  }
+
+  public float [] green(int group) {
+    if(group >= 0 && group < list.size()) {
+      float[] component = new float[list.get(group).size()];
+      for(int i = 0 ; i < component.length ; i++) {
+        int c = list.get(group).get(i);
+        component[i] = pa.green(c);
+      }
+      return component;
+    } else {
+      printErr("class R_Color method green(",group,") no group match with your demand, instead 'null' is return");
+      return null; 
+    }
+  }
+  
+  public float [] blue() {
+    return blue(0);
+  }
+
+  public float [] blue(int group) {
+    if(group >= 0 && group < list.size()) {
+      float[] component = new float[list.get(group).size()];
+      for(int i = 0 ; i < component.length ; i++) {
+        int c = list.get(group).get(i);
+        component[i] = pa.blue(c);
+      }
+      return component;
+    } else {
+      printErr("class R_Color method blue(",group,") no group match with your demand, instead 'null' is return");
+      return null;
+    }
+  }
+
+  public float [] alpha() {
+    return alpha(0);
+  }
+
+  public float [] alpha(int group) {
+    if(group >= 0 && group < list.size()) {
+      float[] component = new float[list.get(0).size()];
+      for(int i = 0 ; i < component.length ; i++) {
+        int c = list.get(group).get(i);
+        component[i] = pa.blue(c);
+      }
+      return component;
+    } else {
+      printErr("class R_Color method alpha(",group,") no group match with your demand, instead 'null' is return");
+      return null;
+    }
+  }
+
+
+
+  // get array multi
+  public vec3 [] hsb() {
+    return  hsb(0);
+  }
+  
+  public vec3 [] hsb(int group) {
+    if(group >= 0 && group < list.size()) {
+      vec3[] component = new vec3[list.get(group).size()];
+      for(int i = 0 ; i < component.length ; i++) {
+        int c = list.get(group).get(i);
+        component[i] = vec3(pa.hue(c),pa.saturation(c),pa.brightness(c));
+      }
+      return component;
+    } else {
+      printErr("class R_Color method hsb(",group,") no group match with your demand, instead 'null' is return");
+      return null;
+    }
+  }
+  
+  public vec3 [] rgb() {
+    return rgb(0);
+  }
+
+  public vec3 [] rgb(int group) {
+    if(group >= 0 && group < list.size()) {
+      vec3[] component = new vec3[list.get(group).size()];
+      for(int i = 0 ; i < component.length ; i++) {
+        int c = list.get(group).get(i);
+        component[i] = vec3(pa.red(c),pa.green(c),pa.blue(c));
+      }
+      return component;
+    } else {
+      printErr("class R_Color method rgb(",group,") no group match with your demand, instead 'null' is return");
+      return null;
+    }
+
+  }
+
+  public vec4 [] hsba() {
+    return hsba(0);
+  }
+
+  public vec4 [] hsba(int group) {
+    if(group >= 0 && group < list.size()) {
+      vec4[] component = new vec4[list.get(0).size()];
+      for(int i = 0 ; i < component.length ; i++) {
+        int c = list.get(0).get(i);
+        component[i] = vec4(pa.hue(c),pa.saturation(c),pa.brightness(c),pa.alpha(c));
+      }
+      return component;
+    } else {
+      printErr("class R_Color method hsba(",group,") no group match with your demand, instead 'null' is return");
+      return null;
+    }
+  }
+  
+  public vec4 [] rgba() {
+    return rgba(0);
+  }
+
+  public vec4 [] rgba(int group) {
+    if(group >= 0 && group < list.size()) {
+      vec4[] component = new vec4[list.get(group).size()];
+      for(int i = 0 ; i < component.length ; i++) {
+        int c = list.get(group).get(i);
+        component[i] = vec4(pa.red(c),pa.green(c),pa.blue(c),pa.alpha(c));
+      }
+      return component;
+    } else {
+      printErr("class R_Color method rgba(",group,") no group match with your demand, instead 'null' is return");
+      return null;
+    }
+  }
+
+
+  
+
+
+  /**
+  * Palette
+  * v 0.1.0
+  * 2019-2019
+  */
+  private class Palette {
+    private ArrayList<Integer> list;
+    private Palette(int... colour) {
+      list = new ArrayList<Integer>();
+      add(colour);
+    }
+
+    private void add(int... colour) {
+      for(int i = 0 ; i < colour.length ; i++) {
+        list.add(colour[i]);
+      }
+    }
+
+    private void clear() {
+      list.clear();
+    }
+
+    private void remove(int target) {
+      if(target >=0 && target < list.size()) {
+        list.remove(target);
+      }
+    }
+
+    private int size() {
+      return list.size();
+    }
+
+    private int get(int target) {
+      if(target >= 0 && target < list.size()) {
+        return list.get(target);
+      } else {
+        printErr("class R_Colour > private class Palette > method get(",target,") don't match with any element of list instead '0 is return");
+        return 0;
+      }
+
+    }
+
+    private int [] array() {
+      // May be in the next Processing version when Lambda expression can be use
+      // int[] array = list.stream().mapToInt(i->i).toArray(); 
+      int[] array = new int[list.size()];
+      for(int i = 0 ; i < array.length ; i++) {
+        array[i] = list.get(i);
+      }
+      return array;
+    }
+  }
 }
+
+
+
+
 
 
 
@@ -150,198 +583,146 @@ float camaieu(float max, float color_ref, float range) {
 
 /**
 color pool 
-v 0.2.0
+v 0.4.0
 */
-// color pool vec4 RGB
-vec4 [] color_pool_RGB(int num) {
-  vec2 sat_range = vec2(g.colorModeY) ;
-  vec2 bright_range = vec2(g.colorModeZ) ;
-  vec2 alpha_range = vec2(g.colorModeA) ;
-  float range = g.colorModeX *.5 ;
-  int num_group = 1 ;
-  float key_hue = -1 ;
-  return color_pool_RGB(num, num_group, key_hue, range, sat_range, bright_range, alpha_range) ;
-}
-
-vec4 [] color_pool_RGB(int num, float key_hue) {
-  vec2 sat_range = vec2(g.colorModeY) ;
-  vec2 bright_range = vec2(g.colorModeZ) ;
-  vec2 alpha_range = vec2(g.colorModeA) ;
-  float range = g.colorModeX *.5 ;
-  int num_group = 1 ;
-  return color_pool_RGB(num, num_group, key_hue, range, sat_range, bright_range, alpha_range) ;
-}
-
-
-vec4 [] color_pool_RGB(int num, int num_group, float hue_range) {
-  vec2 sat_range = vec2(g.colorModeY) ;
-  vec2 bright_range = vec2(g.colorModeZ) ;
-  vec2 alpha_range = vec2(g.colorModeA) ;
-  float key_hue = -1 ;
-  return color_pool_RGB(num, num_group, key_hue, hue_range, sat_range, bright_range, alpha_range) ;
-}
-
-
-vec4 [] color_pool_RGB(int num, int num_group, float key_hue, float hue_range) {
-  vec2 sat_range = vec2(g.colorModeY) ;
-  vec2 bright_range = vec2(g.colorModeZ) ;
-  vec2 alpha_range = vec2(g.colorModeA) ;
-  return color_pool_RGB(num, num_group, key_hue, hue_range, sat_range, bright_range, alpha_range) ;
-}
-
-vec4 [] color_pool_RGB(int num, int num_group, float hue_range, vec2 sat_range, vec2 bright_range, vec2 alpha_range) {
-  float key_hue = -1 ;
-  return color_pool_RGB(num, num_group, key_hue, hue_range, sat_range, bright_range, alpha_range) ;
-}
-
-
-vec4 [] color_pool_RGB(int num, int num_group, float key_hue, float hue_range, vec2 sat_range, vec2 bright_range, vec2 alpha_range) {
-  vec4 [] list = new vec4[num]  ;
-  int [] c = color_pool(num, num_group, key_hue, hue_range, sat_range, bright_range, alpha_range) ;
-  for(int i = 0 ; i <list.length ; i++) {
-    list[i] = new vec4(red(c[i]),green(c[i]),blue(c[i]),alpha(c[i])) ;
-  }
-  return list ;
-}
-
-// color pool vec4 HSB
-vec4 [] color_pool_HSB(int num) {
-  vec2 sat_range = vec2(g.colorModeY) ;
-  vec2 bright_range = vec2(g.colorModeZ) ;
-  vec2 alpha_range = vec2(g.colorModeA) ;
-  float range = g.colorModeX *.5 ;
-  int num_group = 1 ;
-  float key_hue = -1 ;
-  return color_pool_HSB(num, num_group, key_hue, range, sat_range, bright_range, alpha_range) ;
-}
-
-vec4 [] color_pool_HSB(int num, float key_hue) {
-  vec2 sat_range = vec2(g.colorModeY) ;
-  vec2 bright_range = vec2(g.colorModeZ) ;
-  vec2 alpha_range = vec2(g.colorModeA) ;
-  float range = g.colorModeX *.5 ;
-  int num_group = 1 ;
-  return color_pool_HSB(num, num_group, key_hue, range, sat_range, bright_range, alpha_range) ;
-}
-
-
-vec4 [] color_pool_HSB(int num, int num_group, float hue_range) {
-  vec2 sat_range = vec2(g.colorModeY) ;
-  vec2 bright_range = vec2(g.colorModeZ) ;
-  vec2 alpha_range = vec2(g.colorModeA) ;
-  float key_hue = -1 ;
-  return color_pool_HSB(num, num_group, key_hue, hue_range, sat_range, bright_range, alpha_range) ;
-}
-
-
-vec4 [] color_pool_HSB(int num, int num_group, float key_hue, float hue_range) {
-  vec2 sat_range = vec2(g.colorModeY) ;
-  vec2 bright_range = vec2(g.colorModeZ) ;
-  vec2 alpha_range = vec2(g.colorModeA) ;
-  return color_pool_HSB(num, num_group, key_hue, hue_range, sat_range, bright_range, alpha_range) ;
-}
-
-vec4 [] color_pool_HSB(int num, int num_group, float hue_range, vec2 sat_range, vec2 bright_range, vec2 alpha_range) {
-  float key_hue = -1 ;
-  return color_pool_HSB(num, num_group, key_hue, hue_range, sat_range, bright_range, alpha_range) ;
-}
-
-
-vec4 [] color_pool_HSB(int num, int num_group, float key_hue, float hue_range, vec2 sat_range, vec2 bright_range, vec2 alpha_range) {
-  vec4 [] list = new vec4[num]  ;
-  int [] c = color_pool(num, num_group, key_hue, hue_range, sat_range, bright_range, alpha_range) ;
-  for(int i = 0 ; i <list.length ; i++) {
-    list[i] = new vec4(hue(c[i]),saturation(c[i]),brightness(c[i]),alpha(c[i])) ;
-  }
-  return list ;
-}
-
-// color pool int
 int [] color_pool(int num) {
-  vec2 sat_range = vec2(g.colorModeY) ;
-  vec2 bright_range = vec2(g.colorModeZ) ;
-  vec2 alpha_range = vec2(g.colorModeA) ;
-  float range = g.colorModeX *.5 ;
-  int num_group = 1 ;
-  float key_hue = -1 ;
-  return color_pool(num, num_group, key_hue, range, sat_range, bright_range, alpha_range) ;
+  float hue_range = -1;
+  int num_group = 1;
+  float key_hue = -1;
+  return color_pool(num, num_group, key_hue, hue_range, null, null, null) ;
 }
 
-int [] color_pool(int num, float key_hue) {
-  vec2 sat_range = vec2(g.colorModeY) ;
-  vec2 bright_range = vec2(g.colorModeZ) ;
-  vec2 alpha_range = vec2(g.colorModeA) ;
-  float range = g.colorModeX *.5 ;
-  int num_group = 1 ;
-  return color_pool(num, num_group, key_hue, range, sat_range, bright_range, alpha_range) ;
-}
-
-int [] color_pool(int num, int num_group, float hue_range) {
-  vec2 sat_range = vec2(g.colorModeY) ;
-  vec2 bright_range = vec2(g.colorModeZ) ;
-  vec2 alpha_range = vec2(g.colorModeA) ;
-  float key_hue = -1 ;
-  return color_pool(num, num_group, key_hue, hue_range, sat_range, bright_range, alpha_range) ;
+int [] color_pool(int num, float key_hue, float hue_range) {
+  int num_group = 1;
+  return color_pool(num, num_group, key_hue, hue_range, null, null, null) ;
 }
 
 int [] color_pool(int num, int num_group, float key_hue, float hue_range) {
-  vec2 sat_range = vec2(g.colorModeY) ;
-  vec2 bright_range = vec2(g.colorModeZ) ;
-  vec2 alpha_range = vec2(g.colorModeA) ;
-  return color_pool(num, num_group, key_hue, hue_range, sat_range, bright_range, alpha_range) ;
+  return color_pool(num, num_group, key_hue, hue_range, null, null, null);
 }
 
-int [] color_pool(int num, int num_group, float hue_range, vec2 sat_range, vec2 bright_range, vec2 alpha_range) {
-  float key_hue = -1 ;
-  return color_pool(num, num_group, key_hue, hue_range, sat_range, bright_range, alpha_range) ;
-
+int [] color_pool(int num, int num_group, float key_hue, float hue_range, vec2 sat_range, vec2 bright_range) {
+  return color_pool(num, num_group, key_hue, hue_range, sat_range, bright_range, null);
 }
+
+int [] color_pool(int num, int colour, float hue_range, float sat_range, float bri_range) {
+  return color_pool(num,1,colour,hue_range,sat_range,bri_range);
+}
+
+int [] color_pool(int num, int num_group, int colour, float hue_range, float sat_range, float bri_range) {
+  int ref = g.colorMode;
+  float x = g.colorModeX;
+  float y = g.colorModeY;
+  float z = g.colorModeZ;
+  float a = g.colorModeA;
+  colorMode(HSB,360,100,100,100);
+
+  float h = hue(colour);
+  float s = saturation(colour);
+  float s_min = s -sat_range;
+  if(s_min < 0) s_min = 0;
+  if(s_min > g.colorModeY) s_min = g.colorModeY;
+  float s_max = s +sat_range;
+  if(s_max < 0) s_max = 0;
+  if(s_max > g.colorModeY) s_max = g.colorModeY;
+
+
+  float b = brightness(colour);
+  float b_min = b -bri_range;
+  if(b_min < 0) b_min = 0;
+  if(b_min > g.colorModeZ) b_min = g.colorModeZ;
+  float b_max = b +bri_range;
+  if(b_max < 0) b_max = 0;
+  if(b_max > g.colorModeZ) b_max = g.colorModeZ;
+
+  colorMode(ref,x,y,z,a);
+  return color_pool(num,num_group,h,hue_range,vec2(s_min,s_max),vec2(b_min,b_max),null);
+}
+
 
 // color pool by group
 int [] color_pool(int num, int num_group, float key_hue, float hue_range, vec2 sat_range, vec2 bright_range, vec2 alpha_range) {
-  int ref = g.colorMode ;
-  float x = g.colorModeX ;
-  float y = g.colorModeY ;
-  float z = g.colorModeZ ;
-  float a = g.colorModeA ;
-  colorMode(HSB,360,100,100,100) ;
+  int ref = g.colorMode;
+  float x = g.colorModeX;
+  float y = g.colorModeY;
+  float z = g.colorModeZ;
+  float a = g.colorModeA;
+  colorMode(HSB,360,100,100,100);
+  
+  // create range if necessary
+  if(hue_range < 0) {
+    hue_range = g.colorModeX *.5;
+  }
 
-  float [] color_ref = new float[num_group] ;
+  if(sat_range == null) {
+    sat_range = vec2(g.colorModeY);
+  }
+  if(bright_range == null) {
+    bright_range = vec2(g.colorModeZ);
+  }
+
+  if(alpha_range == null) {
+    alpha_range = vec2(g.colorModeA);
+  }
+  
+
+  // create ref
+  float [] color_ref = new float[num_group];
   if(key_hue >= 0 ) {
-    color_ref[0] = key_hue ;
+    color_ref[0] = key_hue;
   } else {
-    color_ref[0] = random(g.colorModeX) ;
+    color_ref[0] = random(g.colorModeX);
   }
   if(num_group > 1) {
-    float step = g.colorModeX / num_group ;
+    float step = g.colorModeX / num_group;
     for(int i = 1 ; i < num_group ; i++) {
-      color_ref[i] = color_ref[i -1] + step ;
+      color_ref[i] = color_ref[i -1] + step;
       if(color_ref[i] > g.colorModeX) {
-        color_ref[i] = color_ref[i] - g.colorModeX ;
+        color_ref[i] = color_ref[i] - g.colorModeX;
       }      
     }
   }
 
-  int [] list = new int[num] ;
-  int count = 0 ;
-  int step = num / num_group ;
-  int next_stop = step ; ;
+  int [] list = new int[num];
+  int count = 0;
+  int step = num / num_group;
+  int next_stop = step;
   for(int i = 0 ; i < list.length ; i++) {
     if(i > next_stop) {
-      next_stop += step ;
+      next_stop += step;
     }
-    float saturation = random(sat_range) ;
-    float brightness = random(bright_range) ;
-    float alpha = random(alpha_range) ;
-    float hue = camaieu(g.colorModeX, color_ref[count], hue_range) ;
-    list[i] = color(hue, saturation,brightness, alpha) ;
-    count++ ;
-    if(count >= color_ref.length) count = 0 ;
+    float saturation = random(sat_range);
+    float brightness = random(bright_range);
+    float alpha = random(alpha_range);
+    float hue = camaieu(g.colorModeX, color_ref[count], hue_range);
+    list[i] = color(hue, saturation,brightness, alpha);
+    count++;
+    if(count >= color_ref.length) count = 0;
 
   }
-  colorMode(ref,x,y,z,a) ;
+  // back to original colorMode
+  colorMode(ref,x,y,z,a);
   return list ;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

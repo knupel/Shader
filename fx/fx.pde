@@ -42,17 +42,20 @@ void setup() {
 	size(1200,700,P3D);
 	load_media();
 	set_pattern(16,16,RGB,true);
+
 	if(mode_shader == 0) {
 		setup_fx_post_on_tex();
 	} else if(mode_shader == 1){
 		setup_fx_post_on_g();
-	} 
+	}  
+
 }
 
 boolean media_is;
 
 float total_fps;
 float avg_fps;
+
 void draw() {	
 	set_pattern(16,16,RGB,reset_is());
 
@@ -78,6 +81,7 @@ void draw() {
 	remote_command_movie();
 	reset(false);
 }
+
 
 
 

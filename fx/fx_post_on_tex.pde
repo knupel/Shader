@@ -48,9 +48,9 @@ void filtering_render() {
     vec2 offset_red = vec2().sin_wave(frameCount,.01,.02);
   	vec2 offset_green = vec2().cos_wave(frameCount,.001,.01);
   	vec2 offset_blue = vec2().sin_wave(frameCount,.005,.002);
-		pass_render(fx_datamosh(render,on_g,threshold,strength,offset_red,offset_green,offset_blue));
+		// pass_render(fx_datamosh(render,on_g,threshold,strength,offset_red,offset_green,offset_blue));
 
-		//pass_render(fx_flip(render,on_g,bvec2(mousePressed,keyPressed)));
+		pass_render(fx_mask(img_a,img_b,on_g));
 		
 		// pass_render(fx_reaction_diffusion(render,on_g));
 		// pass_render(fx_halftone_line(render,on_g,20));

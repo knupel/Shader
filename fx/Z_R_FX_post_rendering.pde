@@ -2,7 +2,7 @@
 * POST FX shader collection
 *
 * 2019-2019
-* v 0.2.4
+* v 0.2.5
 * all filter bellow has been tested.
 * @author @stanlepunk
 * @see https://github.com/StanLepunK/Shader
@@ -12,7 +12,7 @@
 /**
 * Template by Stan le punk
 * this template can be used for texture or direct filtering
-v 0.1.3
+v 0.1.4
 2018-2019
 */
 // setting by class FX
@@ -22,12 +22,12 @@ PGraphics fx_template(PImage source, FX fx) {
 
 // main
 PShader fx_template;
-PGraphics result_template;
+PGraphics pg_template;
 PGraphics fx_template(PImage source, boolean on_g, vec4 level_source) {
-	if(!on_g && (result_template == null 
-								|| (source.width != result_template.width 
-								&& source.height != result_template.height))) {
-		result_template = createGraphics(source.width,source.height,get_renderer());
+	if(!on_g && (pg_template == null 
+								|| (source.width != pg_template.width 
+								&& source.height != pg_template.height))) {
+		pg_template = createGraphics(source.width,source.height,get_renderer());
 	}
 
 	if(fx_template == null) {
@@ -50,7 +50,7 @@ PGraphics fx_template(PImage source, boolean on_g, vec4 level_source) {
 		// fx_template.set("level_source",1,1,1,1.); // value from 0 to 1
 
     // rendering
-		render_shader(fx_template,result_template,source,on_g);
+		render_shader(fx_template,pg_template,source,on_g);
 
 	}
 
@@ -59,7 +59,7 @@ PGraphics fx_template(PImage source, boolean on_g, vec4 level_source) {
 	if(on_g) {
 		return null;
 	} else {
-		return result_template; 
+		return pg_template; 
 	}
 }
 
@@ -103,7 +103,7 @@ PGraphics fx_template(PImage source, boolean on_g, vec4 level_source) {
 
 /**
 * Blur circular
-* v 0.1.5
+* v 0.1.6
 * 2018-2019
 */
 // use fx setting
@@ -113,10 +113,10 @@ PGraphics fx_blur_circular(PImage source, FX fx) {
 
 // main 
 PShader fx_blur_circular;
-PGraphics result_blur_circular;
+PGraphics pg_blur_circular;
 PGraphics fx_blur_circular(PImage source, boolean on_g, vec3 strength, int num) {
-	if(!on_g && (result_blur_circular == null || (source.width != result_blur_circular.width && source.height != result_blur_circular.height))) {
-		result_blur_circular = createGraphics(source.width,source.height,get_renderer());
+	if(!on_g && (pg_blur_circular == null || (source.width != pg_blur_circular.width && source.height != pg_blur_circular.height))) {
+		pg_blur_circular = createGraphics(source.width,source.height,get_renderer());
 	}
 	
 	if(fx_blur_circular == null) {
@@ -135,14 +135,14 @@ PGraphics fx_blur_circular(PImage source, boolean on_g, vec3 strength, int num) 
 		if(strength != null) fx_blur_circular.set("strength",strength.x);
 		fx_blur_circular.set("num",num); 
 
-		render_shader(fx_blur_circular,result_blur_circular,source,on_g);
+		render_shader(fx_blur_circular,pg_blur_circular,source,on_g);
 	}
 	// end
 	reset_reverse_g(false);
 	if(on_g) {
 		return null;	
 	} else {
-		return result_blur_circular; 
+		return pg_blur_circular; 
 	}
 }
 
@@ -167,20 +167,20 @@ PGraphics fx_blur_gaussian(PImage source, FX fx) {
 
 // main
 PShader fx_blur_gaussian;
-PGraphics result_blur_gaussian;
+PGraphics pg_blur_gaussian;
 PGraphics fx_blur_gaussian(PImage source, boolean on_g, boolean second_pass, ivec2 resolution, float strength) {
-	if(!on_g && (result_blur_gaussian == null || (source.width != result_blur_gaussian.width && source.height != result_blur_gaussian.height))) {
-		result_blur_gaussian = createGraphics(source.width,source.height,get_renderer());
+	if(!on_g && (pg_blur_gaussian == null || (source.width != pg_blur_gaussian.width && source.height != pg_blur_gaussian.height))) {
+		pg_blur_gaussian = createGraphics(source.width,source.height,get_renderer());
 	}
   
-  if(result_blur_gaussian == null) {
+  if(pg_blur_gaussian == null) {
   	// security, because that's return problem consol with too much waring message for PImage source
   	if(resolution != null && !all(equal(ivec2(-1),resolution))) {
-  		result_blur_gaussian = fx_image(source,false,null,null,null,null,SCREEN);
+  		pg_blur_gaussian = fx_image(source,false,null,null,null,null,SCREEN);
   	}
   } else {
-  	if(resolution != null && !all(equal(ivec2(result_blur_gaussian),resolution))) {
-  		result_blur_gaussian = fx_image(source,false,null,null,null,null,SCREEN);
+  	if(resolution != null && !all(equal(ivec2(pg_blur_gaussian),resolution))) {
+  		pg_blur_gaussian = fx_image(source,false,null,null,null,null,SCREEN);
   	}
   }
 
@@ -189,12 +189,12 @@ PGraphics fx_blur_gaussian(PImage source, boolean on_g, boolean second_pass, ive
   PGraphics pg_2;
 
 	if(resolution == null) {
-  	pg = createGraphics(result_blur_gaussian.width,result_blur_gaussian.height,get_renderer());
-  	pg_2 = createGraphics(result_blur_gaussian.width,result_blur_gaussian.height,get_renderer());
+  	pg = createGraphics(pg_blur_gaussian.width,pg_blur_gaussian.height,get_renderer());
+  	pg_2 = createGraphics(pg_blur_gaussian.width,pg_blur_gaussian.height,get_renderer());
   } else {
   	int min_res = 10;
   	if(any(lessThanEqual(resolution,ivec2(min_res)))) {
-  		resolution.set(result_blur_gaussian.width,result_blur_gaussian.height);
+  		resolution.set(pg_blur_gaussian.width,pg_blur_gaussian.height);
   	}
   	pg = createGraphics(resolution.x,resolution.y,get_renderer());
   	pg_2 = createGraphics(resolution.x,resolution.y,get_renderer());
@@ -237,7 +237,7 @@ PGraphics fx_blur_gaussian(PImage source, boolean on_g, boolean second_pass, ive
 	  if(!on_g) {
 	  	pg.beginDraw();            
 	    pg.shader(fx_blur_gaussian);
-	    pg.image(result_blur_gaussian,0,0); 
+	    pg.image(pg_blur_gaussian,0,0); 
 	    pg.endDraw();
 
 	    // Applying the blur shader along the horizontal direction   
@@ -311,12 +311,12 @@ PGraphics fx_blur_radial(PImage source, FX fx) {
 
 // main
 PShader fx_blur_radial;
-PGraphics result_blur_radial;
+PGraphics pg_blur_radial;
 PGraphics fx_blur_radial(PImage source, boolean on_g, vec2 pos, float strength, float scale) {
-	if(!on_g && (result_blur_radial == null 
-								|| (source.width != result_blur_radial.width 
-								&& source.height != result_blur_radial.height))) {
-		result_blur_radial = createGraphics(source.width,source.height,get_renderer());
+	if(!on_g && (pg_blur_radial == null 
+								|| (source.width != pg_blur_radial.width 
+								&& source.height != pg_blur_radial.height))) {
+		pg_blur_radial = createGraphics(source.width,source.height,get_renderer());
 	}
 	
 	if(fx_blur_radial == null) {
@@ -334,7 +334,7 @@ PGraphics fx_blur_radial(PImage source, boolean on_g, vec2 pos, float strength, 
 		fx_blur_radial.set("strength",strength);
 		if(pos != null) fx_blur_radial.set("position",pos.x,pos.y);
 		
-		render_shader(fx_blur_radial,result_blur_radial,source,on_g);
+		render_shader(fx_blur_radial,pg_blur_radial,source,on_g);
 	}
 	
 	// return
@@ -342,7 +342,7 @@ PGraphics fx_blur_radial(PImage source, boolean on_g, vec2 pos, float strength, 
 	if(on_g) {
 		return null;
 	} else {
-		return result_blur_radial; 
+		return pg_blur_radial; 
 	}
 }
 
@@ -369,12 +369,12 @@ PGraphics fx_colour_change_a(PImage source, FX fx) {
 
 // main
 PShader fx_colour_change_a;
-PGraphics result_colour_change_a;
+PGraphics pg_colour_change_a;
 PGraphics fx_colour_change_a(PImage source, boolean on_g, int num, vec3... mat) {
-	if(!on_g && (result_colour_change_a == null 
-								|| (source.width != result_colour_change_a.width 
-								&& source.height != result_colour_change_a.height))) {
-		result_colour_change_a = createGraphics(source.width,source.height,get_renderer());
+	if(!on_g && (pg_colour_change_a == null 
+								|| (source.width != pg_colour_change_a.width 
+								&& source.height != pg_colour_change_a.height))) {
+		pg_colour_change_a = createGraphics(source.width,source.height,get_renderer());
 	}
 	
 	if(fx_colour_change_a == null) {
@@ -401,7 +401,7 @@ PGraphics fx_colour_change_a(PImage source, boolean on_g, int num, vec3... mat) 
 
 		fx_colour_change_a.set("num",num);
 
-		render_shader(fx_colour_change_a,result_colour_change_a,source,on_g);
+		render_shader(fx_colour_change_a,pg_colour_change_a,source,on_g);
 
 	}
 	
@@ -410,7 +410,7 @@ PGraphics fx_colour_change_a(PImage source, boolean on_g, int num, vec3... mat) 
 	if(on_g) {
 		return null;	
 	} else {
-		return result_colour_change_a; 
+		return pg_colour_change_a; 
 	}
 }
 
@@ -770,12 +770,12 @@ PGraphics fx_grain(PImage source, FX fx) {
 
 // main
 PShader fx_grain;
-PGraphics result_grain;
+PGraphics pg_grain;
 PGraphics fx_grain(PImage source, boolean on_g, float offset, int mode) {
-	if(!on_g && (result_grain == null 
-								|| (source.width != result_grain.width 
-								&& source.height != result_grain.height))) {
-		result_grain = createGraphics(source.width,source.height,get_renderer());
+	if(!on_g && (pg_grain == null 
+								|| (source.width != pg_grain.width 
+								&& source.height != pg_grain.height))) {
+		pg_grain = createGraphics(source.width,source.height,get_renderer());
 	}
 
 	if(fx_grain == null) {
@@ -794,7 +794,7 @@ PGraphics fx_grain(PImage source, boolean on_g, float offset, int mode) {
     fx_grain.set("offset",offset); // that define the offset
 		fx_grain.set("mode",mode); // mode 0 is for black and white, and mode 1 for RVB
 
-		render_shader(fx_grain,result_grain,source,on_g);
+		render_shader(fx_grain,pg_grain,source,on_g);
 
 	}
 
@@ -803,7 +803,7 @@ PGraphics fx_grain(PImage source, boolean on_g, float offset, int mode) {
 	if(on_g) {
 		return null;	
 	} else {
-		return result_grain; 
+		return pg_grain; 
 	}
 }
 
@@ -840,12 +840,12 @@ PGraphics fx_grain_scatter(PImage source, FX fx) {
 
 // main
 PShader fx_grain_scatter;
-PGraphics result_grain_scatter;
+PGraphics pg_grain_scatter;
 PGraphics fx_grain_scatter(PImage source, boolean on_g,float strength) {
-	if(!on_g && (result_grain_scatter == null 
-								|| (source.width != result_grain_scatter.width 
-								&& source.height != result_grain_scatter.height))) {
-		result_grain_scatter = createGraphics(source.width,source.height,get_renderer());
+	if(!on_g && (pg_grain_scatter == null 
+								|| (source.width != pg_grain_scatter.width 
+								&& source.height != pg_grain_scatter.height))) {
+		pg_grain_scatter = createGraphics(source.width,source.height,get_renderer());
 	}
 
 	if(fx_grain_scatter == null) {
@@ -864,7 +864,7 @@ PGraphics fx_grain_scatter(PImage source, boolean on_g,float strength) {
 		fx_grain_scatter.set("strength",strength);
 
 		// rendering
-		render_shader(fx_grain_scatter,result_grain_scatter,source,on_g);
+		render_shader(fx_grain_scatter,pg_grain_scatter,source,on_g);
 
 	}
 	// return
@@ -872,7 +872,7 @@ PGraphics fx_grain_scatter(PImage source, boolean on_g,float strength) {
 	if(on_g) {
 		return null;
 	} else {
-		return result_grain_scatter; 
+		return pg_grain_scatter; 
 	}
 }
 
@@ -896,7 +896,7 @@ PGraphics fx_grain_scatter(PImage source, boolean on_g,float strength) {
 
 /**
 * halftone dot
-* v 0.0.6
+* v 0.0.7
 * 2018-2019
 */
 // setting by class FX
@@ -926,12 +926,12 @@ PGraphics fx_halftone_dot(PImage source, FX fx) {
 
 // main
 PShader fx_halftone;
-PGraphics result_halftone_dot;
+PGraphics pg_halftone_dot;
 PGraphics fx_halftone_dot(PImage source, boolean on_g, vec2 pos, float size, float angle, float threshold) {
-	if(!on_g && (result_halftone_dot == null 
-								|| (source.width != result_halftone_dot.width 
-								&& source.height != result_halftone_dot.height))) {
-		result_halftone_dot = createGraphics(source.width,source.height,get_renderer());
+	if(!on_g && (pg_halftone_dot == null 
+								|| (source.width != pg_halftone_dot.width 
+								&& source.height != pg_halftone_dot.height))) {
+		pg_halftone_dot = createGraphics(source.width,source.height,get_renderer());
 	}
 
 	if(fx_halftone == null) {
@@ -957,7 +957,7 @@ PGraphics fx_halftone_dot(PImage source, boolean on_g, vec2 pos, float size, flo
 		fx_halftone.set("size",size);
 		fx_halftone.set("threshold",threshold);
 
-		render_shader(fx_halftone,result_halftone_dot,source,on_g);
+		render_shader(fx_halftone,pg_halftone_dot,source,on_g);
 
 	}
 
@@ -966,7 +966,7 @@ PGraphics fx_halftone_dot(PImage source, boolean on_g, vec2 pos, float size, flo
 	if(on_g) {
 		return null;
 	} else {
-		return result_halftone_dot; 
+		return pg_halftone_dot; 
 	}
 }
 
@@ -981,7 +981,7 @@ PGraphics fx_halftone_dot(PImage source, boolean on_g, vec2 pos, float size, flo
 
 /**
 * halftone line
-* v 0.0.8
+* v 0.0.9
 * 2018-2019
 */
 // use setting
@@ -1234,7 +1234,7 @@ PGraphics fx_image(PImage source, boolean on_g, vec2 pos, vec2 scale, vec3 colou
 
 /**
 * Level
-v 0.0.4
+v 0.0.5
 2019-2019
 */
 // direct filtering
@@ -1248,12 +1248,12 @@ PGraphics fx_level(PImage source, FX fx) {
 
 // main method
 PShader fx_level;
-PGraphics result_level;
+PGraphics pg_level;
 PGraphics fx_level(PImage source, boolean on_g, int mode, float... level) {
-	if(!on_g && (result_level == null 
-								|| (source.width != result_level.width 
-								&& source.height != result_level.height))) {
-		result_level = createGraphics(source.width,source.height,get_renderer());
+	if(!on_g && (pg_level == null 
+								|| (source.width != pg_level.width 
+								&& source.height != pg_level.height))) {
+		pg_level = createGraphics(source.width,source.height,get_renderer());
 	}
 
 	if(fx_level == null) {
@@ -1284,7 +1284,7 @@ PGraphics fx_level(PImage source, boolean on_g, int mode, float... level) {
 
 
     // rendering
-		render_shader(fx_level,result_level,source,on_g);
+		render_shader(fx_level,pg_level,source,on_g);
 
 	}
 
@@ -1293,7 +1293,7 @@ PGraphics fx_level(PImage source, boolean on_g, int mode, float... level) {
 	if(on_g) {
 		return null;
 	} else {
-		return result_level; 
+		return pg_level; 
 	}
 }
 
@@ -1310,9 +1310,74 @@ PGraphics fx_level(PImage source, boolean on_g, int mode, float... level) {
 
 
 
+
+/**
+* Mask
+v 0.0.1
+2019-2019
+*/
+PGraphics fx_mask(PImage source, PImage mask, FX fx) {
+	return fx_mask(source,mask,fx.on_g());
+}
+
+// main
+PShader fx_mask;
+PGraphics pg_mask;
+PGraphics fx_mask(PImage source, PImage mask, boolean on_g) {
+	if(!on_g && (pg_mask == null 
+								|| (source.width != pg_mask.width 
+								&& source.height != pg_mask.height))) {
+		pg_mask = createGraphics(source.width,source.height,get_renderer());
+	}
+
+	if(fx_mask == null) {
+		String path = get_fx_post_path()+"mask.glsl";
+		if(fx_post_rope_path_exists) {
+			fx_mask = loadShader(path);
+			println("load shader:",path);
+		}
+	} else {
+		if(on_g) set_shader_flip(fx_mask,source);
+
+		if(graphics_is(mask).equals("PGraphics")) {
+			fx_mask.set("flip_layer",0,0);
+		} else {
+			if(on_g) {
+				fx_mask.set("flip_layer",1,0);
+			}
+		}
+		fx_mask.set("texture_source",source);
+		fx_mask.set("resolution_source",source.width,source.height);
+
+		fx_mask.set("resolution_layer",mask.width,mask.height);
+		fx_mask.set("texture_layer",mask);
+		
+    
+    // rendering
+    render_shader(fx_mask,pg_mask,source,on_g);
+ 
+	}
+
+	// end
+	reset_reverse_g(false);
+	if(on_g) {
+		return null;
+	} else {
+		return pg_mask; 
+	}
+}
+
+
+
+
+
+
+
+
+
 /**
 * mix
-* v 0.0.6
+* v 0.0.7
 * 2019-2019
 *
 * -2 main
@@ -1360,12 +1425,12 @@ PGraphics fx_mix(PImage source, PImage layer, FX fx) {
 
 // main
 PShader fx_mix;
-PGraphics result_mix;
+PGraphics pg_mix;
 PGraphics fx_mix(PImage source, PImage layer, boolean on_g, int mode, vec3 level_source, vec3 level_layer) {
-	if(!on_g && (result_mix == null 
-								|| (source.width != result_mix.width 
-								&& source.height != result_mix.height))) {
-		result_mix = createGraphics(source.width,source.height,get_renderer());
+	if(!on_g && (pg_mix == null 
+								|| (source.width != pg_mix.width 
+								&& source.height != pg_mix.height))) {
+		pg_mix = createGraphics(source.width,source.height,get_renderer());
 	}
 
 	if(fx_mix == null) {
@@ -1397,7 +1462,7 @@ PGraphics fx_mix(PImage source, PImage layer, boolean on_g, int mode, vec3 level
 		fx_mix.set("mode",mode); 
     
     // rendering
-    render_shader(fx_mix,result_mix,source,on_g);
+    render_shader(fx_mix,pg_mix,source,on_g);
  
 	}
 
@@ -1406,7 +1471,7 @@ PGraphics fx_mix(PImage source, PImage layer, boolean on_g, int mode, vec3 level
 	if(on_g) {
 		return null;
 	} else {
-		return result_mix; 
+		return pg_mix; 
 	}
 }
 
@@ -1430,7 +1495,7 @@ PGraphics fx_mix(PImage source, PImage layer, boolean on_g, int mode, vec3 level
 
 /**
 * Pixel 
-* v 0.0.6
+* v 0.0.7
 * 2018-2019
 */
 // setting by class FX
@@ -1448,12 +1513,12 @@ PGraphics fx_pixel(PImage source, FX fx) {
 
 // main
 PShader fx_pixel;
-PGraphics result_pixel;
+PGraphics pg_pixel;
 PGraphics fx_pixel(PImage source, boolean on_g, ivec2 size, int num, vec3 level_source, boolean effect_is) {
-	if(!on_g && (result_pixel == null 
-								|| (source.width != result_pixel.width 
-								&& source.height != result_pixel.height))) {
-		result_pixel = createGraphics(source.width,source.height,get_renderer());
+	if(!on_g && (pg_pixel == null 
+								|| (source.width != pg_pixel.width 
+								&& source.height != pg_pixel.height))) {
+		pg_pixel = createGraphics(source.width,source.height,get_renderer());
 	}
 
 	if(fx_pixel == null) {
@@ -1475,7 +1540,7 @@ PGraphics fx_pixel(PImage source, boolean on_g, ivec2 size, int num, vec3 level_
     fx_pixel.set("size",size.x,size.y); // define the width and height of pixel
 
     // rendering
-		render_shader(fx_pixel,result_pixel,source,on_g);
+		render_shader(fx_pixel,pg_pixel,source,on_g);
 
 	}
 
@@ -1484,7 +1549,7 @@ PGraphics fx_pixel(PImage source, boolean on_g, ivec2 size, int num, vec3 level_
 	if(on_g) {
 		return null;
 	} else {
-		return result_pixel; 
+		return pg_pixel; 
 	}
 }
 
@@ -1505,7 +1570,7 @@ PGraphics fx_pixel(PImage source, boolean on_g, ivec2 size, int num, vec3 level_
 
 /**
 * Reaction diffusion
-* v 0.0.4
+* v 0.0.5
 * 2018-2019
 */
 /**
@@ -1518,14 +1583,14 @@ PGraphics fx_reaction_diffusion(PImage source, FX fx) {
 
 // main
 PShader fx_reac_diff;
-PGraphics result_reac_diff;
+PGraphics pg_reac_diff;
 boolean start;
 PImage buffer_reac_diff;
 PGraphics fx_reaction_diffusion(PImage source, boolean on_g, vec2 conc_uv, vec2 kf, vec2 scale, vec3 rgb, int num, boolean event) {
-	if(result_reac_diff == null 
-								|| (source.width != result_reac_diff.width 
-								&& source.height != result_reac_diff.height)) {
-		result_reac_diff = createGraphics(source.width,source.height,get_renderer());
+	if(pg_reac_diff == null 
+								|| (source.width != pg_reac_diff.width 
+								&& source.height != pg_reac_diff.height)) {
+		pg_reac_diff = createGraphics(source.width,source.height,get_renderer());
 	}
 
 	// init
@@ -1537,8 +1602,8 @@ PGraphics fx_reaction_diffusion(PImage source, boolean on_g, vec2 conc_uv, vec2 
 				println("load shader:",path);
 			}
 		}
-		if(result_reac_diff == null) {
-			result_reac_diff = createGraphics(source.width,source.height,get_renderer());
+		if(pg_reac_diff == null) {
+			pg_reac_diff = createGraphics(source.width,source.height,get_renderer());
 			println("create feedback");
 		}
 	}
@@ -1559,13 +1624,13 @@ PGraphics fx_reaction_diffusion(PImage source, boolean on_g, vec2 conc_uv, vec2 
 
 	// reset part
 	if(!start || event) {
-		result_reac_diff.beginDraw();
+		pg_reac_diff.beginDraw();
 		if(!on_g) {
-			result_reac_diff.image(source,0,0,source.width,source.height);
+			pg_reac_diff.image(source,0,0,source.width,source.height);
 		} else {
-			result_reac_diff.image(buffer_reac_diff,0,0,source.width,source.height);
+			pg_reac_diff.image(buffer_reac_diff,0,0,source.width,source.height);
 		}
-		result_reac_diff.endDraw();
+		pg_reac_diff.endDraw();
 		start = true;
 	}
   /*
@@ -1592,11 +1657,11 @@ PGraphics fx_reaction_diffusion(PImage source, boolean on_g, vec2 conc_uv, vec2 
 		} else {
 			fx_reac_diff.set("texture_source",buffer_reac_diff);
 		}
-		fx_reac_diff.set("texture_layer",result_reac_diff);
+		fx_reac_diff.set("texture_layer",pg_reac_diff);
 
 		fx_reac_diff.set("resolution",source.width,source.height);
 		fx_reac_diff.set("resolution_source",source.width,source.height);
-		fx_reac_diff.set("resolution_layer",result_reac_diff.width,result_reac_diff.height);
+		fx_reac_diff.set("resolution_layer",pg_reac_diff.width,pg_reac_diff.height);
 
 		// eternal param
 		if(conc_uv != null) {
@@ -1634,21 +1699,21 @@ PGraphics fx_reaction_diffusion(PImage source, boolean on_g, vec2 conc_uv, vec2 
 		fx_reac_diff.set("scale",scale.x,scale.y);
 
     // rendering
-		if(result_reac_diff != null && !on_g) {
+		if(pg_reac_diff != null && !on_g) {
 			// texture case
-	  	result_reac_diff.beginDraw();
-	  	result_reac_diff.shader(fx_reac_diff);
-	  	result_reac_diff.image(source,0,0,source.width,source.height);
-	  	result_reac_diff.resetShader();
-	  	result_reac_diff.endDraw();
+	  	pg_reac_diff.beginDraw();
+	  	pg_reac_diff.shader(fx_reac_diff);
+	  	pg_reac_diff.image(source,0,0,source.width,source.height);
+	  	pg_reac_diff.resetShader();
+	  	pg_reac_diff.endDraw();
 	  } else {
       // g case
-	  	result_reac_diff.beginDraw();
-	  	result_reac_diff.shader(fx_reac_diff);
-	  	result_reac_diff.image(buffer_reac_diff,0,0,source.width,source.height);
-	  	result_reac_diff.resetShader();
-	  	result_reac_diff.endDraw();
-	  	image(result_reac_diff);
+	  	pg_reac_diff.beginDraw();
+	  	pg_reac_diff.shader(fx_reac_diff);
+	  	pg_reac_diff.image(buffer_reac_diff,0,0,source.width,source.height);
+	  	pg_reac_diff.resetShader();
+	  	pg_reac_diff.endDraw();
+	  	image(pg_reac_diff);
 	  }
 	}
 
@@ -1656,7 +1721,7 @@ PGraphics fx_reaction_diffusion(PImage source, boolean on_g, vec2 conc_uv, vec2 
 	if(on_g) {
 		return null;
 	} else {
-		return result_reac_diff; 
+		return pg_reac_diff; 
 	}
 }
 
@@ -1701,12 +1766,12 @@ PGraphics fx_split_rgb(PImage source, FX fx) {
 
 // main
 PShader fx_split_rgb;
-PGraphics result_split_rgb;
+PGraphics pg_split_rgb;
 PGraphics fx_split_rgb(PImage source, boolean on_g, vec2 offset_red, vec2 offset_green, vec2 offset_blue) {
-	if(!on_g && (result_split_rgb == null 
-								|| (source.width != result_split_rgb.width 
-								&& source.height != result_split_rgb.height))) {
-		result_split_rgb = createGraphics(source.width,source.height,get_renderer());
+	if(!on_g && (pg_split_rgb == null 
+								|| (source.width != pg_split_rgb.width 
+								&& source.height != pg_split_rgb.height))) {
+		pg_split_rgb = createGraphics(source.width,source.height,get_renderer());
 	}
 
 	if(fx_split_rgb == null) {
@@ -1736,7 +1801,7 @@ PGraphics fx_split_rgb(PImage source, boolean on_g, vec2 offset_red, vec2 offset
 		
 
 		 // rendering
-    render_shader(fx_split_rgb,result_split_rgb,source,on_g);
+    render_shader(fx_split_rgb,pg_split_rgb,source,on_g);
 	}
 
 	// end
@@ -1744,7 +1809,7 @@ PGraphics fx_split_rgb(PImage source, boolean on_g, vec2 offset_red, vec2 offset
 	if(on_g) {
 		return null;
 	} else {
-		return result_split_rgb; 
+		return pg_split_rgb; 
 	}
 }
 
@@ -1834,12 +1899,12 @@ PGraphics fx_warp_proc(PImage source, FX fx) {
 }
 
 PShader fx_warp_proc;
-PGraphics result_warp_proc;
+PGraphics pg_warp_proc;
 PGraphics fx_warp_proc(PImage source, boolean on_g, float strength) {
-	if(!on_g && (result_warp_proc == null 
-								|| (source.width != result_warp_proc.width 
-								&& source.height != result_warp_proc.height))) {
-		result_warp_proc = createGraphics(source.width,source.height,get_renderer());
+	if(!on_g && (pg_warp_proc == null 
+								|| (source.width != pg_warp_proc.width 
+								&& source.height != pg_warp_proc.height))) {
+		pg_warp_proc = createGraphics(source.width,source.height,get_renderer());
 	}
 
 	if(fx_warp_proc == null) {
@@ -1858,7 +1923,7 @@ PGraphics fx_warp_proc(PImage source, boolean on_g, float strength) {
 		fx_warp_proc.set("strength",strength);
 
 		// rendering
-		render_shader(fx_warp_proc,result_warp_proc,source,on_g);
+		render_shader(fx_warp_proc,pg_warp_proc,source,on_g);
 	}
 
 	// return
@@ -1866,7 +1931,7 @@ PGraphics fx_warp_proc(PImage source, boolean on_g, float strength) {
 	if(on_g) {
 		return null;
 	} else {
-		return result_warp_proc; 
+		return pg_warp_proc; 
 	}
 }
 
@@ -1895,10 +1960,10 @@ PGraphics fx_warp_tex_a(PImage source, PImage velocity, PImage direction, FX fx)
 PShader fx_warp_tex_a;
 PGraphics pg_warp_tex_a;
 PGraphics fx_warp_tex_a(PImage source, PImage velocity, PImage direction, boolean on_g, int mode, float strength) {
-	if(!on_g && (result_warp_proc == null 
-								|| (source.width != result_warp_proc.width 
-								&& source.height != result_warp_proc.height))) {
-		result_warp_proc = createGraphics(source.width,source.height,get_renderer());
+	if(!on_g && (pg_warp_proc == null 
+								|| (source.width != pg_warp_proc.width 
+								&& source.height != pg_warp_proc.height))) {
+		pg_warp_proc = createGraphics(source.width,source.height,get_renderer());
 	}
   
 

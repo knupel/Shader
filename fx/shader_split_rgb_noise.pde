@@ -15,12 +15,12 @@ PGraphics fx_split_rgb_noise(PImage source, FX fx) {
 
 // main
 PShader fx_split_rgb_noise;
-PGraphics result_split_rgb_noise;
+PGraphics pg_split_rgb_noise;
 PGraphics fx_split_rgb_noise(PImage source, boolean on_g, vec2 offset) {
-	if(!on_g && (result_split_rgb_noise == null 
-								|| (source.width != result_split_rgb_noise.width 
-								&& source.height != result_split_rgb_noise.height))) {
-		result_split_rgb_noise = createGraphics(source.width,source.height,get_renderer());
+	if(!on_g && (pg_split_rgb_noise == null 
+								|| (source.width != pg_split_rgb_noise.width 
+								&& source.height != pg_split_rgb_noise.height))) {
+		pg_split_rgb_noise = createGraphics(source.width,source.height,get_renderer());
 	}
 
 	if(fx_split_rgb_noise == null) {
@@ -38,7 +38,7 @@ PGraphics fx_split_rgb_noise(PImage source, boolean on_g, vec2 offset) {
 		fx_split_rgb_noise.set("offset",offset.x,offset.y);
 
 		 // rendering
-    render_shader(fx_split_rgb_noise,result_split_rgb_noise,source,on_g);
+    render_shader(fx_split_rgb_noise,pg_split_rgb_noise,source,on_g);
 	}
 
 	// end
@@ -46,6 +46,6 @@ PGraphics fx_split_rgb_noise(PImage source, boolean on_g, vec2 offset) {
 	if(on_g) {
 		return null;
 	} else {
-		return result_split_rgb_noise; 
+		return pg_split_rgb_noise; 
 	}
 }

@@ -86,6 +86,7 @@ void setting_fx_post(ArrayList<FX> fx_list) {
 
   setting_level(fx_list);
 
+  setting_mask(fx_list);
   setting_mix(fx_list);
 
   setting_pixel(fx_list);
@@ -419,6 +420,15 @@ void setting_level(ArrayList<FX> fx_list) {
 }
 
 
+
+// mask
+String set_mask = "mask";
+void setting_mask(ArrayList<FX> fx_list) {
+  init_fx(fx_list,set_mask,FX_MASK);
+}
+
+
+
 // mix
 /*
 * 1 multiply
@@ -458,6 +468,13 @@ void setting_mix(ArrayList<FX> fx_list) {
   fx_set_level_layer(fx_list,set_mix,level_layer.array());
 
 }
+
+
+
+
+
+
+
 
 
 // pixel

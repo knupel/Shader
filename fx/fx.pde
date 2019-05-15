@@ -30,8 +30,8 @@ void load_media() {
 	img_b = loadImage("medium_puros_girl.jpg");
 }
 
-// int mode_shader = 0; // POST FX on PGrahics > texture
-int mode_shader = 1; // POST FX on G
+int mode_shader = 0; // POST FX on PGrahics > texture
+// int mode_shader = 1; // POST FX on G
 // int mode_shader = 2; // FX BACKGROUND
 
 
@@ -65,6 +65,7 @@ void draw() {
 	avg_fps = total_fps/frameCount;
 
   
+  other_stuff();
 
   if(mode_shader == 0) {
   	setting_fx_post(fx_manager);
@@ -76,7 +77,7 @@ void draw() {
 		setting_fx_bg(fx_bg_manager);
 		draw_fx_bg();
 	}
-	//other_stuff();
+	
   
 	remote_command_movie();
 	reset(false);
@@ -105,7 +106,7 @@ void other_stuff() {
 
 
 
-boolean incrust_is = true;
+boolean incrust_is = false;
 void incrust_is(boolean is) {
 	incrust_is = is;
 }

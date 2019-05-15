@@ -2,7 +2,7 @@
 * SHADER FX
 * @see @stanlepunk
 * @see https://github.com/StanLepunK/Shader
-* v 0.8.1
+* v 0.8.2
 * 2019-2019
 *
 */
@@ -33,7 +33,8 @@ int FX_IMAGE = 900;
 
 int FX_LEVEL = 12_00;
 
-int FX_MIX = 13_00;
+int FX_MASK = 13_00;
+int FX_MIX = 13_01;
 
 int FX_PIXEL = 16_00;
 
@@ -180,6 +181,8 @@ void select_fx_post(PImage main, PImage layer_a, PImage layer_b, FX... fx) {
 				fx_halftone_multi(main,fx[i]); 
 			} else if(fx[i].get_type() == FX_IMAGE) {
 				fx_image(main,fx[i]);
+			} else if(fx[i].get_type() == FX_MASK) {
+				fx_mask(main,layer_a,fx[i]); 
 			} else if(fx[i].get_type() == FX_PIXEL) {
 				fx_pixel(main,fx[i]);
 			} else if(fx[i].get_type() == FX_REAC_DIFF) {

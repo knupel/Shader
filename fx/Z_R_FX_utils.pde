@@ -2,7 +2,7 @@
 * SHADER FX
 * @see @stanlepunk
 * @see https://github.com/StanLepunK/Shader
-* v 0.9.0
+* v 0.9.2
 * 2019-2019
 *
 */
@@ -570,8 +570,35 @@ void set_fx_bg_path(String path) {
 
 /**
 * send information to shader.glsl to flip the source in case this one is a PGraphics or PImage
-* v 0.1.0
+* v 0.2.1
 */
+void fx_shader_flip(PShader shader, boolean on_g, boolean filter_is, PImage source, PImage layer) {
+	if(on_g) {
+		set_shader_flip(shader,source);
+	}
+  // reverse for the case filter is active
+	if(!on_g && filter_is) {
+		shader.set("flip_source",1,0);
+	}
+
+  // case there is layer to manage
+	if(layer != null) {
+		if(graphics_is(layer).equals("PGraphics")) {
+			shader.set("flip_layer",0,0);
+		} else {
+			if(on_g) {
+				shader.set("flip_layer",1,0);
+			} 
+			if(!on_g && filter_is) {
+				shader.set("flip_layer",1,0);
+			}
+		}
+	} 
+}
+
+
+
+
 void set_shader_flip(PShader ps, PImage... img) {
 	int num = img.length;
 	ps.set("flip_source",1,0);
@@ -581,7 +608,7 @@ void set_shader_flip(PShader ps, PImage... img) {
 		reverse_g_source(true);
 	}
 
-	if(num == 2) {
+	if(num == 2 && img[1] != null) {
 		ps.set("flip_layer",1,0);
 		if(graphics_is(img[1]).equals("PGraphics") && !reverse_g_layer_is()) {
 			ps.set("flip_layer",0,0);

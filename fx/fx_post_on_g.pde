@@ -68,7 +68,7 @@ void render_post_fx(PImage src_1, PImage src_2, PImage img_1, PImage img_2, PIma
 
 	// select_fx_post(src_1,null,null,get_fx(fx_manager,set_halftone_dot));
 	// select_fx_post(src_1,null,null,get_fx(fx_manager,set_halftone_line));
-	//select_fx_post(src_1,null,null,get_fx(fx_manager,set_halftone_multi));
+	select_fx_post(src_1,null,null,get_fx(fx_manager,set_halftone_multi));
 
 	// select_fx_post(src_1,null,null,get_fx(fx_manager,set_image));
 	// select_fx_post(src_1,img_2,null,get_fx(fx_manager,set_mask));
@@ -77,7 +77,7 @@ void render_post_fx(PImage src_1, PImage src_2, PImage img_1, PImage img_2, PIma
 
 	// select_fx_post(src_1,src_1,null,get_fx(fx_manager,set_mix));
 
-	select_fx_post(src_1,null,null,get_fx(fx_manager,set_pixel));
+	// select_fx_post(src_1,null,null,get_fx(fx_manager,set_pixel));
 
 	// select_fx_post(src_1,null,null,get_fx(fx_manager,set_reac_diff));
 	// select_fx_post(src_1,null,null,get_fx(fx_manager,set_split));

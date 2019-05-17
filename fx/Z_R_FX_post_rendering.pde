@@ -2,7 +2,7 @@
 * POST FX shader collection
 *
 * 2019-2019
-* v 0.2.5
+* v 0.2.7
 * all filter bellow has been tested.
 * @author @stanlepunk
 * @see https://github.com/StanLepunK/Shader
@@ -12,7 +12,7 @@
 /**
 * Template by Stan le punk
 * this template can be used for texture or direct filtering
-v 0.2.0
+v 0.2.1
 2018-2019
 */
 // setting by class FX
@@ -38,7 +38,8 @@ PGraphics fx_template(PImage source, boolean on_g, boolean filter_is, vec4 level
 		}
 		println("load shader:",path);
 	} else {
-		if(on_g) set_shader_flip(fx_template,source);
+		fx_shader_flip(fx_template,on_g,filter_is,source,null);
+
 		fx_template.set("texture_source",source);
 		fx_template.set("resolution",(float)source.width,(float)source.height);
 
@@ -103,7 +104,7 @@ PGraphics fx_template(PImage source, boolean on_g, boolean filter_is, vec4 level
 
 /**
 * Blur circular
-* v 0.2.0
+* v 0.2.1
 * 2018-2019
 */
 // use fx setting
@@ -126,7 +127,8 @@ PGraphics fx_blur_circular(PImage source, boolean on_g, boolean filter_is, vec3 
 			println("load shader:",path);
 		}
 	} else {
-		if(on_g) set_shader_flip(fx_blur_circular,source);
+		fx_shader_flip(fx_blur_circular,on_g,filter_is,source,null);
+
 		fx_blur_circular.set("texture_source",source);
 		fx_blur_circular.set("resolution_source",source.width,source.height);
 		fx_blur_circular.set("resolution",source.width,source.height);
@@ -292,7 +294,7 @@ PGraphics fx_blur_gaussian(PImage source, boolean on_g, boolean filter_is, boole
 
 /**
 * Blur radial
-v 0.3.0
+v 0.3.1
 2018-2019
 */
 // setting by class FX
@@ -326,7 +328,8 @@ PGraphics fx_blur_radial(PImage source, boolean on_g, boolean filter_is, vec2 po
 			println("load shader:",path);
 		}
 	} else {
-		if(on_g) set_shader_flip(fx_blur_radial,source);
+		fx_shader_flip(fx_blur_radial,on_g,filter_is,source,null);
+
 		fx_blur_radial.set("texture_source",source);
 
     // external parameter
@@ -359,7 +362,7 @@ PGraphics fx_blur_radial(PImage source, boolean on_g, boolean filter_is, vec2 po
 
 /**
 * Colour change A by Stan le punk
-v 0.3.0
+v 0.3.1
 2018-2019
 */
 // setting by class FX
@@ -384,7 +387,8 @@ PGraphics fx_colour_change_a(PImage source, boolean on_g, boolean filter_is, int
 			println("load shader:",path);
 		}
 	} else {
-		if(on_g) set_shader_flip(fx_colour_change_a,source);
+		fx_shader_flip(fx_colour_change_a,on_g,filter_is,source,null);
+
 		fx_colour_change_a.set("texture_source",source);
 
 		// external param
@@ -428,7 +432,7 @@ PGraphics fx_colour_change_a(PImage source, boolean on_g, boolean filter_is, int
 
 /**
 * colour change B
-* v 0.1.0
+* v 0.1.1
 * 2018-2019
 */
 
@@ -462,7 +466,8 @@ PGraphics fx_colour_change_b(PImage source, boolean on_g, boolean filter_is, flo
 			println("load shader:",path);
 		}
 	} else {
-		if(on_g) set_shader_flip(fx_colour_change_b,source);
+		fx_shader_flip(fx_colour_change_b,on_g,filter_is,source,null);
+
 		fx_colour_change_b.set("texture_source",source);
 		fx_colour_change_b.set("resolution_source",source.width,source.height);
 		
@@ -508,19 +513,19 @@ PGraphics fx_colour_change_b(PImage source, boolean on_g, boolean filter_is, flo
 /**
 * Datamosh inpired by an algorithm of Alexandre Rivaux 
 * @see https://github.com/alexr4/datamoshing-GLSL
-* v 0.0.2
+* v 0.0.3
 *2019-2019
 */
 // setting by class FX
 PGraphics fx_datamosh(PImage source, FX fx) {
-	return fx_datamosh(source,fx.on_g(),fx.get_threshold().x(),fx.get_strength().x(),fx.get_pair(0),fx.get_pair(1),fx.get_pair(2));
+	return fx_datamosh(source,fx.on_g(),fx.pg_filter_is(),fx.get_threshold().x(),fx.get_strength().x(),fx.get_pair(0),fx.get_pair(1),fx.get_pair(2));
 }
 
 // main
 PShader fx_datamosh;
 PShader fx_flip_datamosh;
 PGraphics pg_datamosh;
-PGraphics fx_datamosh(PImage source, boolean on_g, float threshold, float strength, vec2 offset_red, vec2 offset_green, vec2 offset_blue) {
+PGraphics fx_datamosh(PImage source, boolean on_g, boolean filter_is, float threshold, float strength, vec2 offset_red, vec2 offset_green, vec2 offset_blue) {
 	if(!on_g && (pg_datamosh == null 
 								|| (source.width != pg_datamosh.width 
 								&& source.height != pg_datamosh.height))) {
@@ -543,7 +548,7 @@ PGraphics fx_datamosh(PImage source, boolean on_g, float threshold, float streng
 		}
 		println("load shader:",path);
 	} else {
-		if(on_g) set_shader_flip(fx_datamosh,source);
+		fx_shader_flip(fx_datamosh,on_g,filter_is,source,null);
 
 		fx_datamosh.set("resolution",(float)source.width,(float)source.height);
 		fx_datamosh.set("resolution_source",(float)source.width,(float)source.height);
@@ -620,7 +625,7 @@ PGraphics fx_datamosh(PImage source, boolean on_g, float threshold, float streng
 
 /**
 * Dither bayer 8
-* v 0.3.0
+* v 0.3.1
 * 2018-2019
 */
 // setting by class FX
@@ -646,7 +651,8 @@ PGraphics fx_dither_bayer_8(PImage source, boolean on_g, boolean filter_is, vec3
 			println("load shader:",path);
 		}
 	} else {
-		if(on_g) set_shader_flip(fx_dither_bayer_8,source);
+		fx_shader_flip(fx_dither_bayer_8,on_g,filter_is,source,null);
+
 		fx_dither_bayer_8.set("texture_source",source);
 		fx_dither_bayer_8.set("resolution_source",source.width,source.height);
 
@@ -750,7 +756,7 @@ PGraphics fx_flip(PImage source, boolean on_g, boolean filter_is, bvec2 flip) {
 
 /**
 * Grain 
-v 0.2.0
+v 0.2.1
 2018-2019
 */
 
@@ -785,7 +791,8 @@ PGraphics fx_grain(PImage source, boolean on_g, boolean filter_is, float offset,
 			println("load shader:",path);
 		}
 	} else {
-		if(on_g) set_shader_flip(fx_grain,source);
+		fx_shader_flip(fx_grain,on_g,filter_is,source,null);
+		// if(on_g) set_shader_flip(fx_grain,source);
 		fx_grain.set("texture_source",source);
 		fx_grain.set("resolution_source",source.width,source.height);
 		fx_grain.set("resolution",source.width,source.height);
@@ -826,7 +833,7 @@ PGraphics fx_grain(PImage source, boolean on_g, boolean filter_is, float offset,
 
 /**
 * Grain scatter
-v 0.2.0
+v 0.2.1
 2018-2019
 */
 // setting by class FX
@@ -855,7 +862,8 @@ PGraphics fx_grain_scatter(PImage source, boolean on_g, boolean filter_is, float
 			println("load shader:",path);
 		}
 	} else {
-		if(on_g) set_shader_flip(fx_grain_scatter,source);
+		fx_shader_flip(fx_grain_scatter,on_g,filter_is,source,null);
+
 		fx_grain_scatter.set("texture_source",source);
 		fx_grain_scatter.set("resolution_source",source.width,source.height);
 		fx_grain_scatter.set("resolution",source.width,source.height);
@@ -896,7 +904,7 @@ PGraphics fx_grain_scatter(PImage source, boolean on_g, boolean filter_is, float
 
 /**
 * halftone dot
-* v 0.1.0
+* v 0.1.1
 * 2018-2019
 */
 // setting by class FX
@@ -941,7 +949,8 @@ PGraphics fx_halftone_dot(PImage source, boolean on_g, boolean filter_is, vec2 p
 			println("load shader:",path);
 		}
 	} else {
-		if(on_g) set_shader_flip(fx_halftone,source);
+		fx_shader_flip(fx_halftone,on_g,filter_is,source,null);
+
 		fx_halftone.set("texture_source",source);
 		fx_halftone.set("resolution_source",source.width,source.height);
 
@@ -981,7 +990,7 @@ PGraphics fx_halftone_dot(PImage source, boolean on_g, boolean filter_is, vec2 p
 
 /**
 * halftone line
-* v 0.1.0
+* v 0.1.1
 * 2018-2019
 */
 // use setting
@@ -1024,7 +1033,8 @@ PGraphics fx_halftone_line(PImage source, boolean on_g, boolean filter_is, vec2 
 			println("load shader:",path);
 		}
 	} else {
-		if(on_g) set_shader_flip(fx_halftone_line,source);
+		fx_shader_flip(fx_halftone_line,on_g,filter_is,source,null);
+
 		fx_halftone_line.set("texture_source",source);
 		fx_halftone_line.set("resolution_source",source.width,source.height);
     
@@ -1083,7 +1093,9 @@ PGraphics fx_halftone_multi(PImage source, boolean on_g, boolean filter_is, vec2
 			println("load shader:",path);
 		}
 	} else {
-    if(on_g) set_shader_flip(fx_halftone_multi,source);
+		fx_shader_flip(fx_halftone_multi,on_g,filter_is,source,null);
+    // if(on_g) set_shader_flip(fx_halftone_multi,source);
+
 		fx_halftone_multi.set("texture_source",source);
 		fx_halftone_multi.set("resolution_source",source.width,source.height);
     
@@ -1125,7 +1137,7 @@ PGraphics fx_halftone_multi(PImage source, boolean on_g, boolean filter_is, vec2
 
 /**
 * IMAGE
-* v 0.2.0
+* v 0.2.1
 */
 // setting by class FX
 PGraphics fx_image(PImage source, FX fx) {
@@ -1150,9 +1162,8 @@ PGraphics fx_image(PImage source, boolean on_g, boolean filter_is, vec2 pos, vec
 		}
 		println("load shader:",path);
 	} else {
-		
-		if(on_g) set_shader_flip(fx_image,source);
-		// fx_image.set("flip_source",true,false);
+		fx_shader_flip(fx_image,on_g,filter_is,source,null);
+
 		fx_image.set("texture_source",source);
 		if(on_g) {
 			fx_image.set("resolution",width,height);
@@ -1263,7 +1274,8 @@ PGraphics fx_level(PImage source, boolean on_g, boolean filter_is, int mode, flo
 			println("load shader:",path);
 		}
 	} else {
-		if(on_g) set_shader_flip(fx_level,source);
+		fx_shader_flip(fx_level,on_g,filter_is,source,null);
+
 		fx_level.set("texture_source",source);
 		fx_level.set("resolution_source",source.width,source.height);
 		if(level.length == 1) {
@@ -1337,15 +1349,8 @@ PGraphics fx_mask(PImage source, PImage mask, boolean on_g, boolean filter_is) {
 			println("load shader:",path);
 		}
 	} else {
-		if(on_g) set_shader_flip(fx_mask,source);
+		fx_shader_flip(fx_mask,on_g,filter_is,source,mask);
 
-		if(graphics_is(mask).equals("PGraphics")) {
-			fx_mask.set("flip_layer",0,0);
-		} else {
-			if(on_g) {
-				fx_mask.set("flip_layer",1,0);
-			}
-		}
 		fx_mask.set("texture_source",source);
 		fx_mask.set("resolution_source",source.width,source.height);
 
@@ -1375,9 +1380,12 @@ PGraphics fx_mask(PImage source, PImage mask, boolean on_g, boolean filter_is) {
 
 
 
+
+
+
 /**
 * mix
-* v 0.1.0
+* v 0.1.1
 * 2019-2019
 *
 * -2 main
@@ -1440,7 +1448,7 @@ PGraphics fx_mix(PImage source, PImage layer, boolean on_g, boolean filter_is, i
 			println("load shader:",path);
 		}
 	} else {
-		if(on_g) set_shader_flip(fx_mix,source);
+		fx_shader_flip(fx_mix,on_g,filter_is,source,layer);
 
 		fx_mix.set("texture_source",source);
 		fx_mix.set("resolution_source",source.width,source.height);
@@ -1528,7 +1536,9 @@ PGraphics fx_pixel(PImage source, boolean on_g, boolean filter_is, ivec2 size, i
 			println("load shader:",path);
 		}
 	} else {
-		if(on_g) set_shader_flip(fx_pixel,source);
+		fx_shader_flip(fx_pixel,on_g,filter_is,source,null);
+		// if(on_g) set_shader_flip(fx_pixel,source);
+
 		fx_pixel.set("texture_source",source);
 		fx_pixel.set("resolution",source.width,source.height);
 		fx_pixel.set("resolution_source",source.width,source.height);
@@ -1781,12 +1791,12 @@ PGraphics fx_split_rgb(PImage source, boolean on_g, boolean filter_is, vec2 offs
 			println("load shader:",path);
 		}
 	} else {
-    if(on_g) set_shader_flip(fx_split_rgb,source);
+		fx_shader_flip(fx_split_rgb,on_g,filter_is,source,null);
+
 		fx_split_rgb.set("texture_source",source);
 		fx_split_rgb.set("resolution_source",source.width,source.height);
 
 		// external param
-		// fx_split.set("offset",offset.x,offset.y);
 		if(offset_red != null) {
 			fx_split_rgb.set("offset_red",offset_red.x,offset_red.y);
 		}
@@ -1847,7 +1857,8 @@ PGraphics fx_threshold(PImage source, boolean on_g, boolean filter_is, vec3 leve
 			println("load shader:",path);
 		}
 	} else {
-		if(on_g) set_shader_flip(fx_threshold,source);
+		fx_shader_flip(fx_threshold,on_g,filter_is,source,null);
+
 		fx_threshold.set("texture_source",source);
 		fx_threshold.set("resolution_source",source.width,source.height);
 
@@ -1914,7 +1925,7 @@ PGraphics fx_warp_proc(PImage source, boolean on_g, boolean filter_is, float str
 			println("load shader:",path);
 		}
 	} else {
-		if(on_g) set_shader_flip(fx_warp_proc,source);
+		fx_shader_flip(fx_warp_proc,on_g,filter_is,source,null);
 
 		fx_warp_proc.set("texture_source",source);
 		fx_warp_proc.set("resolution_source",source.width,source.height);
@@ -1948,7 +1959,7 @@ PGraphics fx_warp_proc(PImage source, boolean on_g, boolean filter_is, float str
 
 /**
 * warp texture type A
-* v 0.3.0
+* v 0.3.1
 * 2018-2019
 */
 // use setting
@@ -1974,7 +1985,8 @@ PGraphics fx_warp_tex_a(PImage source, PImage velocity, PImage direction, boolea
 			println("load shader:",path);
 		}
 	} else {
-		if(on_g) set_shader_flip(fx_warp_tex_a,source);
+		fx_shader_flip(fx_warp_tex_a,on_g,filter_is,source,null);
+
 		fx_warp_tex_a.set("texture_source",source);
 		fx_warp_tex_a.set("resolution_source",source.width,source.height);
 
@@ -2015,7 +2027,7 @@ PGraphics fx_warp_tex_a(PImage source, PImage velocity, PImage direction, boolea
 
 /**
 * warp texture type B
-* v 0.1.0
+* v 0.1.1
 * 2019-2019
 */
 // use setting
@@ -2040,7 +2052,8 @@ PGraphics fx_warp_tex_b(PImage source, PImage layer, boolean on_g, boolean filte
 			println("load shader:",path);
 		}
 	} else {
-    if(on_g) set_shader_flip(fx_warp_tex_b,source,layer);
+		fx_shader_flip(fx_warp_tex_b,on_g,filter_is,source,null);
+
 		fx_warp_tex_b.set("texture_source",source);
 		fx_warp_tex_b.set("resolution_source",source.width,source.height);
 		fx_warp_tex_b.set("texture_layer",layer);

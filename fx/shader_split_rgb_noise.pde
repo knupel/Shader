@@ -38,7 +38,8 @@ PGraphics fx_split_rgb_noise(PImage source, boolean on_g, vec2 offset) {
 		fx_split_rgb_noise.set("offset",offset.x,offset.y);
 
 		 // rendering
-    render_shader(fx_split_rgb_noise,pg_split_rgb_noise,source,on_g);
+		boolean pg_filter_is = true;
+    render_shader(fx_split_rgb_noise,pg_split_rgb_noise,source,on_g,pg_filter_is);
 	}
 
 	// end

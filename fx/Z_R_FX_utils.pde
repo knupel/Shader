@@ -2,7 +2,7 @@
 * SHADER FX
 * @see @stanlepunk
 * @see https://github.com/StanLepunK/Shader
-* v 0.8.2
+* v 0.9.0
 * 2019-2019
 *
 */
@@ -271,6 +271,15 @@ void fx_set_quality(ArrayList<FX> fx_list, String name, float quality) {
 
 void fx_set_time(ArrayList<FX> fx_list, String name, float time) {
 	fx_set(fx_list,3,name,time);
+}
+
+
+void fx_set_on_g(ArrayList<FX> fx_list, String name, boolean on_g) {
+	fx_set(fx_list,4,name,on_g);
+}
+
+void fx_set_pg_filter(ArrayList<FX> fx_list, String name, boolean filter_is) {
+	fx_set(fx_list,5,name,filter_is);
 }
 
 // double
@@ -643,18 +652,41 @@ void reset_reverse_g(boolean state){
 
 
 /**
-* render shader
+* RENDER FX
 * this method test if the shader must be display on the main Processing render or return a PGraphics
-* v 0.0.4
+* v 0.1.0
 */
-void render_shader(PShader ps, PGraphics pg, PImage src, boolean on_g) {
-	if(pg != null && !on_g) {
+void render_shader(PShader shader, PGraphics pg, PImage src, boolean on_g, boolean filter_is) {
+	if(on_g) {
+		render_filter_g(shader);
+	} else {
+		if(filter_is) {
+			render_filter_pgraphics(shader,pg);
+		} else {
+			render_shader_pgraphics(shader,pg,src);
+		}
+	}
+}
+
+
+void render_shader_pgraphics(PShader ps, PGraphics pg, PImage src) {
+	if(pg != null) {
   	pg.beginDraw();
   	pg.shader(ps);
   	pg.image(src,0,0,src.width,src.height);
   	pg.resetShader();
   	pg.endDraw();
-  } else {
-  	filter(ps);
   }
+}
+
+
+void render_filter_pgraphics(PShader ps, PGraphics pg) {
+	if(pg != null) {
+  	pg.filter(ps);
+  } 
+}
+
+
+void render_filter_g(PShader ps) {
+	filter(ps);
 }

@@ -37,6 +37,7 @@ void filtering_render() {
 			layer.updatePixels();
 		}
 		boolean on_g = false;
+		boolean filter_is = true;
 
 		// pass_render(fx_template(render,on_g));
 		// pass_render(fx_blur_circular(render,on_g)); 
@@ -49,8 +50,9 @@ void filtering_render() {
   	vec2 offset_green = vec2().cos_wave(frameCount,.001,.01);
   	vec2 offset_blue = vec2().sin_wave(frameCount,.005,.002);
 		// pass_render(fx_datamosh(render,on_g,threshold,strength,offset_red,offset_green,offset_blue));
-
-		pass_render(fx_mask(img_a,img_b,on_g));
+    
+    //pass_render(fx_mask(img_a,img_b,on_g));
+		pass_render(fx_mask(render,render,on_g,filter_is));
 		
 		// pass_render(fx_reaction_diffusion(render,on_g));
 		// pass_render(fx_halftone_line(render,on_g,20));

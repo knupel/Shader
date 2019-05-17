@@ -65,18 +65,21 @@ void draw() {
 	avg_fps = total_fps/frameCount;
 
   
-  other_stuff();
+  
 
   if(mode_shader == 0) {
-  	setting_fx_post(fx_manager);
+  	background(r.PINK);
+  	setting_fx_post(fx_manager,false);
 		draw_fx_post_on_tex();
 	} else if(mode_shader == 1) {
-		setting_fx_post(fx_manager);
+		setting_fx_post(fx_manager,true);
 		draw_fx_post_on_g(img_a,img_b,img_noise_1,img_noise_2);
 	} else if(mode_shader == 2) {
 		setting_fx_bg(fx_bg_manager);
 		draw_fx_bg();
 	}
+
+	other_stuff();
 	
   
 	remote_command_movie();

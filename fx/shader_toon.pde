@@ -41,7 +41,8 @@ PGraphics fx_toon(PImage source, boolean on_g) {
 		fx_toon.set("offset",x,y);
 
 		// rendering
-		render_shader(fx_toon,result_toon,source,on_g);
+		boolean pg_filter_is = true;
+		render_shader(fx_toon,result_toon,source,on_g,pg_filter_is);
 	}
 
 	// return

@@ -1,6 +1,6 @@
 /**
 * Rope framework image
-* v 0.4.4
+* v 0.5.1
 * Copyleft (c) 2014-2019
 * Processing 3.5.3.269
 * Rope library 0.7.1.25
@@ -246,15 +246,17 @@ void select_layer(int target) {
 
 /**
 PImage manager library
-v 0.4.2
+v 0.6.2
 */
-class ROPImage_Manager {
-  ArrayList<ROPImage> library ;
+public class R_Image_Manager {
+  ArrayList<R_Image> library ;
   int which_img;
+
+  public R_Image_Manager() {}
 
   private void build() {
     if(library == null) {
-      library = new ArrayList<ROPImage>();
+      library = new ArrayList<R_Image>();
     }
   }
 
@@ -262,7 +264,7 @@ class ROPImage_Manager {
     build();
     for(int i = 0 ; i <path_img.length ; i++) {
       //Image img = loadImage(img_src[i]);
-      ROPImage rop_img = new ROPImage(path_img[i]);
+      R_Image rop_img = new R_Image(path_img[i]);
       //println(img.width, img_src[i]);
       library.add(rop_img);
     }  
@@ -270,13 +272,13 @@ class ROPImage_Manager {
 
   public void add(PImage img_src) {
     build();
-    ROPImage rop_img = new ROPImage(img_src);
+    R_Image rop_img = new R_Image(img_src);
     library.add(rop_img);
   }
 
   public void add(PImage img_src, String name) {
     build();
-    ROPImage rop_img = new ROPImage(img_src, name);
+    R_Image rop_img = new R_Image(img_src, name, library.size());
     library.add(rop_img);
   }
 
@@ -286,9 +288,7 @@ class ROPImage_Manager {
     }
   }
 
-  public ArrayList<ROPImage> list() {
-    return library;
-  }
+
 
   public void select(int which_one) {
     which_img = which_one ;
@@ -346,7 +346,7 @@ class ROPImage_Manager {
     }
   }
 
-  public String get_name() {
+  public String get_current_name() {
     return get_name(which_img);
   }
 
@@ -373,18 +373,30 @@ class ROPImage_Manager {
       return rank;
     } else return -1;
   }
+  
 
+  public ArrayList<R_Image> list() {
+    return library;
+  }
 
-  public PImage get() {
+  PImage [] get() {
+    if(library != null && library.size() > 0) {
+      return library.toArray(new PImage[library.size()]);
+    } else return null;
+  }
+
+ 
+  public PImage get_current() {
     if(library != null && library.size() > 0 ) {
       if(which_img < library.size()) return library.get(which_img).img; 
-      else return library.get(0).img; 
+      else return library.get(0).get_image(); 
     } else return null ;
   }
+  
 
   public PImage get(int target){
     if(library != null && target < library.size()) {
-      return library.get(target).img;
+      return library.get(target).get_image();
     } else return null;
   }
 
@@ -403,32 +415,56 @@ class ROPImage_Manager {
   }
 
 
-  // private class
-  private class ROPImage {
-    private PImage img ;
-    private String name = "no name" ;
+  public R_Image rand() {
+    if(library != null && library.size() > 0) {
+      int target = floor(random(library.size()));
+      return library.get(target);
+    } else return null;
+  }
+}
 
-    private ROPImage(String path) {
-      this.name = path.split("/")[path.split("/").length -1].split("\\.")[0] ;
-      this.img = loadImage(path);
-    }
 
-    private ROPImage(PImage img) {
-      this.img = img;
-    }
 
-    private ROPImage(PImage img, String name) {
-      this.img = img;
-      this.name = name;
-    }
+/**
+* R_Image
+* 2019-2019
+* v 0.0.2
+*/
+public class R_Image {
+  private PImage img ;
+  private String name = "no name" ;
+  private int id = -1;
 
-    public String get_name() {
-      return name ;
-    }
+  public R_Image(String path) {
+    this.name = path.split("/")[path.split("/").length -1].split("\\.")[0] ;
+    this.img = loadImage(path);
+  }
 
-    public PImage get_image() {
-      return img ;
-    }
+  public R_Image(PImage img) {
+    this.img = img;
+  }
+
+  public R_Image(PImage img, String name, int id) {
+    this.img = img;
+    this.name = name;
+    this.id = id;
+  }
+  
+
+  public R_Image get() {
+    return this;
+  }
+
+  public int get_id() {
+    return id;
+  }
+
+  public String get_name() {
+    return name ;
+  }
+
+  public PImage get_image() {
+    return img ;
   }
 }
 
@@ -617,10 +653,10 @@ void image(PImage img, vec pos) {
     image(img, p.x, p.y) ;
   } else if(pos instanceof vec3) {
     vec3 p = (vec3) pos ;
-    start_matrix() ;
+    push() ;
     translate(p) ;
     image(img, 0,0) ;
-    stop_matrix() ;
+    pop() ;
   }
 }
 
@@ -630,10 +666,10 @@ void image(PImage img, vec pos, vec2 size) {
     image(img, p.x, p.y, size.x, size.y) ;
   } else if(pos instanceof vec3) {
     vec3 p = (vec3) pos ;
-    start_matrix() ;
+    push() ;
     translate(p) ;
     image(img, 0,0, size.x, size.y) ;
-    stop_matrix() ;
+    pop() ;
   }
 }
 
@@ -959,7 +995,7 @@ void show_canvas(int num) {
 
 /**
 * BACKGROUND
-* v 0.2.4
+* v 0.2.5
 * 2015-2019
 */
 /**
@@ -1072,7 +1108,7 @@ void background_calc(PImage src, vec2 pos, vec2 scale, vec3 colour_background, v
     }
     
     int shader_mode = 0;
-    if(mode == CENTER) {
+    if(mode == r.FIT) {
       shader_mode = 0;
     } else if(mode == SCREEN) {
       shader_mode = 1;

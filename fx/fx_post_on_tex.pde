@@ -52,7 +52,8 @@ void filtering_render() {
 		// pass_render(fx_datamosh(render,on_g,threshold,strength,offset_red,offset_green,offset_blue));
     
     //pass_render(fx_mask(img_a,img_b,on_g));
-		pass_render(fx_mask(render,render,on_g,filter_is));
+    int mode = 0 ;
+		pass_render(fx_mask(render,render,on_g,filter_is,mode));
 		
 		// pass_render(fx_reaction_diffusion(render,on_g));
 		// pass_render(fx_halftone_line(render,on_g,20));

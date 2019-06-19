@@ -246,7 +246,7 @@ void select_layer(int target) {
 
 /**
 PImage manager library
-v 0.6.2
+v 0.7.0
 */
 public class R_Image_Manager {
   ArrayList<R_Image> library ;
@@ -379,9 +379,9 @@ public class R_Image_Manager {
     return library;
   }
 
-  PImage [] get() {
+  R_Image [] get() {
     if(library != null && library.size() > 0) {
-      return library.toArray(new PImage[library.size()]);
+      return library.toArray(new R_Image[library.size()]);
     } else return null;
   }
 

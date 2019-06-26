@@ -69,7 +69,7 @@ sound down `ARROW DOWN`
 movie pause `SPACE`
 
 ## command
-enable incrustation : `i` only with `fx_pos_on_g
+enable incrustation : `i` only with `fx_pos_on_g`
 
 
 ## result

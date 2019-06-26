@@ -91,6 +91,7 @@ enable incrustation : `i` only with `fx_pos_on_g
 ![threshold](https://github.com/StanLepunK/Shader/blob/master/img_link/IM%20184811.jpg)
 ![datamosh](https://github.com/StanLepunK/Shader/blob/master/img_link/IM%20184812.jpg)
 ![post incrustation](https://github.com/StanLepunK/Shader/blob/master/img_link/IM%20184813.jpg)
+![mask](https://github.com/StanLepunK/Shader/blob/master/img_link/IM%20184814.jpg)
 ![cellular](https://github.com/StanLepunK/Shader/blob/master/img_link/IM%20300809.jpg)
 ![heart](https://github.com/StanLepunK/Shader/blob/master/img_link/IM%20300810.jpg)
 ![voronoi hex](https://github.com/StanLepunK/Shader/blob/master/img_link/IM%20300811.jpg)

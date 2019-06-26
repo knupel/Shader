@@ -458,6 +458,8 @@ void setting_mask(ArrayList<FX> fx_list, boolean on_g) {
   init_fx(fx_list,set_mask,FX_MASK);
   fx_set_on_g(fx_list,set_mask,on_g);
   fx_set_pg_filter(fx_list,set_mask,true);
+  fx_set_mode(fx_list,set_mask,0);
+  fx_set_num(fx_list,set_mask,12);
 }
 
 

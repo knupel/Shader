@@ -47,8 +47,7 @@ void setup() {
 		setup_fx_post_on_tex();
 	} else if(mode_shader == 1){
 		setup_fx_post_on_g();
-	}  
-
+	} 
 }
 
 boolean media_is;
@@ -79,7 +78,7 @@ void draw() {
 		draw_fx_bg();
 	}
 
-	other_stuff();
+	//other_stuff();
 	
   
 	remote_command_movie();

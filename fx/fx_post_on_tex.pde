@@ -53,7 +53,8 @@ void filtering_render() {
     
     //pass_render(fx_mask(img_a,img_b,on_g));
     int mode = 0 ;
-		pass_render(fx_mask(render,render,on_g,filter_is,mode));
+    int num_threshold = 24;
+		pass_render(fx_mask(render,render,on_g,filter_is,mode,num_threshold));
 		
 		// pass_render(fx_reaction_diffusion(render,on_g));
 		// pass_render(fx_halftone_line(render,on_g,20));

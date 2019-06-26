@@ -2,7 +2,7 @@
 * Mask post FX
 * @see @stanlepunk
 * @see https://github.com/StanLepunK/Shader
-* v 0.0.3
+* v 0.0.4
 * 2019-2019
 */
 // Processing implementation
@@ -21,11 +21,13 @@ uniform vec2 resolution_source;
 uniform ivec2 flip_source; // can be use to flip texture source
 uniform vec4 level_source;
 
+uniform int num;
+uniform int mode;
+
 uniform sampler2D texture_layer;
 uniform vec2 resolution_layer;
 uniform ivec2 flip_layer; // can be use to flip texture layer
 uniform vec4 level_layer;
-uniform int mode;
 
 
 
@@ -59,10 +61,28 @@ vec2 set_uv() {
   return set_uv(0,0,vec2(0));
 }
 
+vec4 step_gray(vec4 value) {
+  float gray = 1.0 / num;
 
+  for(int i = 1 ; i < num ; i++) {
+    if(value.x > (i-1)*gray && value.x < i*gray) {
+      value.x = (i-1)*gray;
+    }
 
+    if(value.y > (i-1)*gray && value.y < i*gray) {
+      value.y = (i-1)*gray;
+    }
 
+    if(value.z > (i-1)*gray && value.z < i*gray) {
+      value.z = (i-1)*gray;
+    }
 
+    if(value.w > (i-1)*gray && value.w < i*gray) {
+      value.w = (i-1)*gray;
+    }
+  }
+  return value;
+}
 
 
 
@@ -78,13 +98,12 @@ void main() {
   vec4 colour_source = texture2D(texture_source,uv_source);
 
   vec4 colour_mask = texture2D(texture_layer,uv_layer);
-  float remove_alpha = (colour_mask.x + colour_mask.y + colour_mask.z) / 3.0;
-  vec4 remove = vec4(0,0,0,remove_alpha);
-  if(mode == 1) {
-    remove.xyz = colour_mask.xyz;
-  } else if(mode == 2) {
-    remove.xyz = vec3((colour_mask.x + colour_mask.y + colour_mask.z) / 3.0) ;
-  }
+
+
+  vec4 remove = vec4((colour_mask.x + colour_mask.y + colour_mask.z) / 3.0);
+
+  remove = step_gray(remove);
+
   colour_source.xyzw = colour_source.xyzw - remove;
   gl_FragColor = colour_source;
 }

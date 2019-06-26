@@ -181,7 +181,7 @@ void costume_management(vec pos, vec size, vec rotation, int which_costume, Stri
 /**
 MAIN METHOD 
 String COSTUME
-v 0.3.1
+v 0.4.0
 Change the method for method with 
 case and which_costume
 and 
@@ -193,7 +193,7 @@ void costume_impl(vec3 pos, vec3 size, vec rot, String sentence, PGraphics pg) {
 	if(rot.z != 0) costume_rotate_z();
 	push(pg);
 	translate(pos,pg);
-	rotate_behavior(rot,pg);
+	costume_rotate(rot,pg);
 	textSize(size.x());
   text(sentence,0,0,pg);
 	pop(pg);
@@ -212,6 +212,7 @@ void costume_impl(vec3 pos, vec3 size, vec rot, int which_costume, PGraphics pg)
 	costume_rope_buffer.pass_graphic(pg);
 	costume_rope_buffer.show(pos,size,rot);
 }
+
 
 void costume_impl(vec pos, vec size, vec rot, Costume costume, PGraphics pg) {
 	costume.pass_graphic(pg);
@@ -448,17 +449,17 @@ float get_thickness_rope() {
 
 /**
 COSTUME
-v 0.0.2
+v 0.0.4
 */
 /**
 simple text 
-v 0.0.1
+v 0.0.2
 */
-/*
-void costume_text(String s) {
-	costume_text_rope = s ;
+
+void costume_text(String arg) {
+	costume_rope_buffer.set_text(arg);
 }
-*/
+
 
 
 /**
@@ -481,11 +482,11 @@ void costume_rotate_z() {
 	costume_rot_z = true;
 }
 
-void rotate_behavior(vec rotate) {
-	rotate_behavior(rotate,null);
+void costume_rotate(vec rotate) {
+	costume_rotate(rotate,null);
 }
 
-void rotate_behavior(vec rotate, PGraphics other) {
+void costume_rotate(vec rotate, PGraphics other) {
   if(get_renderer() == P3D) {
   	if(costume_rot_x && rotate.x() != 0) {
 			rotateX(rotate.x(),other);
@@ -623,8 +624,10 @@ void house(vec3 size, PGraphics other) {
 	if(house_costume_rope != null) {
 		house_costume_rope.size(size);
 		house_costume_rope.pass_graphic(other);
+		// house_costume_rope.show(g);
 		house_costume_rope.show();
 	} else {
+		//house_costume_rope = new House();
 		house_costume_rope = new House(this);
 	}
 }

@@ -22,13 +22,19 @@ void setup() {
 
 void draw() {
 	background(r.WHITE);
-	multi_pix();
+	//multi_pix();
 	
-	//image(img_a);
+	image(img_a);
 	
 	if(mousePressed) {
 	  // fx_fxaa(g,true,true);
 	  // 
+	  ivec2 pix_size = ivec2(5);
+	  int num_colour = 5;
+	  vec3 level = vec3().sin_wave(frameCount,0.01,0.02,0.03);
+	  boolean effect = true ;
+	  if(keyPressed) effect = false;
+	  fx_pixel(g,true,true,pix_size,num_colour,level,effect);
 	}
 
 

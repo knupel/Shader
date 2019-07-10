@@ -6,7 +6,10 @@ all the last research is in 'fx_lab'. In 'fx_framework' is the work around a cla
 
 ```
 shader post fx:
-antialiasing fxaa, blur circular, blue gaussian, blur radial, color change, datamosh, derivative, dither bayer, flip, grain, grain scatter, haltone dot, halftone line, halftone multi, image, level, mask, mix > like photoshop, pixelate, posterization, reaction diffusion, split rgb, threshold, warp procedural, warp textural
+antialiasing fxaa, blur circular, blue gaussian, blur radial, color change, 
+datamosh, derivative, dither bayer, flip, grain, grain scatter, haltone dot, 
+halftone line, halftone multi, image, level, mask, mix > like photoshop, pixelate, 
+posterization, reaction diffusion, split rgb, threshold, warp procedural, warp textural
 ```
 
 ```

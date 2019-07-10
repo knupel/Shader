@@ -1,5 +1,22 @@
-## Shader
-This project is a Processing laboratory framework to customize background via the glsl shader or to filtering your rendering.
+### Shader
+IS my shader collection refactoring for Processing.
+You find for the shader project, three folder : 'example', 'fx_lab' and 'fx_framework'.
+all the last research is in 'fx_lab'. In 'fx_framework' is the work around a class FX to manage the shader see below for more information...
+
+
+```
+shader post fx:
+antialiasing fxaa, blur circular, blue gaussian, blur radial, color change, datamosh, derivative, dither bayer, flip, grain, grain scatter, haltone dot, halftone line, halftone multi, image, level, mask, mix > like photoshop, pixelate, posterization, reaction diffusion, split rgb, threshold, warp procedural, warp textural
+```
+
+```
+shader background:
+cellular, heart, voronoi, snow... and few other
+```
+
+
+### FX FRAMEWORK
+fx_framework can be used to customize background via the glsl shader or to filtering your rendering.
 there is a collection of background shader and more important collection of post fx filtering.
 Plus a method to catch the background before the post rendering to incrust it after the filter.
 
@@ -92,6 +109,7 @@ enable incrustation : `i` only with `fx_pos_on_g`
 ![datamosh](https://github.com/StanLepunK/Shader/blob/master/img_link/IM%20184812.jpg)
 ![post incrustation](https://github.com/StanLepunK/Shader/blob/master/img_link/IM%20184813.jpg)
 ![mask](https://github.com/StanLepunK/Shader/blob/master/img_link/IM%20184814.jpg)
-![cellular](https://github.com/StanLepunK/Shader/blob/master/img_link/IM%20300809.jpg)
-![heart](https://github.com/StanLepunK/Shader/blob/master/img_link/IM%20300810.jpg)
-![voronoi hex](https://github.com/StanLepunK/Shader/blob/master/img_link/IM%20300811.jpg)
+![posterization](https://github.com/StanLepunK/Shader/blob/master/img_link/IM%20184815.jpg)
+![cellular](https://github.com/StanLepunK/Shader/blob/master/img_link/BG%20300809.jpg)
+![heart](https://github.com/StanLepunK/Shader/blob/master/img_link/BG%20300810.jpg)
+![voronoi hex](https://github.com/StanLepunK/Shader/blob/master/img_link/BG%20300811.jpg)

@@ -24,7 +24,9 @@ void draw() {
 	background(r.WHITE); 
 	multi_pix();
   if(mousePressed) {
-    fx_fxaa(g,true,true);
+    float sub_pix_cap = 0.75;
+    float sub_pix_trim = -0.2;
+    fx_fxaa(g,true,true,sub_pix_cap,sub_pix_trim);
   }
 }
 

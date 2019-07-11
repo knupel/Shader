@@ -2,7 +2,7 @@
 * POST FX shader collection
 *
 * 2019-2019
-* v 0.2.12
+* v 0.2.13
 * all filter bellow has been tested.
 * @author @stanlepunk
 * @see https://github.com/StanLepunK/Shader
@@ -83,89 +83,76 @@ PGraphics fx_template(PImage source, boolean on_g, boolean filter_is, vec4 level
 
 
 /**
-* Antialiasing by Stan le punk
-* v 0.0.1
+* Antialiasing FXAA by Stan le punk
+* v 0.0.2
 * 2019-2019
 */
 // setting by class FX
-PGraphics fx_antialiasing(PImage source, FX fx) {
-	return fx_antialiasing(source,fx.on_g(),fx.pg_filter_is(),fx.get_mode());
+PGraphics fx_fxaa(PImage source, FX fx) {
+	return fx_fxaa(source,fx.on_g(),fx.pg_filter_is(), fx.get_pair(0).x(), fx.get_pair(0).y());
 }
 
 // main
-PShader fx_antialiasing;
-PGraphics pg_antialiasing;
-PGraphics fx_antialiasing(PImage source, boolean on_g, boolean filter_is, int mode) {
-	if(!on_g && (pg_antialiasing == null 
-								|| (source.width != pg_antialiasing.width 
-								|| source.height != pg_antialiasing.height))) {
-		pg_antialiasing = createGraphics(source.width,source.height,get_renderer());
+PShader fx_fxaa;
+PGraphics pg_fxaa;
+PGraphics fx_fxaa(PImage source, boolean on_g, boolean filter_is, float sub_pix_cap, float sub_pix_trim) {
+	if(!on_g && (pg_fxaa == null 
+								|| (source.width != pg_fxaa.width 
+								|| source.height != pg_fxaa.height))) {
+		pg_fxaa = createGraphics(source.width,source.height,get_renderer());
 	}
 
-	if(fx_antialiasing == null) {
-		// String path = get_fx_post_path()+"AA_FXAA.glsl";
+	if(fx_fxaa == null) {
 		String path = get_fx_post_path()+"AA_FXAA.glsl";
-		// String path = get_fx_post_path()+"AA.glsl";
 		if(fx_post_rope_path_exists) {
-			fx_antialiasing = loadShader(path);
-			// println("load shader: AA_FXAA.glsl");
+			fx_fxaa = loadShader(path);
 			println("load shader: AA_FXAA.glsl");
 		}
 		println("load shader:",path);
 	} else {
-		fx_shader_flip(fx_antialiasing,on_g,filter_is,source,null);
+		fx_shader_flip(fx_fxaa,on_g,filter_is,source,null);
 
-		fx_antialiasing.set("texture_source",source);
-		fx_antialiasing.set("resolution_source",(float)source.width,(float)source.height);
+		fx_fxaa.set("texture_source",source);
+		fx_fxaa.set("resolution_source",(float)source.width,(float)source.height);
+
+		
+		float edge_threshold = 0.8; // nothing happen, but after 0.8 the effect is kill
+		fx_fxaa.set("edge_threshold",edge_threshold);
+
+		float edge_threshold_min = 0.5; // nothing happen
+		fx_fxaa.set("edge_threshold_min",edge_threshold_min);
+
+		// search
+		int search_steps = 8; // nothing happen
+		fx_fxaa.set("search_steps",search_steps);
+
+		float search_threshold = 0.5; // nothing happen from 0 to 1
+		fx_fxaa.set("search_threshold",search_threshold);
+
+		// sub
+		// float sub_pix_cap = 0.75 ; // something happen from 0 to 1
+		fx_fxaa.set("sub_pix_cap",sub_pix_cap);
+
+		//float sub_pix_trim = -0.5; //something happen from -1 to 1 
+		fx_fxaa.set("sub_pix_trim",sub_pix_trim);
 
 
-		// fx_antialiasing.set("mode",mode); // value from 0 to 1
-		// vec2 nw = vec2().sin_wave(frameCount,0.01,0.03).mult(0.1);
-		// vec2 ne = vec2().cos_wave(frameCount,0.01,0.02).mult(0.1);
-		// vec2 sw = vec2().sin_wave(frameCount,0.01,0.02).mult(0.1);
-		// vec2 se = vec2().cos_wave(frameCount,0.01,0.03).mult(0.1);
-
-				vec2 nw = vec2(0);
-		vec2 ne = vec2(.499,0);
-		vec2 sw = vec2(0,.499);
-		vec2 se = vec2(.499,.501);
-
-		// 				vec2 nw = vec2(.501,.499);
-		// vec2 ne = vec2(.499,.501);
-		// vec2 sw = vec2(.501,.499);
-		// vec2 se = vec2(.499,.501);
-
-
-
-		// vec2 nw = vec2(0,0);
-		// vec2 ne = vec2(1,0);
-		// vec2 sw = vec2(0,1);
-		// vec2 se = vec2(1,1);
-  //   float n = map(mouseX,0,width,-1,1);
-  //   float w = map(mouseY,0,height,-1,1);
-		// vec2 nw = vec2(n,w);
-		// vec2 ne = vec2(1,0);
-		// vec2 sw = vec2(0,1);
-		// vec2 se = vec2(1,1);
-
-		fx_antialiasing.set("nw",nw.x(),nw.y()); // value from -1 to 1
-		fx_antialiasing.set("ne",ne.x(),ne.y()); // value from -1 to 1
-		fx_antialiasing.set("sw",sw.x(),sw.y()); // value from -1 to 1
-		fx_antialiasing.set("se",se.x(),se.y()); // value from -1 to 1
 
     // rendering
-		render_shader(fx_antialiasing,pg_antialiasing,source,on_g,filter_is);
-
+		render_shader(fx_fxaa,pg_fxaa,source,on_g,filter_is);
 	}
-
 	// return
 	reset_reverse_g(false);
 	if(on_g) {
 		return null;
 	} else {
-		return pg_antialiasing; 
+		return pg_fxaa; 
 	}
 }
+
+
+
+
 
 
 
@@ -901,6 +888,62 @@ PGraphics fx_flip(PImage source, boolean on_g, boolean filter_is, bvec2 flip) {
 
 
 
+
+
+
+
+
+
+/**
+* Glitch FXAA by Stan le punk
+* v 0.0.1
+* 2019-2019
+*/
+// setting by class FX
+PGraphics fx_glitch_fxaa(PImage source, FX fx) {
+	return fx_glitch_fxaa(source,fx.on_g(),fx.pg_filter_is(),fx.get_cardinal());
+}
+
+// main
+PShader fx_glitch_fxaa;
+PGraphics pg_glitch_fxaa;
+PGraphics fx_glitch_fxaa(PImage source, boolean on_g, boolean filter_is, vec4 cardinal) {
+	if(!on_g && (pg_glitch_fxaa == null 
+								|| (source.width != pg_glitch_fxaa.width 
+								|| source.height != pg_glitch_fxaa.height))) {
+		pg_glitch_fxaa = createGraphics(source.width,source.height,get_renderer());
+	}
+
+	if(fx_glitch_fxaa == null) {
+		String path = get_fx_post_path()+"AA_FXAA_glitch.glsl";
+		if(fx_post_rope_path_exists) {
+			fx_glitch_fxaa = loadShader(path);
+			println("load shader: AA_FXAA.glsl");
+		}
+		println("load shader:",path);
+	} else {
+		fx_shader_flip(fx_glitch_fxaa,on_g,filter_is,source,null);
+
+		fx_glitch_fxaa.set("texture_source",source);
+		fx_glitch_fxaa.set("resolution_source",(float)source.width,(float)source.height);
+
+
+		fx_glitch_fxaa.set("nw",cardinal.x(),cardinal.w()); // value from -1 to 1
+		fx_glitch_fxaa.set("ne",cardinal.x(),cardinal.y()); // value from -1 to 1
+		fx_glitch_fxaa.set("sw",cardinal.z(),cardinal.w()); // value from -1 to 1
+		fx_glitch_fxaa.set("se",cardinal.z(),cardinal.y()); // value from -1 to 1
+
+    // rendering
+		render_shader(fx_glitch_fxaa,pg_glitch_fxaa,source,on_g,filter_is);
+	}
+	// return
+	reset_reverse_g(false);
+	if(on_g) {
+		return null;
+	} else {
+		return pg_glitch_fxaa; 
+	}
+}
 
 
 
@@ -1776,13 +1819,9 @@ PGraphics fx_posterization(PImage source, boolean on_g, boolean filter_is, vec3 
 		fx_posterization.set("resolution_source",(float)source.width,(float)source.height);
 
 
-
-
-
 		fx_posterization.set("threshold",threshold.x(),threshold.y(),threshold.z()); // value 0 to 1
 		if(num < 2) num = 2;
 		fx_posterization.set("num",num);
-
 
     // rendering
 		render_shader(fx_posterization,pg_posterization,source,on_g,filter_is);

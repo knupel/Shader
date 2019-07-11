@@ -22,19 +22,14 @@ void setup() {
 
 void draw() {
 	background(r.WHITE);
-	//multi_pix();
+	multi_pix();
 	
-	image(img_a);
+	// image(img_a);
 	
 	if(mousePressed) {
-	  // fx_fxaa(g,true,true);
-	  // 
-	  ivec2 pix_size = ivec2(5);
-	  int num_colour = 5;
-	  vec3 level = vec3().sin_wave(frameCount,0.01,0.02,0.03);
-	  boolean effect = true ;
-	  if(keyPressed) effect = false;
-	  fx_pixel(g,true,true,pix_size,num_colour,level,effect);
+		float sub_pix_cap = 0.75;
+		float sub_pix_trim = -0.2;
+	  fx_fxaa(g,true,true,sub_pix_cap,sub_pix_trim);
 	}
 
 
@@ -60,9 +55,11 @@ void img(PImage img, float rot) {
 
 float rot;
 void multi_pix() {
-rot += 0.001;
-for(int i = 0 ; i < 10 ; i++) {
-	pix(rot + (i*0.1));
+//rot += 0.001;
+int num = 77;
+float step = TAU / num ;
+for(int i = 0 ; i < num ; i++) {
+	pix(rot + (i*step));
 	 }
 }
 void pix(float rot) {

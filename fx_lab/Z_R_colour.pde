@@ -1,6 +1,6 @@
 /**
 * Rope COLOUR
-*v 0.10.3
+*v 0.10.10
 * Copyleft (c) 2016-2019 
 * Stan le Punk > http://stanlepunk.xyz/
 * Processing 3.5.3
@@ -16,12 +16,33 @@
 
 
 
+/**
+* palette
+* v 0.0.2
+*/
+R_Colour palette_colour_rope;
+void palette(int... list_colour) {
+  if(palette_colour_rope == null) {
+    palette_colour_rope = new R_Colour(this,list_colour);
+  } else {
+    palette_colour_rope.clear();
+    palette_colour_rope.add(0,list_colour);
+  }
+}
+
+int [] get_palette() {
+  if(palette_colour_rope != null) {
+    return palette_colour_rope.get();
+  } else return null;
+}
+
+
 
 
 
 /**
 * COLOUR LIST class
-* v 0.3.2
+* v 0.3.3
 * 2017-2019
 */
 public class R_Colour implements rope.core.R_Constants, rope.core.R_Constants_Colour {
@@ -90,6 +111,11 @@ public class R_Colour implements rope.core.R_Constants, rope.core.R_Constants_Co
     return list.size();
   }
 
+
+  public int size() {
+    return size(0);
+  }
+
   public int size(int group) {
     if(group >= 0 && group < list.size()) {
       return list.get(group).size();
@@ -98,7 +124,13 @@ public class R_Colour implements rope.core.R_Constants, rope.core.R_Constants_Co
       return -1;
     }
   }
+  
 
+
+
+  public int [] get() {
+    return get(0);
+  }
 
   public int [] get(int group) {
     if(group >= 0 && group < list.size()) {
@@ -251,6 +283,10 @@ public class R_Colour implements rope.core.R_Constants, rope.core.R_Constants_Co
   }
   
 
+  public float [] hue() {
+    return hue(0);
+  }
+
   public float [] hue(int group) {
     if(group >= 0 && group < list.size()) {
       float[] component = new float[list.get(group).size()];
@@ -265,6 +301,11 @@ public class R_Colour implements rope.core.R_Constants, rope.core.R_Constants_Co
     }
   }
 
+
+  
+  public float [] saturation() {
+    return saturation(0);
+  }
 
   public float [] saturation(int group) {
     if(group >= 0 && group < list.size()) {
@@ -281,6 +322,11 @@ public class R_Colour implements rope.core.R_Constants, rope.core.R_Constants_Co
   }
 
 
+
+  public float [] brightness() {
+    return brightness(0);
+  }
+  
   public float [] brightness(int group) {
     if(group >= 0 && group < list.size()) {
       float[] component = new float[list.get(group).size()];
@@ -293,6 +339,11 @@ public class R_Colour implements rope.core.R_Constants, rope.core.R_Constants_Co
       printErr("class R_Color method brightness(",group,") no group match with your demand, instead 'null' is return");
       return null; 
     }
+  }
+
+
+  public float [] red() {
+    return red(0);
   }
 
   public float [] red(int group) {
@@ -309,6 +360,10 @@ public class R_Colour implements rope.core.R_Constants, rope.core.R_Constants_Co
     }
   }
 
+  
+  public float [] green() {
+    return green(0);
+  }
 
   public float [] green(int group) {
     if(group >= 0 && group < list.size()) {
@@ -323,8 +378,12 @@ public class R_Colour implements rope.core.R_Constants, rope.core.R_Constants_Co
       return null; 
     }
   }
-  
 
+
+  public float [] blue() {
+    return blue(0);
+  }
+  
   public float [] blue(int group) {
     if(group >= 0 && group < list.size()) {
       float[] component = new float[list.get(group).size()];
@@ -339,6 +398,10 @@ public class R_Colour implements rope.core.R_Constants, rope.core.R_Constants_Co
     }
   }
 
+
+  public float [] alpha() {
+    return alpha(0);
+  }
 
   public float [] alpha(int group) {
     if(group >= 0 && group < list.size()) {
@@ -355,6 +418,11 @@ public class R_Colour implements rope.core.R_Constants, rope.core.R_Constants_Co
   }
 
   
+
+  public vec3 [] hsb() {
+    return hsb(0);
+  }
+
   public vec3 [] hsb(int group) {
     if(group >= 0 && group < list.size()) {
       vec3[] component = new vec3[list.get(group).size()];
@@ -369,6 +437,10 @@ public class R_Colour implements rope.core.R_Constants, rope.core.R_Constants_Co
     }
   }
 
+
+  public vec3 [] rgb() {
+    return rgb(0);
+  }
 
   public vec3 [] rgb(int group) {
     if(group >= 0 && group < list.size()) {
@@ -386,6 +458,10 @@ public class R_Colour implements rope.core.R_Constants, rope.core.R_Constants_Co
   }
 
 
+  public vec4 [] hsba() {
+    return hsba(0);
+  }
+
   public vec4 [] hsba(int group) {
     if(group >= 0 && group < list.size()) {
       vec4[] component = new vec4[list.get(0).size()];
@@ -400,6 +476,10 @@ public class R_Colour implements rope.core.R_Constants, rope.core.R_Constants_Co
     }
   }
 
+
+  public vec4 [] rgba() {
+    return rgba(0);
+  }
 
   public vec4 [] rgba(int group) {
     if(group >= 0 && group < list.size()) {
@@ -512,6 +592,15 @@ float [] getColorMode() {
   return getColorMode(false);
 }
 
+
+
+
+
+
+
+
+
+
 /**
 camaieu 
 v 0.1.2
@@ -531,27 +620,99 @@ float camaieu(float max, float reference, float range) {
 
 
 
+/**
+* mixer
+* v 0.0.1
+* mix color together with the normal threshold variation
+*/
+int mixer(int o, int d, float threshold) {
+  if(g.colorMode == 1) {
+    float x = gradient_value(red(o),red(d),threshold);
+    float y = gradient_value(green(o),green(d),threshold);
+    float z = gradient_value(blue(o),blue(d),threshold);
+    return color(x,y,z);
+  } else {
+    float x = gradient_value(hue(o),hue(d),threshold);
+    float y = gradient_value(saturation(o),saturation(d),threshold);
+    float z = gradient_value(brightness(o),brightness(d),threshold);
+    return color(x,y,z);
+  }
+}
+
+float gradient_value(float origin, float destination, float threshold) {
+  float gradient = origin;
+  float range = origin - destination;
+  float power = range * threshold;
+  return gradient - power;
+}
+
+
+
+
+
+
+
+
+/**
+* plot
+* v 0.0.2
+* set pixel color with alpha and PGraphics management 
+*/
+void plot(int x, int y, int colour) {
+  plot(x, y, colour, 1.0, g);
+}
+
+void plot(int x, int y, int colour, PGraphics pg) {
+  plot(x, y, colour, 1.0, pg);
+}
+
+void plot(int x, int y, int colour, float alpha) {
+  plot(x, y, colour, alpha, g);
+}
+
+void plot(int x, int y, int colour, float alpha, PGraphics pg) {
+  int bg = pg.get(x,y);
+  int col = colour;
+  if(alpha < 1) {
+    col = mixer(bg,colour,alpha);
+  } 
+  int rank = x + y * pg.width;
+  if(rank >= 0 && rank < pg.pixels.length && x >= 0 && x < pg.width) {
+    pg.pixels[rank] = col; 
+  }  
+}
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 /**
 * simple color pool
-* v 0.1.0
+* v 0.1.1
 */
 int [] hue_palette(int master_colour, int num_group, int num_colour, float spectrum) {
   if(num_group > num_colour) num_group = num_colour;
   float div = 1.0 / num_group;
-  int hue_range = int(spectrum*div); 
-  int hue_key = (int)hue(master_colour);
+  float hue_range = spectrum*div; 
+  float hue_key = hue(master_colour);
   vec2 range_sat = vec2(saturation(master_colour));
   vec2 range_bri = vec2(brightness(master_colour));
-  vec2 range_alp = vec2(100);
+  vec2 range_alp = vec2(100.0);
   return color_pool(num_group, num_colour, hue_key,hue_range, range_sat,range_bri,range_alp);
-  //return new R_Colour(this,list_temp);
 }
 
 /**
 color pool 
-v 0.5.0
+v 0.5.1
 */
 int [] color_pool(int num) {
   float hue_range = -1;
@@ -615,6 +776,14 @@ int [] color_pool(int num_group, int num, float key_hue, float hue_range, vec2 s
   float y = g.colorModeY;
   float z = g.colorModeZ;
   float a = g.colorModeA;
+  float ratio_h = 360.0 / g.colorModeX;
+  float ratio_s = 100.0 / g.colorModeY;
+  float ratio_b = 100.0 / g.colorModeZ;
+  float ratio_a = 100.0 / g.colorModeA;
+  hue_range *= ratio_h;
+  sat_range.mult(ratio_s);
+  bright_range.mult(ratio_b);
+  alpha_range.mult(ratio_a);
   colorMode(HSB,360,100,100,100);
   
   // create range if necessary
@@ -878,15 +1047,3 @@ int color_context(int color_ref, int threshold, int clear, int dark) {
   }
   return new_color ;
 }
-
-
-
-
-
-
-
-
-
-
-
-

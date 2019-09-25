@@ -54,7 +54,9 @@ void filtering_render() {
     //pass_render(fx_mask(img_a,img_b,on_g));
     int mode = 0 ;
     int num_threshold = 24;
-		pass_render(fx_mask(render,render,on_g,filter_is,mode,num_threshold));
+    vec2 range_threshold = vec2(0,1);
+    vec4 layer_rgba = vec4(1);
+		pass_render(fx_mask(render,render,on_g,filter_is,mode,num_threshold,range_threshold,layer_rgba));
 		
 		// pass_render(fx_reaction_diffusion(render,on_g));
 		// pass_render(fx_halftone_line(render,on_g,20));

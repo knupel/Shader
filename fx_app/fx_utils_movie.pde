@@ -6,16 +6,16 @@
 import processing.video.Movie;
 Movie movie_input;
 void set_movie(String path) {
-	if(movie_input == null && path != null && !media_is) {
+	if(movie_input == null && path != null && !media_is()) {
 		if(extension_is(path,"avi","mov","mp4","mpg")) {
 			println("method set_movie():",path);
 			movie_input = new Movie(this,path);
 			movie_input.loop();
-			media_is = true;
+			media_is(true);
 		} else {
 			printErr("method set_movie(): [",path,"] don't match for class Movie");
 		}
-	} else if(movie_input != null && media_is) {
+	} else if(movie_input != null && media_is()) {
 	  if(window_ref == null || !window_ref.equals(ivec2(movie_input.width,movie_input.height))) {
 	  	surface.setSize(movie_input.width,movie_input.height);
 	  	window_ref = ivec2(movie_input.width,movie_input.height);

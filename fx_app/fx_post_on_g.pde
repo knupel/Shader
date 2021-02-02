@@ -1,23 +1,22 @@
 /**
-Work around filter g it( little hard,
+Work around filter g it's hard,
 so the option to copy PGraphics g is used, but not sure that's be good with huge rendering sinze
 */
-void setup_fx_post_on_g() {
-	select_input();
-}
+void draw_fx_post_on_g(int target_img_0, int target_img_1, PImage pattern_1, PImage pattern_2) {
+	PImage img_1 = lib_img.get(target_img_0);
+	PImage img_2 = lib_img.get(target_img_1);
+	if(display_movie_is()) {
+		set_movie(input_path());
+		if(movie_input != null && !window_change_is()) {
+			filter_g(movie_input, img_1, img_2, pattern_1,pattern_2);
+		}
+	}
 
-
-
-void draw_fx_post_on_g(PImage img_1, PImage img_2, PImage pattern_1, PImage pattern_2) {
-	set_movie(input_path());
-	set_img(input_path());
-	if((movie_input != null || img_input != null) && !window_change_is()) {
-    if(movie_input != null) {
-    	filter_g(movie_input, img_1,img_2, pattern_1,pattern_2);
-    }
-    if(img_input != null) {
-    	filter_g(img_input, img_1,img_2, pattern_1,pattern_2);
-    }
+	if(display_img_is()) {
+		set_img(img_1);
+		if(img_input != null && !window_change_is()) {
+			filter_g(img_input, img_1, img_2, pattern_1,pattern_2);
+		}
 	}
 }
 
@@ -25,7 +24,6 @@ PImage temp;
 float angle_g;
 
 void filter_g(PImage input, PImage img_1, PImage img_2, PImage pattern_1, PImage pattern_2) {
-
 	boolean with_g = true;
   if(with_g) {
   	// image(movie_input,CENTER);
@@ -37,7 +35,9 @@ void filter_g(PImage input, PImage img_1, PImage img_2, PImage pattern_1, PImage
   } else {
   	render_post_fx(input,null,img_1,img_2,pattern_1,pattern_2);
 	}
-	if(incrust_is()) fx_inc(g);
+	if(incrust_is()) {
+		fx_inc(g);
+	}
 }
 
 
@@ -68,10 +68,10 @@ void render_post_fx(PImage src_1, PImage src_2, PImage img_1, PImage img_2, PIma
 
 	// select_fx_post(src_1,null,null,get_fx(fx_manager,set_halftone_dot));
 	// select_fx_post(src_1,null,null,get_fx(fx_manager,set_halftone_line));
-	// select_fx_post(src_1,null,null,get_fx(fx_manager,set_halftone_multi));
+	select_fx_post(src_1,null,null,get_fx(fx_manager,set_halftone_multi));
 
 	// select_fx_post(src_1,null,null,get_fx(fx_manager,set_image));
-	select_fx_post(img_1,img_2,null,get_fx(fx_manager,set_mask));
+	// select_fx_post(img_1,img_2,null,get_fx(fx_manager,set_mask));
 
 	// select_fx_post(src_1,null,null,get_fx(fx_manager,set_level));
 

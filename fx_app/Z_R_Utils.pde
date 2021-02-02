@@ -1,6 +1,6 @@
 /**
 * Rope UTILS 
-* v 1.64.3
+* v 1.64.4
 * Copyleft (c) 2014-2021
 * Rope – Romanesco Processing Environment – 
 * @author @stanlepunk
@@ -403,20 +403,10 @@ class Constant_list {
 
 /**
 * FOLDER & FILE MANAGER
-* v 0.8.0
+* v 0.8.1
 */
 String warning_input_file_folder_message = "Window was closed or the user hit cancel.";
-String warning_input_file_not_accepted = "This file don't match with any extension accepted:";
-
-
-
-
-
-
-
-
-
-
+String warning_input_file_not_accepted = ANSI_RED+"This file don't match with any extension accepted:"+ANSI_WHITE;
 
 
 String [] input_type = {  "default",
@@ -467,7 +457,7 @@ void print_extension_filter(String type) {
 					break;
 				}
 				if(count == input_type.length) {
-					printErr("method print_extension_filter(): no input available for this type:",type);
+					printErr(ANSI_RED+"method print_extension_filter(): no input available for this type:"+ANSI_WHITE,type);
 				}
 			}
 		}
@@ -699,7 +689,7 @@ class R_Input {
 		boolean apply_filter_is = true;
 		if(context.equals(P3D) || context.equals(P2D) || context.equals(FX2D)) {
 			apply_filter_is = false;
-			println("WARNING: method select_input() cannot apply filter extension",type," in this renderer context", context,"\ninstead classic method selectInput() is used");
+			println(ANSI_RED+"WARNING:"+ANSI_WHITE+" method select_input(String type) cannot apply filter extension"+ANSI_RED,type,ANSI_WHITE+"\nin this renderer context"+ANSI_RED, context,ANSI_WHITE+"instead classic method selectInput() is used");
 		}
 
 		if(!apply_filter_is) {

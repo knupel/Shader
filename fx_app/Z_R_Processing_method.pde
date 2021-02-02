@@ -3173,6 +3173,10 @@ v 0.0.2
 */
 void filter(PShader shader) {
   if(get_layer_is_correct()) {
+    println("void filter(PShader shader)", get_layer());
+    println("void filter(PShader shader)", get_layer().width);
+    println("void filter(PShader shader)", get_layer().height);
+    println("void filter(PShader shader)", shader);
     get_layer().filter(shader);
   } else if (g.pixels != null) {
     g.filter(shader);

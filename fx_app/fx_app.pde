@@ -5,108 +5,54 @@
 
 * You can use easily the class and method FX without the framework part, just use the tab start by Y_ and Z_ and make your own shader world.
 * @see https://github.com/StanLepunK/Shader
-* v 0.1.0
-* 2018-2021
-*/
-PGraphics render;
+*
+* WARNING
+* if you change the shader/fx folder, utilies in case you export your sketch, the shader folder is not exported.
+* in void setup() 
+* set_fx_path(sketchPath(2)+"/shader/fx/");
 
+*/
+String app_name = "SHADER FX";
+String version ="2018-2021 | v 0.1.0";
+PGraphics render;
 ArrayList<FX> fx_manager = new ArrayList<FX>();
 ArrayList<FX> fx_bg_manager = new ArrayList<FX>();
 
-PImage img_a,img_b;
 
-void load_media() {
-	img_a = loadImage("medium_leticia.jpg");
-	img_b = loadImage("medium_puros_girl.jpg");
-}
-
-// int mode_shader = 0; // POST FX on PGrahics > texture
-int mode_shader = 1; // POST FX on G
-// int mode_shader = 2; // FX BACKGROUND
+// int MODE_SHADER = 0; // POST FX on PGrahics > texture
+int MODE_SHADER = 1; // POST FX on "g". "g" is the main rendering of Processing
+// int MODE_SHADER = 2; // create shader pure fx on the background, is not a post fx on specific media.
 
 
 void setup() {
 	rope_version();
-	// if you change the shader/fx folder, utili in case you export your sketch, the shader folder is not exported.
-	// set_fx_path(sketchPath(2)+"/shader/fx/"); 
-	
 	size(1200,700,P3D);
-	load_media();
+	img_a = loadImage("medium_leticia.jpg");
+	img_b = loadImage("medium_puros_girl.jpg");
 	set_pattern(16,16,RGB,true);
-
-	if(mode_shader == 0) {
-		setup_fx_post_on_tex();
-	} else if(mode_shader == 1){
-		setup_fx_post_on_g();
-	} 
+	// select_mode_shader(MODE_SHADER);
 }
-
-boolean media_is;
 
 float total_fps;
 float avg_fps;
 
 void draw() {	
 	set_pattern(16,16,RGB,reset_is());
-	//println(width,height);
-
 	String rate = "instant rate"+(int)frameRate + " | average rate:" + (int)avg_fps;
 	surface.setTitle(rate);
 	total_fps += frameRate;
 	avg_fps = total_fps/frameCount;
 
-  
-  
-
-  if(mode_shader == 0) {
-  	background(r.PINK);
-  	setting_fx_post(fx_manager,false);
-		draw_fx_post_on_tex();
-	} else if(mode_shader == 1) {
-		setting_fx_post(fx_manager,true);
-		draw_fx_post_on_g(img_a,img_b,img_noise_1,img_noise_2);
-	} else if(mode_shader == 2) {
-		setting_fx_bg(fx_bg_manager);
-		draw_fx_bg();
-	}
-
+	render_mode_shader(MODE_SHADER);
 	//other_stuff();
-	
-  
 	remote_command_movie();
 	reset(false);
+	instruction(instruction_is());
+	add_media();
+
+	// println("display_movie_is()",display_movie_is());
+	// println("display_img_is()",display_img_is());
 }
-
-
-/**
-* background fx
-* 2019-2019
-*/
-void draw_fx_bg() {
-  // select_fx_background(get_fx(fx_bg_manager,set_template_fx_bg));
-	// select_fx_background(get_fx(fx_bg_manager,set_cellular_fx_bg));
-	// select_fx_background(get_fx(fx_bg_manager,set_heart_fx_bg));
-	// select_fx_background(get_fx(fx_bg_manager,set_necklace_fx_bg));
-	// select_fx_background(get_fx(fx_bg_manager,set_neon_fx_bg));
-	// select_fx_background(get_fx(fx_bg_manager,set_psy_fx_bg));
-	// select_fx_background(get_fx(fx_bg_manager,set_snow_fx_bg));
-	select_fx_background(get_fx(fx_bg_manager,set_voronoi_hex_fx_bg));
-}
-
-
-
-
-float rot_x; 
-float rot_y;
-void other_stuff() {
-	translate(width/2,height/2);
-	rotateX(rot_x += .01);
-	rotateY(rot_y += .02);
-	box(600,100,100);
-}
-
-
-
 
 
 // EVENT
@@ -144,6 +90,32 @@ void keyPressed() {
 
 	if(key == ' ') {
 		space_switch();
+	}
+
+	if(key == 'i') {
+		instruction_switch();
+	}
+
+	if(key == 'o') {
+		folder_is(true);
+		select_folder();
+		instruction_is(false);
+		display_movie_is(false);
+		display_img_is(true);
+	}
+
+	if(key == 'm') {
+		input_is(true);
+		select_input();
+		instruction_is(false);
+		display_movie_is(true);
+		display_img_is(false);
+		media_is(false);
+	}
+
+	if(key == DELETE || key == BACKSPACE) {
+		lib_img.clear();
+		println("clear librarie image:", lib_img.size());
 	}
 }
 

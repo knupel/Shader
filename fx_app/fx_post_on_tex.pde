@@ -1,21 +1,23 @@
-
-
-
-
-
-
-void setup_fx_post_on_tex() {
-	select_input();
-}
-
-void draw_fx_post_on_tex() {
-	set_movie(input_path());
-	set_img(input_path());
-  if(img_input != null) {
-  	render = to_pgraphics(img_input);
-  } else if(movie_input != null) {
-  	render = to_pgraphics(movie_input);
-  }
+/**
+* FX on texture PGraphics
+* 2019-2021
+* v 0.1.0
+*/
+void draw_fx_post_on_tex(int index_img) {
+	if(display_movie_is() && movie_input != null) {
+		set_movie(input_path());
+		render = to_pgraphics(movie_input);
+	}
+	if(display_img_is() && img_input != null) {
+		set_img(lib_img.get(index_img));
+		render = to_pgraphics(img_input);
+	}
+	//set_img(input_path());
+  // if(img_input != null) {
+  // 	// render = to_pgraphics(img_input);
+  // } else if(movie_input != null) {
+  // 	// render = to_pgraphics(movie_input);
+  // }
 	// set_shape();
 	filtering_render();
 }
@@ -71,7 +73,6 @@ void filtering_render() {
 		// pass_render(fx_mix(render,img_b,on_g,FX_MULTIPLY));
 
 		image(render);
-	  
 	}
 }
 

@@ -5,18 +5,8 @@
 
 * You can use easily the class and method FX without the framework part, just use the tab start by Y_ and Z_ and make your own shader world.
 * @see https://github.com/StanLepunK/Shader
-* v 0.0.6
-* 2018-2019
-* This little framework use Rope Library and Rope framework.
-* More about Rope Library 
-* @see https://github.com/StanLepunK/Rope
-* More about Rope framework
-* @see https://github.com/StanLepunK/Rope_method
-
-* 
-* Enjoy, share, copy, paste, improve and blahblah
-* Processing 3.5.3.269
-* Rope Library 0.7.1.25
+* v 0.1.0
+* 2018-2021
 */
 PGraphics render;
 
@@ -36,6 +26,7 @@ int mode_shader = 1; // POST FX on G
 
 
 void setup() {
+	rope_version();
 	// if you change the shader/fx folder, utili in case you export your sketch, the shader folder is not exported.
 	// set_fx_path(sketchPath(2)+"/shader/fx/"); 
 	
@@ -57,6 +48,7 @@ float avg_fps;
 
 void draw() {	
 	set_pattern(16,16,RGB,reset_is());
+	//println(width,height);
 
 	String rate = "instant rate"+(int)frameRate + " | average rate:" + (int)avg_fps;
 	surface.setTitle(rate);
@@ -86,6 +78,22 @@ void draw() {
 }
 
 
+/**
+* background fx
+* 2019-2019
+*/
+void draw_fx_bg() {
+  // select_fx_background(get_fx(fx_bg_manager,set_template_fx_bg));
+	// select_fx_background(get_fx(fx_bg_manager,set_cellular_fx_bg));
+	// select_fx_background(get_fx(fx_bg_manager,set_heart_fx_bg));
+	// select_fx_background(get_fx(fx_bg_manager,set_necklace_fx_bg));
+	// select_fx_background(get_fx(fx_bg_manager,set_neon_fx_bg));
+	// select_fx_background(get_fx(fx_bg_manager,set_psy_fx_bg));
+	// select_fx_background(get_fx(fx_bg_manager,set_snow_fx_bg));
+	select_fx_background(get_fx(fx_bg_manager,set_voronoi_hex_fx_bg));
+}
+
+
 
 
 float rot_x; 
@@ -98,34 +106,6 @@ void other_stuff() {
 }
 
 
-
-
-
-
-
-
-
-
-
-
-boolean incrust_is = false;
-void incrust_is(boolean is) {
-	incrust_is = is;
-}
-
-boolean incrust_is() {
-	return incrust_is;
-}
-
-
-boolean reset = false;
-void reset(boolean reset){
-	this.reset = reset;
-}
-
-boolean reset_is() {
-	return reset;
-}
 
 
 
@@ -151,55 +131,23 @@ void mouseWheel(MouseEvent e) {
 }
 
 
-void mousePressed() {
-	
-}
-
-
-
-boolean key_up = false;
-boolean key_down = false;
-boolean key_left = false;
-boolean key_right = false;
-boolean key_space = false;
 void keyPressed() {
-	if(key == CODED) {
-		if(keyCode == UP) {
-			key_up = true;
-		}
-
-		if(keyCode == DOWN) {
-			key_down = true;
-		}
-
-		if(keyCode == LEFT) {
-			key_left = true;
-			set_movie_speed(-1);
-		}
-
-		if(keyCode == RIGHT) {
-			key_right = true;
-			set_movie_speed(1);
-		}
-	}
-
-	if(key == ' ') {
-		if(key_space) key_space = false ; else key_space = true;
-	}
+	keyPressed_arrow();
 
 	if(key == 'n') {
 		reset(true);
 	}
 
 	if(key == 'i') {
-		incrust_is =  incrust_is? false:true;
+		incrust_is =  incrust_is ? false:true;
+	}
+
+	if(key == ' ') {
+		space_switch();
 	}
 }
 
 void keyReleased() {
-	key_up = false;
-	key_down = false;
-	key_left = false;
-	key_right = false;
+	keyReleased_arrow_false();
 }
 

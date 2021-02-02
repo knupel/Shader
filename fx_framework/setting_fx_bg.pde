@@ -159,7 +159,6 @@ void setting_snow_fx_bg(ArrayList<FX> fx_list) {
   float speed = map(mouseX,0,width,0,1);
   fx_set_speed(fx_list,set_snow_fx_bg,speed);
   
-
   float quality = abs(sin(frameCount *.01));
   fx_set_quality(fx_list,set_snow_fx_bg,quality);
 }

@@ -9,8 +9,8 @@ void setup_fx_post_on_g() {
 
 
 void draw_fx_post_on_g(PImage img_1, PImage img_2, PImage pattern_1, PImage pattern_2) {
-	set_movie(input());
-	set_img(input());
+	set_movie(input_path());
+	set_img(input_path());
 	if((movie_input != null || img_input != null) && !window_change_is()) {
     if(movie_input != null) {
     	filter_g(movie_input, img_1,img_2, pattern_1,pattern_2);

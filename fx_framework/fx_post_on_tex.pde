@@ -9,8 +9,8 @@ void setup_fx_post_on_tex() {
 }
 
 void draw_fx_post_on_tex() {
-	set_movie(input());
-	set_img(input());
+	set_movie(input_path());
+	set_img(input_path());
   if(img_input != null) {
   	render = to_pgraphics(img_input);
   } else if(movie_input != null) {

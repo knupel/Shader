@@ -1,6 +1,8 @@
 # build stuff in case there is
 filters/build-tmp/
 todo_
+out/
+.class
 
 # Runtime data
 pids
